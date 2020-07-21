@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "iqserver.fullname" . }}
+  labels:
+    {{- include "iqserver.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "iqserver.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "iqserver.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ include "iqserver.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: application
+              containerPort: {{ .Values.iq.applicationPort }}
+              protocol: TCP
+            - name: admin
+              containerPort: {{ .Values.iq.adminPort }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: admin
+          readinessProbe:
+            httpGet:
+              path: /
+              port: application
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - mountPath: /sonatype-work
+              name: nxiq-pv-data
+            - mountPath: /etc/nexus-iq-server
+              name: config-volume
+  {{- if .Values.iq.licenseSecret }}
+            - mountPath: /etc/nexus-iq-license
+              name: license-volume
+  {{- end }}
+      volumes:
+        - name: nxiq-pv-data
+          persistentVolumeClaim:
+            claimName: {{ template "iqserver.fullname" . }}-data
+        - name: config-volume
+          configMap:
+            name: {{ template "iqserver.fullname" . }}
+            items:
+              - key: config.yml
+                path: config.yml
+  {{- if .Values.iq.licenseSecret }}
+        - name: license-volume
+          secret:
+            secretName: {{ template "iqserver.fullname" . }}-license
+  {{- end }}
+        {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

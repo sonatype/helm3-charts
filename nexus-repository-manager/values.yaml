@@ -1,0 +1,179 @@
+statefulset:
+  enabled: false
+replicaCount: 1
+# By default deploymentStrategy is set to rollingUpdate with maxSurge of 25% and maxUnavailable of 25% . you can change type to `Recreate` or can uncomment `rollingUpdate` specification and adjust them to your usage.
+deploymentStrategy: {}
+  # rollingUpdate:
+  #   maxSurge: 25%
+  #   maxUnavailable: 25%
+  # type: RollingUpdate
+image:
+  repository: sonatype/nexus3
+  pullPolicy: IfNotPresent
+
+nexus:
+  imageName: sonatype/nexus3
+  imageTag: 3.21.1
+  imagePullPolicy: IfNotPresent
+  imagePullSecret: ""
+  env:
+    - name: install4jAddVmParams
+      value: "-Xms1200M -Xmx1200M -XX:MaxDirectMemorySize=2G -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
+    - name: NEXUS_SECURITY_RANDOMPASSWORD
+      value: "false"
+  # nodeSelector:
+  #   cloud.google.com/gke-nodepool: default-pool
+  resources: {}
+    # requests:
+      ## Based on https://support.sonatype.com/hc/en-us/articles/115006448847#mem
+      ## and https://twitter.com/analytically/status/894592422382063616:
+      ##   Xms == Xmx
+      ##   Xmx <= 4G
+      ##   MaxDirectMemory >= 2G
+      ##   Xmx + MaxDirectMemory <= RAM * 2/3 (hence the request for 4800Mi)
+      ##   MaxRAMFraction=1 is not being set as it would allow the heap
+      ##     to use all the available memory.
+      # cpu: 250m
+      # memory: 4800Mi
+  # The ports should only be changed if the nexus image uses a different port
+  dockerPort: 18443
+  nexusPort: 8081
+
+  securityContext:
+    fsGroup: 2000
+  podAnnotations: {}
+  livenessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 30
+    failureThreshold: 6
+    # timeoutSeconds: 10
+    path: /
+  readinessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 30
+    failureThreshold: 6
+    # timeoutSeconds: 10
+    path: /
+  # hostAliases allows the modification of the hosts file inside a container
+  hostAliases: []
+  # - ip: "192.168.1.10"
+  #   hostnames:
+  #   - "example.com"
+  #   - "www.example.com"
+
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name:
+
+deployment:
+  # # Add annotations in deployment to enhance deployment configurations
+  annotations: {}
+  # # Add init containers. e.g. to be used to give specific permissions for nexus-data.
+  # # Add your own init container or uncomment and modify the given example.
+  initContainers:
+  # - name: fmp-volume-permission
+    # image: busybox
+    # imagePullPolicy: IfNotPresent
+    # command: ['chown','-R', '200', '/nexus-data']
+    # volumeMounts:
+      # - name: nexus-data
+        # mountPath: /nexus-data
+  # # Uncomment and modify this to run a command after starting the nexus container.
+  postStart:
+    command:    # '["/bin/sh", "-c", "ls"]'
+  preStart:
+    command:    # '["/bin/rm", "-f", "/path/to/lockfile"]'
+  # terminationGracePeriodSeconds: 120
+  additionalContainers:
+  additionalVolumes:
+  additionalVolumeMounts:
+
+ingress:
+  enabled: true
+  annotations: {kubernetes.io/ingress.class: nginx}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  path: /
+  hosts: 
+      - host: repo.demo
+        paths: [/]
+  tls: []
+    # - secretName: nexus-local-tls
+    #   hosts:
+    #     - nexus.local
+    #     - iqserver.local
+    #     - nexus-docker.local
+    #     - nexus-docker-hosted.local
+
+
+service:
+  name: nexus3
+  enabled: true
+  labels: {}
+  annotations: {}
+  ports:
+  - name: nxrm-svc
+    targetPort: nexus-ui
+    port: 8081
+  serviceType: ClusterIP
+
+
+route:
+  enabled: false
+  name: docker
+  portName: docker
+  labels:
+  annotations:
+  # path: /docker
+
+nexusProxyRoute:
+  enabled: false
+  labels:
+  annotations:
+  # path: /nexus
+
+persistence:
+  enabled: true
+  accessMode: ReadWriteOnce
+  ## If defined, storageClass: <storageClass>
+  ## If set to "-", storageClass: "", which disables dynamic provisioning
+  ## If undefined (the default) or set to null, no storageClass spec is
+  ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+  ##   GKE, AWS & OpenStack)
+  ##
+  # existingClaim:
+  # annotations:
+  #  "helm.sh/resource-policy": keep
+  # storageClass: "-"
+  storageSize: 8Gi
+  # If PersistentDisk already exists you can create a PV for it by including the 2 following keypairs.
+  # pdName: nexus-data-disk
+  # fsType: ext4
+
+
+tolerations: []
+
+# # Enable configmap and add data in configmap
+config:
+  enabled: false
+  mountPath: /sonatype-nexus-conf
+  data:
+
+
+
+# # To use an additional secret, set enable to true and add data
+secret:
+  enabled: false
+  mountPath: /etc/secret-volume
+  readOnly: true
+  data:
+
+

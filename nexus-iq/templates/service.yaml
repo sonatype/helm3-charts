@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "iqserver.fullname" . }}
+  labels:
+    {{- include "iqserver.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: 8070
+      targetPort: application
+      protocol: TCP
+      name: application
+    - port: 8071
+      targetPort: admin
+      protocol: TCP
+      name: admin
+  selector:
+    {{- include "iqserver.selectorLabels" . | nindent 4 }}
