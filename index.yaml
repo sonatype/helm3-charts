@@ -2,8 +2,152 @@ apiVersion: v1
 entries:
   nexus-iq-server:
   - apiVersion: v2
+    appVersion: 1.96.0
+    created: "2020-07-22T10:25:50.885291-04:00"
+    description: Sonatype Nexus IQ Server continuously monitors your entire software
+      supply chain
+    digest: 942d37d19d6da083125a38e99cfb92bf9cbc152428628e662a587fb607206b4d
+    home: https://www.sonatype.com/nexus-iq-server
+    icon: https://www.sonatype.com/hubfs/2019%20Horizontal%20Product%20logo/horizontal%20Repo%20/Repo/NexusRepo_horiz.svg
+    keywords:
+    - sonatype
+    - nexus
+    - lifecycle
+    - iq
+    - remediate
+    - vulnerabilities
+    - policy
+    maintainers:
+    - email: cloud-ops@sonatype.com
+      name: Sonatype
+    name: nexus-iq-server
+    type: application
+    urls:
+    - https://sonatype.github.io/helm3-charts/nexus-iq-server-96.0.0.tgz
+    version: 96.0.0
+  - apiVersion: v2
+    appVersion: 1.95.0
+    created: "2020-07-22T10:25:50.884345-04:00"
+    description: Sonatype Nexus IQ Server continuously monitors your entire software
+      supply chain
+    digest: 4aa84b5dae3b457b752932880f61ae9a376f853f686c0da1cc4d32b399de7706
+    home: https://www.sonatype.com/nexus-iq-server
+    icon: https://www.sonatype.com/hubfs/2019%20Horizontal%20Product%20logo/horizontal%20Repo%20/Repo/NexusRepo_horiz.svg
+    keywords:
+    - sonatype
+    - nexus
+    - lifecycle
+    - iq
+    - remediate
+    - vulnerabilities
+    - policy
+    maintainers:
+    - email: cloud-ops@sonatype.com
+      name: Sonatype
+    name: nexus-iq-server
+    type: application
+    urls:
+    - https://sonatype.github.io/helm3-charts/nexus-iq-server-95.0.0.tgz
+    version: 95.0.0
+  - apiVersion: v2
+    appVersion: 1.94.0
+    created: "2020-07-22T10:25:50.883406-04:00"
+    description: Sonatype Nexus IQ Server continuously monitors your entire software
+      supply chain
+    digest: 72531a96e5efe67a385233159f06001df41b355165d117c23495638ab1da5ddf
+    home: https://www.sonatype.com/nexus-iq-server
+    icon: https://www.sonatype.com/hubfs/2019%20Horizontal%20Product%20logo/horizontal%20Repo%20/Repo/NexusRepo_horiz.svg
+    keywords:
+    - sonatype
+    - nexus
+    - lifecycle
+    - iq
+    - remediate
+    - vulnerabilities
+    - policy
+    maintainers:
+    - email: cloud-ops@sonatype.com
+      name: Sonatype
+    name: nexus-iq-server
+    type: application
+    urls:
+    - https://sonatype.github.io/helm3-charts/nexus-iq-server-94.0.0.tgz
+    version: 94.0.0
+  - apiVersion: v2
+    appVersion: 1.93.0
+    created: "2020-07-22T10:25:50.882488-04:00"
+    description: Sonatype Nexus IQ Server continuously monitors your entire software
+      supply chain
+    digest: 44e6a07a70928a5996f9ee0e63257e8c5e66d8ba5b9bdc4e708c13ea9ae1c847
+    home: https://www.sonatype.com/nexus-iq-server
+    icon: https://www.sonatype.com/hubfs/2019%20Horizontal%20Product%20logo/horizontal%20Repo%20/Repo/NexusRepo_horiz.svg
+    keywords:
+    - sonatype
+    - nexus
+    - lifecycle
+    - iq
+    - remediate
+    - vulnerabilities
+    - policy
+    maintainers:
+    - email: cloud-ops@sonatype.com
+      name: Sonatype
+    name: nexus-iq-server
+    type: application
+    urls:
+    - https://sonatype.github.io/helm3-charts/nexus-iq-server-93.0.0.tgz
+    version: 93.0.0
+  - apiVersion: v2
+    appVersion: 1.92.0
+    created: "2020-07-22T10:25:50.881538-04:00"
+    description: Sonatype Nexus IQ Server continuously monitors your entire software
+      supply chain
+    digest: 55a2dee26ae4f0264ef72205a72abbb9bb5a18fa15470dd955d298be4ccdeeea
+    home: https://www.sonatype.com/nexus-iq-server
+    icon: https://www.sonatype.com/hubfs/2019%20Horizontal%20Product%20logo/horizontal%20Repo%20/Repo/NexusRepo_horiz.svg
+    keywords:
+    - sonatype
+    - nexus
+    - lifecycle
+    - iq
+    - remediate
+    - vulnerabilities
+    - policy
+    maintainers:
+    - email: cloud-ops@sonatype.com
+      name: Sonatype
+    name: nexus-iq-server
+    type: application
+    urls:
+    - https://sonatype.github.io/helm3-charts/nexus-iq-server-92.0.0.tgz
+    version: 92.0.0
+  - apiVersion: v2
+    appVersion: 1.91.0
+    created: "2020-07-22T10:25:50.879447-04:00"
+    description: Sonatype Nexus IQ Server continuously monitors your entire software
+      supply chain
+    digest: 12f5058c167d3bde0bc297e45928980c9f877a128f823548d8519e57d0142adf
+    home: https://www.sonatype.com/nexus-iq-server
+    icon: https://www.sonatype.com/hubfs/2019%20Horizontal%20Product%20logo/horizontal%20Repo%20/Repo/NexusRepo_horiz.svg
+    keywords:
+    - sonatype
+    - nexus
+    - lifecycle
+    - iq
+    - remediate
+    - vulnerabilities
+    - policy
+    maintainers:
+    - email: cloud-ops@sonatype.com
+      name: Sonatype
+    name: nexus-iq-server
+    type: application
+    urls:
+    - https://sonatype.github.io/helm3-charts/nexus-iq-server-91.0.0.tgz
+    version: 91.0.0
+  - apiVersion: v2
     appVersion: 1.90.0
-    created: "2020-07-22T10:01:38.545483-04:00"
+    created: "2020-07-22T10:25:50.87845-04:00"
     description: Sonatype Nexus IQ Server continuously monitors your entire software
       supply chain
     digest: 9b814ea41d3e099565dce82015bc5c31a5df175e1dd40026163698fae5855e75
@@ -28,7 +172,7 @@ entries:
   nexus-repository-manager:
   - apiVersion: v2
     appVersion: 3.21.1
-    created: "2020-07-22T10:01:38.546765-04:00"
+    created: "2020-07-22T10:25:50.886332-04:00"
     description: Sonatype Nexus Repository Manager - Universal Binary repository
     digest: 05474db69d725354084797012797793df73576a43e724228bcc5b9335e810b14
     home: https://www.sonatype.com/nexus-repository-oss
@@ -54,4 +198,4 @@ entries:
     urls:
     - https://sonatype.github.io/helm3-charts/nexus-repository-manager-21.1.0.tgz
     version: 21.1.0
-generated: "2020-07-22T10:01:38.544291-04:00"
+generated: "2020-07-22T10:25:50.877259-04:00"
