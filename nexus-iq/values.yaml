@@ -19,6 +19,7 @@ iq:
   # licenseFile: /etc/nexus-iq-license/license_lic
 
 
+deploymentStrategy: Recreate
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
