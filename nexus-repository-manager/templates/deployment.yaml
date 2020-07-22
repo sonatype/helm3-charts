@@ -18,10 +18,8 @@ spec:
   {{- if .Values.statefulset.enabled }}
   serviceName: {{ template "nexus.fullname" . }}
   {{- end }}
-  {{- if .Values.deploymentStrategy }}
   strategy:
-{{ toYaml .Values.deploymentStrategy | indent 4 }}
-  {{- end }}
+    type: {{ .Values.deploymentStrategy }}
   selector:
     matchLabels:
       {{- include "nexus.selectorLabels" . | nindent 6 }}
