@@ -3,7 +3,7 @@ entries:
   nexus-iq-server:
   - apiVersion: v2
     appVersion: 1.96.0
-    created: "2020-07-22T16:34:58.722409-04:00"
+    created: "2020-07-22T16:38:50.520462-04:00"
     description: Sonatype Nexus IQ Server continuously monitors your entire software
       supply chain
     digest: 61a62659398703cf83ff5cb0946955d4b7fbef2b8d77ddb6562d6fa48626c5c5
@@ -27,7 +27,7 @@ entries:
     version: 96.0.0
   - apiVersion: v2
     appVersion: 1.95.0
-    created: "2020-07-22T16:34:58.721072-04:00"
+    created: "2020-07-22T16:38:50.51951-04:00"
     description: Sonatype Nexus IQ Server continuously monitors your entire software
       supply chain
     digest: 946a275cb2f350737470d0e78c512b2f989845edb5f3695e6071fa58e45e315f
@@ -51,7 +51,7 @@ entries:
     version: 95.0.0
   - apiVersion: v2
     appVersion: 1.94.0
-    created: "2020-07-22T16:34:58.719637-04:00"
+    created: "2020-07-22T16:38:50.518507-04:00"
     description: Sonatype Nexus IQ Server continuously monitors your entire software
       supply chain
     digest: d3f041166476963a4a8ae243716d9dbca7e0749b36a000935cae6aad7171d9e5
@@ -75,7 +75,7 @@ entries:
     version: 94.0.0
   - apiVersion: v2
     appVersion: 1.93.0
-    created: "2020-07-22T16:34:58.718139-04:00"
+    created: "2020-07-22T16:38:50.51555-04:00"
     description: Sonatype Nexus IQ Server continuously monitors your entire software
       supply chain
     digest: bb68f380d78d0321193bf4530f6829a38e0208ad7bdc4803a8b12ca23a1e51dd
@@ -99,7 +99,7 @@ entries:
     version: 93.0.0
   - apiVersion: v2
     appVersion: 1.92.0
-    created: "2020-07-22T16:34:58.716765-04:00"
+    created: "2020-07-22T16:38:50.513813-04:00"
     description: Sonatype Nexus IQ Server continuously monitors your entire software
       supply chain
     digest: 8f5142a235aa3c39ce541630c699d759481cfab44838426dd062d3865746c7b3
@@ -123,7 +123,7 @@ entries:
     version: 92.0.0
   - apiVersion: v2
     appVersion: 1.91.0
-    created: "2020-07-22T16:34:58.715071-04:00"
+    created: "2020-07-22T16:38:50.512122-04:00"
     description: Sonatype Nexus IQ Server continuously monitors your entire software
       supply chain
     digest: ff815424806f5794ebfa2b48d88bb8c4e8d4cd2ea0b556b5a25557215db80555
@@ -147,7 +147,7 @@ entries:
     version: 91.0.0
   - apiVersion: v2
     appVersion: 1.90.0
-    created: "2020-07-22T16:34:58.712526-04:00"
+    created: "2020-07-22T16:38:50.508945-04:00"
     description: Sonatype Nexus IQ Server continuously monitors your entire software
       supply chain
     digest: 9b814ea41d3e099565dce82015bc5c31a5df175e1dd40026163698fae5855e75
@@ -171,8 +171,148 @@ entries:
     version: 90.0.0
   nexus-repository-manager:
   - apiVersion: v2
+    appVersion: 3.25.0
+    created: "2020-07-22T16:38:50.530131-04:00"
+    description: Sonatype Nexus Repository Manager - Universal Binary repository
+    digest: 7b2a5a88966331b2f8d898cb9cad5c68ec116247ff6502ebad33d27b5e6e3147
+    home: https://www.sonatype.com/nexus-repository-oss
+    icon: https://www.sonatype.com/hubfs/2019%20Horizontal%20Product%20logo/horizontal%20Repo%20/Repo/NexusRepo_horiz.svg
+    keywords:
+    - artifacts
+    - dependency
+    - management
+    - sonatype
+    - nexus
+    - repository
+    - quickstart
+    - ci
+    - repository-manager
+    - nexus3
+    maintainers:
+    - email: support@sonatype.com
+      name: Sonatype
+    name: nexus-repository-manager
+    sources:
+    - https://github.com/sonatype/nexus-public
+    type: application
+    urls:
+    - https://sonatype.github.io/helm3-charts/nexus-repository-manager-25.0.0.tgz
+    version: 25.0.0
+  - apiVersion: v2
+    appVersion: 3.24.0
+    created: "2020-07-22T16:38:50.529125-04:00"
+    description: Sonatype Nexus Repository Manager - Universal Binary repository
+    digest: 1363bf95ed56ed0ee1c3754937f86d6f7dea0c972c59626d9a29f69178080d5c
+    home: https://www.sonatype.com/nexus-repository-oss
+    icon: https://www.sonatype.com/hubfs/2019%20Horizontal%20Product%20logo/horizontal%20Repo%20/Repo/NexusRepo_horiz.svg
+    keywords:
+    - artifacts
+    - dependency
+    - management
+    - sonatype
+    - nexus
+    - repository
+    - quickstart
+    - ci
+    - repository-manager
+    - nexus3
+    maintainers:
+    - email: support@sonatype.com
+      name: Sonatype
+    name: nexus-repository-manager
+    sources:
+    - https://github.com/sonatype/nexus-public
+    type: application
+    urls:
+    - https://sonatype.github.io/helm3-charts/nexus-repository-manager-24.0.0.tgz
+    version: 24.0.0
+  - apiVersion: v2
+    appVersion: 3.23.0
+    created: "2020-07-22T16:38:50.527641-04:00"
+    description: Sonatype Nexus Repository Manager - Universal Binary repository
+    digest: 89cc4ac2805b3e1fc58ece9fb28e38dde075def5ba226ac0f856fb056d548b0f
+    home: https://www.sonatype.com/nexus-repository-oss
+    icon: https://www.sonatype.com/hubfs/2019%20Horizontal%20Product%20logo/horizontal%20Repo%20/Repo/NexusRepo_horiz.svg
+    keywords:
+    - artifacts
+    - dependency
+    - management
+    - sonatype
+    - nexus
+    - repository
+    - quickstart
+    - ci
+    - repository-manager
+    - nexus3
+    maintainers:
+    - email: support@sonatype.com
+      name: Sonatype
+    name: nexus-repository-manager
+    sources:
+    - https://github.com/sonatype/nexus-public
+    type: application
+    urls:
+    - https://sonatype.github.io/helm3-charts/nexus-repository-manager-23.0.0.tgz
+    version: 23.0.0
+  - apiVersion: v2
+    appVersion: 3.22.1
+    created: "2020-07-22T16:38:50.525717-04:00"
+    description: Sonatype Nexus Repository Manager - Universal Binary repository
+    digest: 05a3765f173d7567f6d90c8ac9d75bb2e21b62a9facf32fc2dee3291b371005a
+    home: https://www.sonatype.com/nexus-repository-oss
+    icon: https://www.sonatype.com/hubfs/2019%20Horizontal%20Product%20logo/horizontal%20Repo%20/Repo/NexusRepo_horiz.svg
+    keywords:
+    - artifacts
+    - dependency
+    - management
+    - sonatype
+    - nexus
+    - repository
+    - quickstart
+    - ci
+    - repository-manager
+    - nexus3
+    maintainers:
+    - email: support@sonatype.com
+      name: Sonatype
+    name: nexus-repository-manager
+    sources:
+    - https://github.com/sonatype/nexus-public
+    type: application
+    urls:
+    - https://sonatype.github.io/helm3-charts/nexus-repository-manager-22.1.0.tgz
+    version: 22.1.0
+  - apiVersion: v2
+    appVersion: 3.22.0
+    created: "2020-07-22T16:38:50.523808-04:00"
+    description: Sonatype Nexus Repository Manager - Universal Binary repository
+    digest: 383fd7d2a90e794ea39e17f99fe624b3f2b15dea1f93f83ee063666c17006966
+    home: https://www.sonatype.com/nexus-repository-oss
+    icon: https://www.sonatype.com/hubfs/2019%20Horizontal%20Product%20logo/horizontal%20Repo%20/Repo/NexusRepo_horiz.svg
+    keywords:
+    - artifacts
+    - dependency
+    - management
+    - sonatype
+    - nexus
+    - repository
+    - quickstart
+    - ci
+    - repository-manager
+    - nexus3
+    maintainers:
+    - email: support@sonatype.com
+      name: Sonatype
+    name: nexus-repository-manager
+    sources:
+    - https://github.com/sonatype/nexus-public
+    type: application
+    urls:
+    - https://sonatype.github.io/helm3-charts/nexus-repository-manager-22.0.0.tgz
+    version: 22.0.0
+  - apiVersion: v2
     appVersion: 3.21.1
-    created: "2020-07-22T16:34:58.723615-04:00"
+    created: "2020-07-22T16:38:50.521512-04:00"
     description: Sonatype Nexus Repository Manager - Universal Binary repository
     digest: 04d75fac790538358b4cfbb48705225c783e629eed9380d38a5a984ff31d065c
     home: https://www.sonatype.com/nexus-repository-oss
@@ -198,4 +338,4 @@ entries:
     urls:
     - https://sonatype.github.io/helm3-charts/nexus-repository-manager-21.1.0.tgz
     version: 21.1.0
-generated: "2020-07-22T16:34:58.709987-04:00"
+generated: "2020-07-22T16:38:50.507891-04:00"
