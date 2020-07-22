@@ -9,3 +9,7 @@ The current releases have been tested on minikube v1.12.1 running k8s v1.18.3
 
 ### To install Sonatype's Nexus products
 ```helm ```
+
+### 413 Errors
+The default setting for Nginx allows for very small upload sizes. Add this annotation to the ingress for each product to remove teh limit:
+```nginx.ingress.kubernetes.io/proxy-body-size: "0"```
