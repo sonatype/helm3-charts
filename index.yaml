@@ -3,10 +3,10 @@ entries:
   nexus-iq-server:
   - apiVersion: v2
     appVersion: 1.90.0
-    created: "2020-07-22T09:42:04.073979-04:00"
+    created: "2020-07-22T10:01:38.545483-04:00"
     description: Sonatype Nexus IQ Server continuously monitors your entire software
       supply chain
-    digest: 3229c184fd0e82f9c5c94373892fc46ed72a9a876b2f851b64af5b54a16c7412
+    digest: 9b814ea41d3e099565dce82015bc5c31a5df175e1dd40026163698fae5855e75
     home: https://www.sonatype.com/nexus-iq-server
     icon: https://www.sonatype.com/hubfs/2019%20Horizontal%20Product%20logo/horizontal%20Repo%20/Repo/NexusRepo_horiz.svg
     keywords:
@@ -23,14 +23,14 @@ entries:
     name: nexus-iq-server
     type: application
     urls:
-    - https://sonatype.github.io/helm3-charts/nexus-iq-server-1.90.0-0.tgz
-    version: 1.90.0-0
+    - https://sonatype.github.io/helm3-charts/nexus-iq-server-90.0.0.tgz
+    version: 90.0.0
   nexus-repository-manager:
   - apiVersion: v2
     appVersion: 3.21.1
-    created: "2020-07-22T09:42:04.075134-04:00"
+    created: "2020-07-22T10:01:38.546765-04:00"
     description: Sonatype Nexus Repository Manager - Universal Binary repository
-    digest: f294b636a5a37f8f174fae953a8f6b644441ee8ab26c364f286bded544dbabca
+    digest: 05474db69d725354084797012797793df73576a43e724228bcc5b9335e810b14
     home: https://www.sonatype.com/nexus-repository-oss
     icon: https://www.sonatype.com/hubfs/2019%20Horizontal%20Product%20logo/horizontal%20Repo%20/Repo/NexusRepo_horiz.svg
     keywords:
@@ -52,6 +52,6 @@ entries:
     - https://github.com/sonatype/nexus-public
     type: application
     urls:
-    - https://sonatype.github.io/helm3-charts/nexus-repository-manager-3.21.1-0.tgz
-    version: 3.21.1-0
-generated: "2020-07-22T09:42:04.072855-04:00"
+    - https://sonatype.github.io/helm3-charts/nexus-repository-manager-21.1.0.tgz
+    version: 21.1.0
+generated: "2020-07-22T10:01:38.544291-04:00"
