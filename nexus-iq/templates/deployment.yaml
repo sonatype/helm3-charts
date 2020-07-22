@@ -6,9 +6,6 @@ metadata:
     {{- include "iqserver.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
-  {{- if .Values.statefulset.enabled }}
-  serviceName: {{ template "nexus.fullname" . }}
-  {{- end }}
   {{- if .Values.deploymentStrategy }}
   strategy:
     {{ toYaml .Values.deploymentStrategy | indent 4 }}
