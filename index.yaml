@@ -3,7 +3,7 @@ entries:
   nexus-iq-server:
   - apiVersion: v2
     appVersion: 1.91.0
-    created: "2020-07-22T13:57:32.840839-04:00"
+    created: "2020-07-22T14:57:01.118316-04:00"
     description: Sonatype Nexus IQ Server continuously monitors your entire software
       supply chain
     digest: d462fe9dfae28c397546adfb46f9073fbe21dce7d7566c28dc2d81cc1416e13f
@@ -27,7 +27,7 @@ entries:
     version: 91.0.0
   - apiVersion: v2
     appVersion: 1.90.0
-    created: "2020-07-22T13:57:32.836201-04:00"
+    created: "2020-07-22T14:57:01.116928-04:00"
     description: Sonatype Nexus IQ Server continuously monitors your entire software
       supply chain
     digest: 9b814ea41d3e099565dce82015bc5c31a5df175e1dd40026163698fae5855e75
@@ -52,7 +52,7 @@ entries:
   nexus-repository-manager:
   - apiVersion: v2
     appVersion: 3.21.1
-    created: "2020-07-22T13:57:32.842301-04:00"
+    created: "2020-07-22T14:57:01.119778-04:00"
     description: Sonatype Nexus Repository Manager - Universal Binary repository
     digest: 05474db69d725354084797012797793df73576a43e724228bcc5b9335e810b14
     home: https://www.sonatype.com/nexus-repository-oss
@@ -78,4 +78,4 @@ entries:
     urls:
     - https://sonatype.github.io/helm3-charts/nexus-repository-manager-21.1.0.tgz
     version: 21.1.0
-generated: "2020-07-22T13:57:32.833433-04:00"
+generated: "2020-07-22T14:57:01.115107-04:00"

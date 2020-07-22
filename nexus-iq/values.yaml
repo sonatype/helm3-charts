@@ -10,7 +10,6 @@ iq:
   name: nxiq
   hostname: iq-server.demo
   imageName: sonatype/nexus-iq-server
-  imageTag: 1.91.0
   applicationPort: 8070
   adminPort: 8071
   memory: 1Gi
