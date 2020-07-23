@@ -12,9 +12,9 @@ These charts are designed to work out of the box with minikube using both ingess
 
 The current releases have been tested on minikube v1.12.1 running k8s v1.18.3
 
+## Adding the repo
 To Add as a Helm Repo
-helm repo add sonatype https://sonatype.github.io/helm3-charts/
-
+```helm repo add sonatype https://sonatype.github.io/helm3-charts/```
 
 ## Testing the Chart
 To test the chart:
@@ -31,7 +31,7 @@ $ helm install --dry-run --debug -f my_values.yaml ./
 To install the chart:
 
 ```bash
-$ helm install ./
+$ helm install nexus-iq sonatype/nexus-iq-server [ --version v90.0.0 ]
 ```
 
 The above command deploys IQ on the Kubernetes cluster in the default configuration.
@@ -51,6 +51,9 @@ helm install -f myvalues.yaml ./ --name sonatype-
 ```
 
 The default login is admin/admin123
+
+## Upgrading the Chart
+```helm upgrade nexus-iq sonatype/nexus-iq-server [--version v91.0.0]```
 
 ## Uninstalling the Chart
 
