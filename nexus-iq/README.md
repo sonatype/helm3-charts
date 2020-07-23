@@ -15,12 +15,6 @@ The current releases have been tested on minikube v1.12.1 running k8s v1.18.3
 To Add as a Helm Repo
 helm repo add sonatype https://sonatype.github.io/helm3-charts/
 
-To install Sonatype's Nexus products
-helm
-
-413 Errors
-The default setting for Nginx allows for very small upload sizes. Add this annotation to the ingress for each product to remove teh limit: nginx.ingress.kubernetes.io/proxy-body-size: "0"
-
 
 ## Testing the Chart
 To test the chart:
@@ -103,10 +97,11 @@ The command removes all the Kubernetes components associated with the chart and 
 You can define the `config.yml` for IQ Server in your `myvalues.yml` file on startup. 
 It is the `iq.configYaml` property. For more details, see the [Configuring IQ Server](https://help.sonatype.com/iqserver/configuring) help page.
 
-
 ## Installing the License
 
 The license file can be installed via the UI when IQ server is running, or it can be done as a part of the deploy. 
 If you leave the `licenseFile` field empty/commented, IQ Server will start and prompt you to manually install the license 
 when you first enter the GUI.
 
+## 413 Errors
+The default setting for Nginx allows for very small upload sizes. Add this annotation to the ingress for each product to remove teh limit: nginx.ingress.kubernetes.io/proxy-body-size: "0"
