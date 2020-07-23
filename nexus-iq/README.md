@@ -6,53 +6,21 @@
 
 - Kubernetes 1.8+ with Beta APIs enabled
 - PV provisioner support in the underlying infrastructure
-- Helm 2
+- Helm 3
 
-### With Open Docker Image
+These charts are designed to work out of the box with minikube using both ingess and ingress-dns addons.
 
-By default, the Chart uses Red Hat's Certified Container. If you want to use the standard docker image, run with `--set iq.imageName=sonatype/nexus-iq-server`.
+The current releases have been tested on minikube v1.12.1 running k8s v1.18.3
 
-### With Red Hat Certified container
+To Add as a Helm Repo
+helm repo add sonatype https://sonatype.github.io/helm3-charts/
 
-Red Hat Certified Container (RHCC) requires authentication in order to pull the image. To do this:
+To install Sonatype's Nexus products
+helm
 
-  1. [Create a Service Account](https://access.redhat.com/terms-based-registry/)
-  2. Copy the docker configuration JSON sample and replace the host from `registry.redhat.io` to `registry.connect.redhat.com` and save it as a file, eg:
+413 Errors
+The default setting for Nginx allows for very small upload sizes. Add this annotation to the ingress for each product to remove teh limit: nginx.ingress.kubernetes.io/proxy-body-size: "0"
 
-```json
-{
-  "auths": {
-    "registry.connect.redhat.com": {
-      "auth": "TOKEN"
-    }
-  }
-}
-```
-
-If the cluster fails to pull the image, try reverting back to `registry.redhat.io` in the `auths` configuration.
-
-  3. Encode the file in Base 64 format:
-
-```bash
-cat service-auth.json | base64 > service.base64
-```
-  4. Add this to your `myvalues.yaml` as `iq.imagePullSecret`:
-
-```yaml
-iq:
-  name: nxiq
-  imageName: registry.connect.redhat.com/sonatype/nexus-iq-server
-  imageTag: 1.85.0-01-ubi
-  imagePullPolicy: IfNotPresent
-  imagePullSecret: "{BASE64-DOCKER-CONFIG}"
-```
-
-## Initialize Helm/Tiller on the Kubernetes cluster if needed
-
-Install helm/tiller:
-```bash
-$ helm init
-```
 
 ## Testing the Chart
 To test the chart:
@@ -142,34 +110,3 @@ The license file can be installed via the UI when IQ server is running, or it ca
 If you leave the `licenseFile` field empty/commented, IQ Server will start and prompt you to manually install the license 
 when you first enter the GUI.
 
-### Installing the License Automatically
-To do it automatically, first encode your `.lic` file in Base 64 with no line breaks, eg:
-
-```bash
-base64 --wrap=0 mylicense.lic > lic.base64
-```
-
-Then add this value to your `myvalues.yaml` file as `iq.licenseSecret`, eg:
-
-```yaml
-iq:
-  licenseSecret: bXkgc2FtcGxlIGxpY2Vuc2U=
-```
-
-Specify the `licenseFile` path in your `myvalues.yaml` in `iq.configYaml` as:
-
-```yaml
-iq:
-  configYaml:
-    server:
-      applicationConnectors:
-        - type: http
-          port: 8070
-      adminConnectors:
-        - type: http
-          port: 8071
-    createSampleData: true
-    sonatypeWork: /sonatype-work
-    # add this line and the `licenseSecret` above to autoconfigure licensing
-    licenseFile: /etc/nexus-iq-license/license_lic
-```
