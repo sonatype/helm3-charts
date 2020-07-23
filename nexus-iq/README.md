@@ -34,15 +34,7 @@ To install the chart:
 $ helm install nexus-iq sonatype/nexus-iq-server [ --version v90.0.0 ]
 ```
 
-The above command deploys IQ on the Kubernetes cluster in the default configuration.
-
-If you are getting the error `Error: no available release name found` during
-`helm install`, grant cluster-admin to kube-system:default service account:
-```bash
-$ kubectl create clusterrolebinding add-on-cluster-admin \
-    --clusterrole=cluster-admin \
-    --serviceaccount=kube-system:default
-```
+The above command deploys IQ on the Kubernetes cluster in the default configuration. Note the optional version flag.
 
 You can pass custom configuration values as:
 
@@ -53,7 +45,10 @@ helm install -f myvalues.yaml ./ --name sonatype-
 The default login is admin/admin123
 
 ## Upgrading the Chart
+
 ```helm upgrade nexus-iq sonatype/nexus-iq-server [--version v91.0.0]```
+
+Note: optional version flag shown
 
 ## Uninstalling the Chart
 
@@ -73,7 +68,6 @@ The command removes all the Kubernetes components associated with the chart and 
 | Parameter            | Description                                                  | Default           |
 | -------------------- | ------------------------------------------------------------ | ----------------- |
 | `iq.imageName`       | The image name to use for the IQ Container, eg `sonatype/nexus-iq-server`  | `"registry.connect.redhat.com/sonatype/nexus-iq-server"`              |
-| `iq.imageTag`        | The image tag to use                                         | the latest tag, eg `"1.85.0-01-ubi"`              |
 | `iq.imagePullSecret` | The base-64 encoded secret to pull a container from Red Hat  | `""`              |
 | `iq.applicationPort` | Port of the application connector. Must match the value in the `configYaml` property | `8070`            |
 | `iq.adminPort`       | Port of the application connector. Must match the value in the `configYaml` property | `8071`            |
