@@ -1,14 +1,14 @@
-{{- if .Values.statefulset.enabled }}
-apiVersion: apps/v1
-kind: StatefulSet
-{{- else }}
 apiVersion: apps/v1
 kind: Deployment
-{{- end }}
 metadata:
   name: {{ template "nexus.fullname" . }}
   labels:
 {{ include "nexus.labels" . | indent 4 }}
+  {{- if .Values.nexus.extraLabels }}
+    {{- with .Values.nexus.extraLabels }}
+      {{ toYaml . | indent 4 }}
+    {{- end }}
+  {{- end }}
 {{- if .Values.deployment.annotations }}
   annotations:
 {{ toYaml .Values.deployment.annotations | indent 4 }}
@@ -23,6 +23,11 @@ spec:
   selector:
     matchLabels:
       {{- include "nexus.selectorLabels" . | nindent 6 }}
+      {{- if .Values.nexus.extraSelectorLabels }}
+        {{- with .Values.nexus.extraSelectorLabels }}
+          {{ toYaml . | indent 6 }}
+        {{- end }}
+      {{- end }}      
   template:
     metadata:
     {{- if .Values.nexus.podAnnotations }}
