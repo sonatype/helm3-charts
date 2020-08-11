@@ -5,54 +5,21 @@
 ## Introduction
 
 This chart bootstraps a Nexus OSS deployment on a cluster using Helm.
-\
+
 ## Prerequisites
 
 - Kubernetes 1.8+ with Beta APIs enabled
 - PV provisioner support in the underlying infrastructure
-- Helm 2
+- Helm 3
 
 ### With Open Docker Image
 
-By default, the Chart uses Red Hat's Certified Container. If you want to use the standard docker image, run with `--set nexus.imageName=sonatype/nexus3`.
+By default, the Chart uses Sonatype's Public Docker image. If you want to use a different image, run with `--set nexus.imageName=<my>/<image>`.
 
 ### With Red Hat Certified container
 
-Red Hat Certified Container (RHCC) requires authentication in order to pull the image. To do this:
+If you're looking run our Certified Red Hat image in an OpenShift4 environment there is an Certified Operator in OperatorHub
 
-  1. [Create a Service Account](https://access.redhat.com/terms-based-registry/)
-  2. Copy the docker configuration JSON sample and replace the host from `registry.redhat.io` to `registry.connect.redhat.com` and save it as a file, eg:
-
-```json
-{
-  "auths": {
-    "registry.connect.redhat.com": {
-      "auth": "TOKEN"
-    }
-  }
-}
-```
-
-If the cluster fails to pull the image, try reverting back to `registry.redhat.io` in the `auths` configuration.
-
-  3. Encode the file in Base 64 format:
-
-```bash
-cat service-auth.json | base64 > service.base64
-```
-  4. Add this base64 encoded string to your `myvalues.yaml` file as `nexus.imagePullSecret`:
-
-```yaml
-nexus:
-  imagePullSecret: {BASE64_ENCODED_SECRET}
-```
-
-## Initialize Helm/Tiller on the Kubernetes cluster if needed
-
-Install helm/tiller:
-```bash
-$ helm init
-```
 
 ## Testing the Chart
 To test the chart:
@@ -173,8 +140,7 @@ The following table lists the configurable parameters of the Nexus chart and the
 
 ### Persistence
 
-By default a PersistentVolumeClaim is created and mounted into the `/nexus-data` directory. In order to disable this functionality
-you can change the `values.yaml` to disable persistence which will use an `emptyDir` instead.
+By default a PersistentVolumeClaim is created and mounted into the `/nexus-data` directory. In order to disable this functionality you can change the `values.yaml` to disable persistence which will use an `emptyDir` instead.
 
 > *"An emptyDir volume is first created when a Pod is assigned to a Node, and exists as long as that Pod is running on that node. When a Pod is removed from a node for any reason, the data in the emptyDir is deleted forever."*
 
