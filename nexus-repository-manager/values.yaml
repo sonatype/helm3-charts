@@ -1,15 +1,14 @@
 statefulset:
+  # Not sure this is even supported yet
   enabled: false
-replicaCount: 1
 # By default deploymentStrategy is set to rollingUpdate with maxSurge of 25% and maxUnavailable of 25% . you can change type to `Recreate` or can uncomment `rollingUpdate` specification and adjust them to your usage.
 deploymentStrategy: Recreate
 image:
+  # Sonatype Official Public Image
   repository: sonatype/nexus3
   pullPolicy: IfNotPresent
 
 nexus:
-  imageName: sonatype/nexus3
-  imagePullPolicy: IfNotPresent
   imagePullSecret: ""
   env:
     - name: install4jAddVmParams
@@ -86,16 +85,15 @@ deployment:
     command:    # '["/bin/sh", "-c", "ls"]'
   preStart:
     command:    # '["/bin/rm", "-f", "/path/to/lockfile"]'
-  # terminationGracePeriodSeconds: 120
+  terminationGracePeriodSeconds: 120
   additionalContainers:
   additionalVolumes:
   additionalVolumeMounts:
 
 ingress:
+  # Defaults to NGINX if true
   enabled: true
   annotations: {kubernetes.io/ingress.class: nginx}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
   path: /
   hosts: 
       - host: repo.demo
@@ -104,7 +102,6 @@ ingress:
     # - secretName: nexus-local-tls
     #   hosts:
     #     - nexus.local
-    #     - iqserver.local
     #     - nexus-docker.local
     #     - nexus-docker-hosted.local
 

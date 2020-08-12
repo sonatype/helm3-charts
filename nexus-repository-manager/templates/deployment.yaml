@@ -14,7 +14,7 @@ metadata:
 {{ toYaml .Values.deployment.annotations | indent 4 }}
 {{- end }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: 1
   {{- if .Values.statefulset.enabled }}
   serviceName: {{ template "nexus.fullname" . }}
   {{- end }}
@@ -53,15 +53,16 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- if .Values.deployment.terminationGracePeriodSeconds }}
+      terminationGracePeriodSeconds: {{ .Values.deployment.terminationGracePeriodSeconds }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- if .Values.deployment.terminationGracePeriodSeconds }}
-          terminationGracePeriodSeconds: {{ .Values.deployment.terminationGracePeriodSeconds }}
-          {{- end }}
+
           lifecycle:
           {{- if .Values.deployment.postStart.command }}
             postStart:
