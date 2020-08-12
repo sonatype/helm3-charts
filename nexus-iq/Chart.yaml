@@ -28,7 +28,7 @@ keywords:
   - remediate
   - vulnerabilities
   - policy
-home: https://www.sonatype.com/nexus-iq-server
+home: https://www.sonatype.com/product-nexus-lifecycle
 icon: https://www.sonatype.com/hubfs/2019%20Horizontal%20Product%20logo/horizontal%20Repo%20/Repo/NexusRepo_horiz.svg
 maintainers:
   - email:  cloud-ops@sonatype.com
