@@ -77,16 +77,13 @@ The following table lists the configurable parameters of the Nexus chart and the
 | Parameter                                   | Description                         | Default                                 |
 | ------------------------------------------  | ----------------------------------  | ----------------------------------------|
 | `statefulset.enabled`                       | Use statefulset instead of deployment | `false` |
-| `replicaCount`                              | Number of Nexus service replicas    | `1`                                     |
-| `deploymentStrategy`                        | Deployment Strategy     |  `rollingUpdate` |
+| `deploymentStrategy`                        | Deployment Strategy     |  `Recreate` |
 | `nexus.imagePullPolicy`                     | Nexus image pull policy             | `IfNotPresent`                          |
 | `nexus.imagePullSecret`                     | Secret to download Nexus image from private registry      | `nil`             |
 | `nexus.env`                                 | Nexus environment variables         | `[{install4jAddVmParams: -Xms1200M -Xmx1200M -XX:MaxDirectMemorySize=2G -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap}]` |
 | `nexus.resources`                           | Nexus resource requests and limits  | `{}`                                    |
-| `nexus.dockerPort`                          | Port to access docker               | `5003`                                  |
+| `nexus.dockerPort`                          | Port to access docker               | `18443`                                  |
 | `nexus.nexusPort`                           | Internal port for Nexus service     | `8081`                                  |
-| `nexus.service.type`                        | Service for Nexus                   |`NodePort`                                |
-| `nexus.service.clusterIp`                   | Specific cluster IP when service type is cluster IP. Use None for headless service |`nil`   |
 | `nexus.securityContext`                     | Security Context (for enabling official image use `fsGroup: 2000`) | `{}`     |
 | `nexus.labels`                              | Service labels                      | `{}`                                    |
 | `nexus.podAnnotations`                      | Pod Annotations                     | `{}`
@@ -102,8 +99,7 @@ The following table lists the configurable parameters of the Nexus chart and the
 | `nexus.readinessProbe.path`                 | Path for ReadinessProbe             | /                                       |
 | `nexus.hostAliases`                         | Aliases for IPs in /etc/hosts       | []                                      |
 | `ingress.enabled`                           | Create an ingress for Nexus         | `true`                                  |
-| `ingress.annotations`                       | Annotations to enhance ingress configuration  | `{}`                          |
-| `ingress.tls.enabled`                       | Enable TLS                          | `true`                                 |
+| `ingress.annotations`                       | Annotations to enhance ingress configuration  | `{kubernetes.io/ingress.class: nginx}`                          |
 | `ingress.tls.secretName`                    | Name of the secret storing TLS cert, `false` to use the Ingress' default certificate | `nexus-tls`                             |
 | `ingress.path`                              | Path for ingress rules. GCP users should set to `/*` | `/`                    |
 | `tolerations`                               | tolerations list                    | `[]`                                    |
@@ -122,14 +118,14 @@ The following table lists the configurable parameters of the Nexus chart and the
 | `secret.mountPath`                          | Path to mount the secret         | `/etc/secret-volume`                       |
 | `secret.readOnly`                           | Secret readonly state            | `true`                                     |
 | `secret.data`                               | Secret data                      | `nil`                                      |
-| `service.enabled`                           | Enable additional service        | `nil`                                      |
-| `service.name`                              | Service name                     | `nil`                                      |
-| `service.portName`                          | Service port name                | `nil`                                      |
+| `service.enabled`                           | Enable additional service        | `true`                                     |
+| `service.name`                              | Service name                     | `nexus3`                                   |
+| `service.portName`                          | Service port name                | `nxrm-svc`                                 |
 | `service.labels`                            | Service labels                   | `nil`                                      |
 | `service.annotations`                       | Service annotations              | `nil`                                      |
-| `service.loadBalancerSourceRanges`          | Service LoadBalancer source IP whitelist | `nil`                              |
-| `service.targetPort`                        | Service port                     | `nil`                                      |
-| `service.port`                              | Port for exposing service        | `nil`                                      |
+| `service.targetPort`                        | Service targetport               | `nexus-ui`                                 |
+| `service.port`                              | Port for exposing service        | `8081`                                     |
+| 'service.type                               | Service Type                     | 'ClusterIP'                                |
 | `route.enabled`         | Set to true to create route for additional service | `false` |
 | `route.name`            | Name of route                                      | `docker` |
 | `route.portName`        | Target port name of service                        | `docker` |
