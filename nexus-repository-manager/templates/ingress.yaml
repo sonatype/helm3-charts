@@ -28,8 +28,8 @@ spec:
       secretName: {{ .secretName }}
     {{- end }}
   {{- end }}
-  {{- range .Values.ingress.hosts }}
   rules:
+  {{- range .Values.ingress.hosts }}
     - host: {{ .host }}
       http:
         paths:
