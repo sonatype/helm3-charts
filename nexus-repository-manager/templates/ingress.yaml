@@ -28,14 +28,18 @@ spec:
       secretName: {{ .secretName }}
     {{- end }}
   {{- end }}
+  {{- range .Values.ingress.hosts }}
   rules:
-    - host: repo.demo
+    - host: {{ .host }}
       http:
         paths:
-          - path: {{ $ingressPath }}
+        {{- range .paths }}
+          - path: {{ . }}
             backend:
               serviceName: {{ $fullName }}
               servicePort: 8081
+        {{- end }}
+  {{- end }}
   {{- range .Values.service.additionalPorts }}
     - host: {{ .host | quote }}
       http:
