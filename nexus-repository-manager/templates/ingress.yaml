@@ -29,13 +29,17 @@ spec:
     {{- end }}
   {{- end }}
   rules:
-    - host: repo.demo
+  {{- range .Values.ingress.hosts }}
+    - host: {{ .host }}
       http:
         paths:
-          - path: {{ $ingressPath }}
+        {{- range .paths }}
+          - path: {{ . }}
             backend:
               serviceName: {{ $fullName }}
               servicePort: 8081
+        {{- end }}
+  {{- end }}
   {{- range .Values.service.additionalPorts }}
     - host: {{ .host | quote }}
       http:
