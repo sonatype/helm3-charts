@@ -3,12 +3,12 @@ entries:
   nexus-iq-server:
   - apiVersion: v2
     appVersion: 1.96.0
-    created: "2020-08-25T11:24:58.243952-04:00"
+    created: "2020-08-25T17:09:25.754229-04:00"
     description: Sonatype Nexus IQ Server continuously monitors your entire software
       supply chain
-    digest: 61a62659398703cf83ff5cb0946955d4b7fbef2b8d77ddb6562d6fa48626c5c5
-    home: https://www.sonatype.com/nexus-iq-server
-    icon: https://www.sonatype.com/hubfs/2019%20Horizontal%20Product%20logo/horizontal%20Repo%20/Repo/NexusRepo_horiz.svg
+    digest: 4aa9466fe6936fd97c4c74747699e333e4481586f087d8d65bdd322febf87976
+    home: https://www.sonatype.com/product-nexus-lifecycle
+    icon: https://sonatype.github.io/helm3-charts/NexusIQServer_Vertical.svg
     keywords:
     - sonatype
     - nexus
@@ -18,7 +18,7 @@ entries:
     - vulnerabilities
     - policy
     maintainers:
-    - email: cloud-ops@sonatype.com
+    - email: support@sonatype.com
       name: Sonatype
     name: nexus-iq-server
     type: application
@@ -27,7 +27,7 @@ entries:
     version: 96.0.0
   - apiVersion: v2
     appVersion: 1.95.0
-    created: "2020-08-25T11:24:58.243066-04:00"
+    created: "2020-08-25T17:09:25.753201-04:00"
     description: Sonatype Nexus IQ Server continuously monitors your entire software
       supply chain
     digest: 946a275cb2f350737470d0e78c512b2f989845edb5f3695e6071fa58e45e315f
@@ -51,7 +51,7 @@ entries:
     version: 95.0.0
   - apiVersion: v2
     appVersion: 1.94.0
-    created: "2020-08-25T11:24:58.24221-04:00"
+    created: "2020-08-25T17:09:25.751237-04:00"
     description: Sonatype Nexus IQ Server continuously monitors your entire software
       supply chain
     digest: d3f041166476963a4a8ae243716d9dbca7e0749b36a000935cae6aad7171d9e5
@@ -75,7 +75,7 @@ entries:
     version: 94.0.0
   - apiVersion: v2
     appVersion: 1.93.0
-    created: "2020-08-25T11:24:58.241338-04:00"
+    created: "2020-08-25T17:09:25.749479-04:00"
     description: Sonatype Nexus IQ Server continuously monitors your entire software
       supply chain
     digest: bb68f380d78d0321193bf4530f6829a38e0208ad7bdc4803a8b12ca23a1e51dd
@@ -99,7 +99,7 @@ entries:
     version: 93.0.0
   - apiVersion: v2
     appVersion: 1.92.0
-    created: "2020-08-25T11:24:58.240449-04:00"
+    created: "2020-08-25T17:09:25.747374-04:00"
     description: Sonatype Nexus IQ Server continuously monitors your entire software
       supply chain
     digest: 8f5142a235aa3c39ce541630c699d759481cfab44838426dd062d3865746c7b3
@@ -123,7 +123,7 @@ entries:
     version: 92.0.0
   - apiVersion: v2
     appVersion: 1.91.0
-    created: "2020-08-25T11:24:58.239534-04:00"
+    created: "2020-08-25T17:09:25.745438-04:00"
     description: Sonatype Nexus IQ Server continuously monitors your entire software
       supply chain
     digest: ff815424806f5794ebfa2b48d88bb8c4e8d4cd2ea0b556b5a25557215db80555
@@ -147,7 +147,7 @@ entries:
     version: 91.0.0
   - apiVersion: v2
     appVersion: 1.90.0
-    created: "2020-08-25T11:24:58.238549-04:00"
+    created: "2020-08-25T17:09:25.743578-04:00"
     description: Sonatype Nexus IQ Server continuously monitors your entire software
       supply chain
     digest: 9b814ea41d3e099565dce82015bc5c31a5df175e1dd40026163698fae5855e75
@@ -172,7 +172,7 @@ entries:
   nexus-repository-manager:
   - apiVersion: v2
     appVersion: 3.26.1
-    created: "2020-08-25T11:24:58.252774-04:00"
+    created: "2020-08-25T17:09:25.769949-04:00"
     description: Sonatype Nexus Repository Manager - Universal Binary repository
     digest: 7743c6bf0900b0f89612e2033b1e76742df262fe5a0de945cadef6a231cd018e
     home: https://www.sonatype.com/nexus-repository-oss
@@ -200,7 +200,7 @@ entries:
     version: 26.1.0
   - apiVersion: v2
     appVersion: 3.25.0
-    created: "2020-08-25T11:24:58.251821-04:00"
+    created: "2020-08-25T17:09:25.767825-04:00"
     description: Sonatype Nexus Repository Manager - Universal Binary repository
     digest: 5cabc43303051e204754fc9b947808aaa037a7bdc3b87ece0f8e4166a6bc399c
     home: https://www.sonatype.com/nexus-repository-oss
@@ -228,7 +228,7 @@ entries:
     version: 25.0.1
   - apiVersion: v2
     appVersion: 3.25.0
-    created: "2020-08-25T11:24:58.250885-04:00"
+    created: "2020-08-25T17:09:25.766062-04:00"
     description: Sonatype Nexus Repository Manager - Universal Binary repository
     digest: d3c10e4a5177c5f6bbe1235d953d6b88ebdbef2f6e13e9d89b7ff20ba8ca8bb8
     home: https://www.sonatype.com/nexus-repository-oss
@@ -256,7 +256,7 @@ entries:
     version: 25.0.0
   - apiVersion: v2
     appVersion: 3.24.0
-    created: "2020-08-25T11:24:58.249898-04:00"
+    created: "2020-08-25T17:09:25.764595-04:00"
     description: Sonatype Nexus Repository Manager - Universal Binary repository
     digest: 6eb6bf208912af5ca4d281c164f38f7802c3a68fbda99d0f5cf0ce8218e8ee99
     home: https://www.sonatype.com/nexus-repository-oss
@@ -284,7 +284,7 @@ entries:
     version: 24.0.0
   - apiVersion: v2
     appVersion: 3.23.0
-    created: "2020-08-25T11:24:58.248817-04:00"
+    created: "2020-08-25T17:09:25.763021-04:00"
     description: Sonatype Nexus Repository Manager - Universal Binary repository
     digest: 4984bf9e9c1081e8791436f7c7df0510b3b1d5431eede710537776123fc66163
     home: https://www.sonatype.com/nexus-repository-oss
@@ -312,7 +312,7 @@ entries:
     version: 23.0.0
   - apiVersion: v2
     appVersion: 3.22.1
-    created: "2020-08-25T11:24:58.247102-04:00"
+    created: "2020-08-25T17:09:25.761531-04:00"
     description: Sonatype Nexus Repository Manager - Universal Binary repository
     digest: 9585669e291d0c4327620703bcb305246c817c02c1b1242704e8a56edf453025
     home: https://www.sonatype.com/nexus-repository-oss
@@ -340,7 +340,7 @@ entries:
     version: 22.1.0
   - apiVersion: v2
     appVersion: 3.22.0
-    created: "2020-08-25T11:24:58.246077-04:00"
+    created: "2020-08-25T17:09:25.758407-04:00"
     description: Sonatype Nexus Repository Manager - Universal Binary repository
     digest: 97e85f5e30b79c96cf7395f4a2e123d88d2c5c3156441704c50cfa8f8c9608c0
     home: https://www.sonatype.com/nexus-repository-oss
@@ -368,7 +368,7 @@ entries:
     version: 22.0.0
   - apiVersion: v2
     appVersion: 3.21.1
-    created: "2020-08-25T11:24:58.244972-04:00"
+    created: "2020-08-25T17:09:25.756912-04:00"
     description: Sonatype Nexus Repository Manager - Universal Binary repository
     digest: 53d418dd822e2e3e2085cbf37b9d83dd904abb94dc7a90ac95930f221c4b3d58
     home: https://www.sonatype.com/nexus-repository-oss
@@ -394,4 +394,4 @@ entries:
     urls:
     - https://sonatype.github.io/helm3-charts/charts/nexus-repository-manager-21.1.0.tgz
     version: 21.1.0
-generated: "2020-08-25T11:24:58.236634-04:00"
+generated: "2020-08-25T17:09:25.741521-04:00"

@@ -31,5 +31,5 @@ keywords:
 home: https://www.sonatype.com/product-nexus-lifecycle
 icon: https://sonatype.github.io/helm3-charts/NexusIQServer_Vertical.svg
 maintainers:
-  - email:  cloud-ops@sonatype.com
+  - email:  support@sonatype.com
     name: Sonatype
