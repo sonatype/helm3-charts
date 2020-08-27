@@ -3,13 +3,14 @@
 # Declare variables to be passed into your templates.
 replicaCount: 1
 image:
+  # Sonatype Official Public Image
   repository: sonatype/nexus-iq-server
+  tag: 1.96.0
   pullPolicy: IfNotPresent
   
 iq:
   name: nxiq
   hostname: iq-server.demo
-  imageName: sonatype/nexus-iq-server
   applicationPort: 8070
   adminPort: 8071
   memory: 1Gi

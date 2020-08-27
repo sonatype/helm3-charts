@@ -67,7 +67,9 @@ You can pass custom configuration values as:
 helm install -f myvalues.yaml ./ --name sonatype-nexus
 ```
 
-The default login is admin/admin123
+The default login is randomized and can be found in sonatype /sonatype-work/admin.password
+or you can override this behavior by setting an environmental variable
+NEXUS_SECURITY_RANDOMPASSWORD to 'true'
 
 ## Uninstalling the Chart
 
@@ -137,7 +139,7 @@ The following table lists the configurable parameters of the Nexus chart and the
 | `service.annotations`                       | Service annotations              | `nil`                                      |
 | `service.targetPort`                        | Service targetport               | `nexus-ui`                                 |
 | `service.port`                              | Port for exposing service        | `8081`                                     |
-| 'service.type                               | Service Type                     | 'ClusterIP'                                |
+| `service.type`                              | Service Type                     | `ClusterIP`                                |
 | `route.enabled`         | Set to true to create route for additional service | `false` |
 | `route.name`            | Name of route                                      | `docker` |
 | `route.portName`        | Target port name of service                        | `docker` |
