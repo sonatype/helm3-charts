@@ -28,17 +28,17 @@ spec:
     {{- end }}
   {{- end }}
   rules:
-    - host: iq-server.demo
+    - host: {{ .Values.ingress.hostUI }}
       http:
         paths:
-          - path: {{ $ingressPath }}
+          - path: {{ .Values.ingress.hostUIPath }}
             backend:
               serviceName: {{ $fullName }}
               servicePort: 8070
-    - host: admin.iq-server.demo
+    - host: {{ .Values.ingress.hostAdmin }}
       http:
         paths:
-          - path: {{ $ingressPath }}
+          - path: {{ .Values.ingress.hostAdminPath }}
             backend:
               serviceName: {{ $fullName }}
               servicePort: 8071
