@@ -5,7 +5,7 @@ kind: PersistentVolume
 metadata:
   name: {{ .Values.persistence.pdName }}
   labels:
-    {{ include "nexus.labels" . | indent 4 }}
+{{ include "nexus.labels" . | indent 4 }}
     {{- if .Values.nexus.extraLabels }}
       {{- with .Values.nexus.extraLabels }}
         {{ toYaml . | indent 4 }}
