@@ -29,24 +29,18 @@ spec:
     {{- end }}
   {{- end }}
   rules:
-  {{- range .Values.ingress.hosts }}
-    - host: {{ .host }}
+    - host: {{ .Values.ingress.hostRepo }}
       http:
         paths:
-        {{- range .paths }}
-          - path: {{ . }}
+          - path: {{ .Values.ingress.hostPath }}
             backend:
               serviceName: {{ $fullName }}
-              servicePort: 8081
-        {{- end }}
-  {{- end }}
-  {{- range .Values.service.additionalPorts }}
-    - host: {{ .host | quote }}
+              servicePort: 8070
+    - host: {{ .Values.ingress.hostDocker }}
       http:
         paths:
           - path: {{ $ingressPath }}
             backend:
               serviceName: {{ $fullName }}
-              servicePort: {{ .name }}
+              servicePort: 5000
   {{- end }}
-{{- end }}
