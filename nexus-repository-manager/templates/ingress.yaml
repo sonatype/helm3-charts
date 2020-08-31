@@ -35,7 +35,7 @@ spec:
           - path: {{ .Values.ingress.hostPath }}
             backend:
               serviceName: {{ $fullName }}
-              servicePort: 8070
+              servicePort: 8081
     - host: {{ .Values.ingress.hostDocker }}
       http:
         paths:
