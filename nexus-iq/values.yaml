@@ -5,7 +5,7 @@ replicaCount: 1
 image:
   # Sonatype Official Public Image
   repository: sonatype/nexus-iq-server
-  tag: 1.96.0
+  tag: 1.97.0
   pullPolicy: IfNotPresent
   
 iq:
@@ -46,7 +46,7 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  type: ClusterIP
+  type: "ClusterIP"
   port: 80
 
 ingress:
