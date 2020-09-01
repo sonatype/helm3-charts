@@ -5,3 +5,8 @@ ingress:
     # kubernetes.io/tls-acme: "true"
   hostPath: /
   hostRepo: repo.demo
+
+nexus:
+  env:
+    - name: NEXUS_SECURITY_RANDOMPASSWORD
+      value: "false"
