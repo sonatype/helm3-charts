@@ -15,6 +15,9 @@ spec:
     - port: 8081
       protocol: TCP
       name: nexus-ui
+    - port: 5000
+      protocol: TCP
+      name: docker-default
   selector:
     {{- include "nexus.selectorLabels" . | nindent 4 }}
     {{- if .Values.nexus.extraSelectorLabels }}
