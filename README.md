@@ -2,7 +2,7 @@
 
 These charts are designed to work out of the box with minikube using both ingess and ingress dns addons.
 
-The current releases have been tested on minikube v1.12.1 running k8s v1.18.3
+The current releases have been tested on minikube v1.12.3 running k8s v1.18.3
 
 ### To Add as a Helm Repo
 
