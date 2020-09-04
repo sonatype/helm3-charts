@@ -76,6 +76,8 @@ spec:
           {{- end }}
           env:
 {{ toYaml .Values.nexus.env | indent 12 }}
+          envFrom:
+{{ toYaml .Values.nexus.envFrom | indent 12 }}
           resources:
 {{ toYaml .Values.nexus.resources | indent 12 }}
           ports:
