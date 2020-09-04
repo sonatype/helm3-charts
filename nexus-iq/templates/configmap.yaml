@@ -1,7 +1,14 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "iqserver.fullname" . }}
+  name: {{ template "iqserver.fullname" . }}-conf
+  labels:
+    {{ include "iqserver.labels" . | indent 4 }}
+    {{- if .Values.iqserver.extraLabels }}
+      {{- with .Values.iqserver.extraLabels }}
+        {{ toYaml . | indent 4 }}
+      {{- end }}
+    {{- end }}
 data:
   config.yml: |
 {{ toYaml .Values.configYaml | indent 4 }}
