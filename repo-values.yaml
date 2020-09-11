@@ -3,6 +3,7 @@ ingress:
   annotations: {kubernetes.io/ingress.class: nginx}
   hostPath: /
   hostRepo: repo.demo
+  hostDocker: registry.demo
 
 nexus:
   env:
