@@ -15,9 +15,6 @@ metadata:
 {{- end }}
 spec:
   replicas: 1
-  {{- if .Values.statefulset.enabled }}
-  serviceName: {{ template "nexus.fullname" . }}
-  {{- end }}
   strategy:
     type: {{ .Values.deploymentStrategy }}
   selector:
@@ -126,24 +123,6 @@ spec:
 {{ toYaml .Values.nexus.securityContext | indent 8 }}
       {{- end }}
       volumes:
-        {{- if .Values.statefulset.enabled }}
-        {{- if not .Values.persistence.enabled }}
-        - name: {{ template "nexus.fullname" . }}-data
-          emptyDir: {}
-        {{- end }}
-        - name: {{ template "nexus.fullname" . }}-backup
-          emptyDir: {}
-        {{- else }}
-        - name: {{ template "nexus.fullname" . }}-data
-          {{- if .Values.persistence.enabled }}
-          persistentVolumeClaim:
-            claimName: {{ .Values.persistence.existingClaim | default (printf "%s-%s" (include "nexus.fullname" .) "data") }}
-          {{- else }}
-          emptyDir: {}
-          {{- end }}
-        - name: {{ template "nexus.fullname" . }}-backup
-          emptyDir: {}
-        {{- end }}
         {{- if .Values.secret.enabled }}
         - name: {{ template "nexus.name" . }}-secret
           secret:
@@ -156,32 +135,3 @@ spec:
       tolerations:
 {{ toYaml . | indent 8 }}
     {{- end }}
-
-
-## create pvc in case of statefulsets
-  {{- if .Values.statefulset.enabled }}
-  volumeClaimTemplates:
-    {{- if .Values.persistence.enabled }}
-    - metadata:
-        name: {{ template "nexus.fullname" . }}-data
-        labels:
-{{ include "nexus.labels" . | indent 10 }}
-        {{- if .Values.persistence.annotations }}
-        annotations:
-{{ toYaml .Values.persistence.annotations | indent 10 }}
-        {{- end }}
-      spec:
-        accessModes:
-          - {{ .Values.persistence.accessMode | quote }}
-        resources:
-          requests:
-            storage: {{ .Values.persistence.storageSize | quote }}
-        {{- if .Values.persistence.storageClass }}
-        {{- if (eq "-" .Values.persistence.storageClass) }}
-        storageClassName: ""
-        {{- else }}
-        storageClassName: "{{ .Values.persistence.storageClass }}"
-        {{- end }}
-        {{- end }}
-    {{- end }}
-  {{- end }}
