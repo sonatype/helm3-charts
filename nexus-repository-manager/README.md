@@ -93,6 +93,7 @@ The following table lists the configurable parameters of the Nexus chart and the
 | `deploymentStrategy`                        | Deployment Strategy     |  `Recreate` |
 | `nexus.imagePullPolicy`                     | Nexus image pull policy             | `IfNotPresent`                          |
 | `nexus.imagePullSecret`                     | Secret to download Nexus image from private registry      | `nil`             |
+| `nexus.dockerSupport.enabled`               | Enable/disable docker support       | `true`                                  |
 | `nexus.env`                                 | Nexus environment variables         | `[{install4jAddVmParams: -Xms1200M -Xmx1200M -XX:MaxDirectMemorySize=2G -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap}]` |
 | `nexus.resources`                           | Nexus resource requests and limits  | `{}`                                    |
 | `nexus.dockerPort`                          | Port to access docker               | `18443`                                  |

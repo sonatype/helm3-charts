@@ -11,6 +11,8 @@ image:
 
 nexus:
   imagePullSecret: ""
+  dockerSupport:
+    enabled: true
   env:
     - name: install4jAddVmParams
       value: "-Xms1200M -Xmx1200M -XX:MaxDirectMemorySize=2G -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"

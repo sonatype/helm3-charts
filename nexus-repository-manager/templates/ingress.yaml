@@ -36,6 +36,7 @@ spec:
             backend:
               serviceName: {{ $fullName }}
               servicePort: 8081
+    {{ if .Values.nexus.dockerSupport.enabled }}
     - host: {{ .Values.ingress.hostDocker }}
       http:
         paths:
@@ -43,4 +44,5 @@ spec:
             backend:
               serviceName: {{ $fullName }}
               servicePort: 5000
+    {{- end }}
   {{- end }}
