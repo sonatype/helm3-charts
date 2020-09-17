@@ -9,3 +9,5 @@ nexus:
   env:
     - name: NEXUS_SECURITY_RANDOMPASSWORD
       value: "false"
+  dockerSupport:
+    enabled: true
