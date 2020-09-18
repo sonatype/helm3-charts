@@ -3,9 +3,9 @@ kind: ConfigMap
 metadata:
   name: {{ template "iqserver.fullname" . }}-conf
   labels:
-    {{ include "iqserver.labels" . | indent 4 }}
-    {{- if .Values.iqserver.extraLabels }}
-      {{- with .Values.iqserver.extraLabels }}
+{{ include "iqserver.labels" . | indent 4 }}
+    {{- if .Values.iq.extraLabels }}
+      {{- with .Values.iq.extraLabels }}
         {{ toYaml . | indent 4 }}
       {{- end }}
     {{- end }}

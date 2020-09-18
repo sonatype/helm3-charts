@@ -12,6 +12,11 @@ metadata:
   name: {{ $fullName }}
   labels:
     {{- include "iqserver.labels" . | nindent 4 }}
+    {{- if .Values.iq.extraLabels }}
+      {{- with .Values.iq.extraLabels }}
+        {{ toYaml . | indent 4 }}
+      {{- end }}
+    {{- end }}
   {{- with .Values.ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
