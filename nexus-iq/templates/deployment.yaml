@@ -66,7 +66,7 @@ spec:
             claimName: {{ template "iqserver.fullname" . }}-data
         - name: config-volume
           configMap:
-            name: {{ template "iqserver.fullname" . }}
+            name: {{ template "iqserver.fullname" . }}-conf
             items:
               - key: config.yml
                 path: config.yml
