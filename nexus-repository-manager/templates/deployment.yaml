@@ -105,6 +105,10 @@ spec:
             timeoutSeconds: {{ .Values.nexus.readinessProbe.timeoutSeconds }}
             {{- end }}
           volumeMounts:
+            - mountPath: /nexus-data	
+              name: {{ template "nexus.fullname" . }}-data	
+            - mountPath: /nexus-data/backup	
+              name: {{ template "nexus.fullname" . }}-backup
             {{- if .Values.secret.enabled }}
             - mountPath: {{ .Values.secret.mountPath }}
               name: {{ template "nexus.name" . }}-secret
