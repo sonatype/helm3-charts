@@ -42,13 +42,13 @@ nexus:
     initialDelaySeconds: 30
     periodSeconds: 30
     failureThreshold: 6
-    # timeoutSeconds: 10
+    timeoutSeconds: 10
     path: /
   readinessProbe:
     initialDelaySeconds: 30
     periodSeconds: 30
     failureThreshold: 6
-    # timeoutSeconds: 10
+    timeoutSeconds: 10
     path: /
   # hostAliases allows the modification of the hosts file inside a container
   hostAliases: []
