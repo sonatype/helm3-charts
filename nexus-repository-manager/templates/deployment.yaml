@@ -106,14 +106,14 @@ spec:
             {{- end }}
           volumeMounts:
             - mountPath: /nexus-data	
-              name: {{ template "nexus.fullname" . }}-data
+              name: {{ template "nexus.name" . }}-data
             {{- if .Values.config.enabled }}
             - mountPath: {{ .Values.config.mountPath }}
-              name: {{ template "nexus.fullname" . }}-conf
+              name: {{ template "nexus.name" . }}-conf
             {{- end }}
             {{- if .Values.secret.enabled }}
             - mountPath: {{ .Values.secret.mountPath }}
-              name: {{ template "nexus.fullname" . }}-secret
+              name: {{ template "nexus.Xname" . }}-secret
               readOnly: {{ .Values.secret.readOnly }}
             {{- end }}
             {{- if .Values.deployment.additionalVolumeMounts}}
@@ -127,7 +127,7 @@ spec:
 {{ toYaml .Values.nexus.securityContext | indent 8 }}
       {{- end }}
       volumes:
-        - name: {{ template "nexus.fullname" . }}-data
+        - name: {{ template "nexus.name" . }}-data
           {{- if .Values.persistence.enabled }}
           persistentVolumeClaim:
             claimName: {{ .Values.persistence.existingClaim | default (printf "%s-%s" (include "nexus.fullname" .) "data") }}
@@ -135,14 +135,14 @@ spec:
             emptyDir: {}
           {{- end }}
         {{- if .Values.config.enabled }}
-        - name: {{ template "nexus.fullname" . }}-conf
+        - name: {{ template "nexus.name" . }}-conf
           configMap:
-            name: {{ template "nexus.fullname" . }}-conf
+            name: {{ template "nexus.name" . }}-conf
         {{- end }}
         {{- if .Values.secret.enabled }}
-        - name: {{ template "nexus.fullname" . }}-secret
+        - name: {{ template "nexus.name" . }}-secret
           secret:
-            secretName: {{ template "nexus.fullname" . }}-secret
+            secretName: {{ template "nexus.name" . }}-secret
         {{- end }}
         {{- if .Values.deployment.additionalVolumes }}
 {{ toYaml .Values.deployment.additionalVolumes | indent 8 }}
