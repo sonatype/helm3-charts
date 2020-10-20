@@ -6,7 +6,7 @@ deploymentStrategy: Recreate
 image:
   # Sonatype Official Public Image
   repository: sonatype/nexus3
-  tag: 3.28.0
+  tag: 3.28.1
   pullPolicy: IfNotPresent
 
 nexus:
