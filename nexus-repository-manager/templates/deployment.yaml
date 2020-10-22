@@ -113,7 +113,7 @@ spec:
             {{- end }}
             {{- if .Values.secret.enabled }}
             - mountPath: {{ .Values.secret.mountPath }}
-              name: {{ template "nexus.Xname" . }}-secret
+              name: {{ template "nexus.name" . }}-secret
               readOnly: {{ .Values.secret.readOnly }}
             {{- end }}
             {{- if .Values.deployment.additionalVolumeMounts}}
