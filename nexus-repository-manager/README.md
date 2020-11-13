@@ -123,7 +123,6 @@ The following table lists the configurable parameters of the Nexus chart and the
 | `deployment.annotations`                    | Annotations to enhance deployment configuration  | `{}`                       |
 | `deployment.initContainers`                 | Init containers to run before main containers  | `nil`                        |
 | `deployment.postStart.command`              | Command to run after starting the nexus container  | `nil`                    |
-| `deployment.preStart.command`               | Command to run before starting the nexus container  | `nil`                   |
 | `deployment.terminationGracePeriodSeconds`  | Update termination grace period (in seconds)        | 120s                    |
 | `deployment.additionalContainers`           | Add additional Container         | `nil`                                      |
 | `deployment.additionalVolumes`              | Add additional Volumes           | `nil`                                      |

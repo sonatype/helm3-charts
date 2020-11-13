@@ -66,11 +66,6 @@ spec:
               exec:
                 command: {{ .Values.deployment.postStart.command }}
           {{- end }}
-          {{- if .Values.deployment.preStart.command }}
-            preStart:
-              exec:
-                command: {{ .Values.deployment.preStart.command }}
-          {{- end }}
           env:
 {{ toYaml .Values.nexus.env | indent 12 }}
           envFrom:
