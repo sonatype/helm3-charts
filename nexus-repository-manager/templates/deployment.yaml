@@ -75,10 +75,12 @@ spec:
           ports:
             - name: nexus-ui
               containerPort: {{ .Values.nexus.nexusPort }}
-            {{ if .Values.nexus.dockerSupport.enabled }}
-            - name: docker-default
-              containerPort: 5000
-            {{ end }}
+            {{- if .Values.nexus.docker.enabled }}
+            {{- range .Values.nexus.docker.ports }}
+            - name: docker-{{ . }}
+              containerPort: {{ . }}
+            {{- end }}
+            {{- end }}
           livenessProbe:
             httpGet:
               path: {{ .Values.nexus.livenessProbe.path }}
