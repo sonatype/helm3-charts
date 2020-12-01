@@ -11,11 +11,11 @@ image:
 
 nexus:
   docker:
-    enabled: true
-    registries:
-      - host: chart.local
-        port: 5000
-        secretName: registrySecret
+    enabled: false
+    registries: []
+    #  - host: chart.local
+    #    port: 5000
+    #    secretName: registrySecret
   env:
     - name: install4jAddVmParams
       value: "-Xms1200M -Xmx1200M -XX:MaxDirectMemorySize=2G -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
@@ -103,7 +103,6 @@ ingress:
     # kubernetes.io/tls-acme: "true"
   hostPath: /
   hostRepo: repo.demo
-  hostDocker: registry.demo
   tls: []
     # - secretName: nexus-local-tls
     #   hosts:
