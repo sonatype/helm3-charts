@@ -10,8 +10,12 @@ image:
   pullPolicy: IfNotPresent
 
 nexus:
-  dockerSupport:
+  docker:
     enabled: true
+    registries:
+      - host: chart.local
+        port: 5000
+        secretName: registrySecret
   env:
     - name: install4jAddVmParams
       value: "-Xms1200M -Xmx1200M -XX:MaxDirectMemorySize=2G -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
@@ -32,7 +36,6 @@ nexus:
       # cpu: 250m
       # memory: 4800Mi
   # The ports should only be changed if the nexus image uses a different port
-  dockerPort: 18443
   nexusPort: 8081
 
   securityContext:
@@ -114,10 +117,6 @@ service:
   enabled: true
   labels: {}
   annotations: {}
-  ports:
-  - name: nxrm-svc
-    targetPort: nexus-ui
-    port: 8081
   serviceType: ClusterIP
 
 

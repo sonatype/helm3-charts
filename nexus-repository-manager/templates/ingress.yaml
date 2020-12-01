@@ -1,6 +1,6 @@
 {{- if .Values.ingress.enabled -}}
 {{- $fullName := include "nexus.fullname" . -}}
-{{- $svcPort := .Values.service.port -}}
+{{- $svcPort := .Values.nexus.nexusPort -}}
 {{- $ingressPath := .Values.ingress.path -}}
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
@@ -36,13 +36,38 @@ spec:
             backend:
               serviceName: {{ $fullName }}
               servicePort: 8081
-    {{ if .Values.nexus.dockerSupport.enabled }}
-    - host: {{ .Values.ingress.hostDocker }}
+
+{{ if .Values.nexus.docker.enabled }}
+{{ range $registry := .Values.nexus.docker.registries }}
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: {{ $fullName | trunc 49 }}-docker-{{ $registry.port }}
+  labels:
+    {{- include "nexus.labels" $ | nindent 4 }}
+    {{- if $.Values.nexus.extraLabels }}
+      {{- with $.Values.nexus.extraLabels }}
+        {{ toYaml . | indent 4 }}
+      {{- end }}
+    {{- end }}
+  {{- with $.Values.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  tls:
+    - hosts:
+      - {{ $registry.host | quote }}
+      secretName: {{ $registry.secretName }}
+  rules:
+    - host: {{ $registry.host }}
       http:
         paths:
-          - path: {{ $ingressPath }}
+          - path: /
             backend:
-              serviceName: {{ $fullName }}
-              servicePort: 5000
+              serviceName: {{ $fullName | trunc 49 }}-docker-{{ $registry.port }}
+              servicePort: {{ $registry.port }}
     {{- end }}
-  {{- end }}
+{{- end }}
+{{- end }}
