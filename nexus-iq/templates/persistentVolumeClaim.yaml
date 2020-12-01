@@ -11,7 +11,7 @@ metadata:
     {{- end }}
   {{- if .Values.persistence.annotations }}
 annotations:
-  {{ toYaml .Values.persistence.annotations | indent 4 }}
+  {{ toYaml .Values.persistence.annotations | indent 2 }}
   {{- end }}
 spec:
   {{- if .Values.persistence.storageClass }}
