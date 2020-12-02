@@ -94,11 +94,10 @@ The following table lists the configurable parameters of the Nexus chart and the
 | `nexus.imagePullPolicy`                     | Nexus image pull policy             | `IfNotPresent`                          |
 | `nexus.imagePullSecret`                     | Secret to download Nexus image from private registry      | `nil`             |
 | `nexus.docker.enabled`                      | Enable/disable docker support       | `true`                                  |
-| `nexus.docker.registries`                   | Support multiple docker registries  | `[]`                             |
-| `nexus.docker.registries[x].host`           | Host for the docker registry        | `cluster.local`                         |
-| `nexus.docker.registries[x].port`           | Port for the docker registry        | `5000`                                  |
-| `nexus.docker.registries[x].secretName`     | TLS Secret Name for the ingress     | `registrySecret`                        |
-
+| `nexus.docker.registries`                   | Support multiple docker registries  | (see below)                             |
+| `nexus.docker.registries[0].host`           | Host for the docker registry        | `cluster.local`                         |
+| `nexus.docker.registries[0].port`           | Port for the docker registry        | `5000`                                  |
+| `nexus.docker.registries[0].secretName`     | TLS Secret Name for the ingress     | `registrySecret`                        |
 | `nexus.env`                                 | Nexus environment variables         | `[{install4jAddVmParams: -Xms1200M -Xmx1200M -XX:MaxDirectMemorySize=2G -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap}]` |
 | `nexus.resources`                           | Nexus resource requests and limits  | `{}`                                    |
 | `nexus.nexusPort`                           | Internal port for Nexus service     | `8081`                                  |
