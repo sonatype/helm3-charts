@@ -1,13 +1,13 @@
-- name: Helm Chart Releaser
+name: Helm Chart Releaser
   # You may pin to the exact commit or the version.
   # uses: helm/chart-releaser-action@565e7795cebb33bb2cf4f52ab8f779e21b9fa262
-  uses: helm/chart-releaser-action@v1.1.0
-  with:
-    # The chart-releaser version to use (default: v1.1.1)
-    version: # optional
-    # The relative path to the chart-releaser config file
-    config: # optional
-    # The charts directory
-    charts_dir: .
-    # The GitHub Pages URL to the charts repo (default: https://<owner>.github.io/<repo>)
-    charts_repo_url: # optional
+uses: helm/chart-releaser-action@v1.1.0
+with:
+  # The chart-releaser version to use (default: v1.1.1)
+  version: # optional
+  # The relative path to the chart-releaser config file
+  config: # optional
+  # The charts directory
+  charts_dir: .
+  # The GitHub Pages URL to the charts repo (default: https://<owner>.github.io/<repo>)
+  charts_repo_url: # optional
