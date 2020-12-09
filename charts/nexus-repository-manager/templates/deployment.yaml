@@ -34,6 +34,7 @@ spec:
       labels:
         {{- include "nexus.selectorLabels" . | nindent 8 }}
     spec:
+      serviceAccountName: {{ include "nexus.serviceAccountName" . }}
       {{- if .Values.deployment.initContainers }}
       initContainers:
 {{ toYaml .Values.deployment.initContainers | indent 6 }}
