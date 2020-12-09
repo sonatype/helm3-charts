@@ -34,6 +34,8 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+{{ toYaml .Values.iq.env | indent 12 }}
           ports:
             - name: application
               containerPort: {{ .Values.iq.applicationPort }}

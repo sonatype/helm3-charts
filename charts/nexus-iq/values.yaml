@@ -19,6 +19,9 @@ iq:
   # add this line with this file path and the `licenseSecret` above to autoconfigure licensing
   # licenseFile: /etc/nexus-iq-license/license_lic
   extraLabels:
+  env:
+    - name: JAVA_OPTS
+      value: "-Djava.util.prefs.userRoot=${SONATYPE_WORK}/javaprefs"
 
 
 deploymentStrategy: Recreate
