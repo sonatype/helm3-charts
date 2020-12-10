@@ -27,10 +27,11 @@ spec:
       {{- end }}      
   template:
     metadata:
-    {{- if .Values.nexus.podAnnotations }}
       annotations:
+        checksum/configmap-properties: {{ include (print .Template.BasePath "/configmap-properties.yaml") $ | sha256sum }}
+        {{- if .Values.nexus.podAnnotations }}
 {{ toYaml .Values.nexus.podAnnotations | indent 8}}
-    {{- end }}
+        {{- end }}
       labels:
         {{- include "nexus.selectorLabels" . | nindent 8 }}
     spec:
