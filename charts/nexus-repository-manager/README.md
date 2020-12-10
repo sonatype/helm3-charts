@@ -115,6 +115,8 @@ The following table lists the configurable parameters of the Nexus chart and the
 | `nexus.readinessProbe.timeoutSeconds`       | Time in seconds after readiness probe times out    | `nil`                    |
 | `nexus.readinessProbe.path`                 | Path for ReadinessProbe             | /                                       |
 | `nexus.hostAliases`                         | Aliases for IPs in /etc/hosts       | []                                      |
+| `nexus.properties.override`                 | Set to true to override default nexus.properties | `false`                    |
+| `nexus.properties.data`                 | A map of custom nexus properties if `override` is set to true | `nexus.scripts.allowCreation: true`            |
 | `ingress.enabled`                           | Create an ingress for Nexus         | `true`                                  |
 | `ingress.annotations`                       | Annotations to enhance ingress configuration  | `{kubernetes.io/ingress.class: nginx}`                          |
 | `ingress.tls.secretName`                    | Name of the secret storing TLS cert, `false` to use the Ingress' default certificate | `nexus-tls`                             |
