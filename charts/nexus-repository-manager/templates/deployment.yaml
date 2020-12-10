@@ -109,6 +109,11 @@ spec:
             - mountPath: {{ .Values.config.mountPath }}
               name: {{ template "nexus.name" . }}-conf
             {{- end }}
+            {{- if .Values.nexus.properties.override }}
+            - mountPath: /nexus-data/etc/nexus.properties
+              name: {{ template "nexus.name" . }}-properties
+              subPath: nexus.properties
+            {{- end }}
             {{- if .Values.secret.enabled }}
             - mountPath: {{ .Values.secret.mountPath }}
               name: {{ template "nexus.name" . }}-secret
@@ -136,6 +141,14 @@ spec:
         - name: {{ template "nexus.name" . }}-conf
           configMap:
             name: {{ template "nexus.name" . }}-conf
+        {{- end }}
+        {{- if .Values.nexus.properties.override }}
+        - name: {{ template "nexus.name" . }}-properties
+          configMap:
+            name: {{ template "nexus.name" . }}-properties
+            items:
+            - key: nexus.properties
+              path: nexus.properties
         {{- end }}
         {{- if .Values.secret.enabled }}
         - name: {{ template "nexus.name" . }}-secret

@@ -21,6 +21,10 @@ nexus:
       value: "-Xms1200M -Xmx1200M -XX:MaxDirectMemorySize=2G -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
     - name: NEXUS_SECURITY_RANDOMPASSWORD
       value: "true"
+  properties:
+    override: false
+    data:
+      nexus.scripts.allowCreation: true
   # nodeSelector:
   #   cloud.google.com/gke-nodepool: default-pool
   resources: {}
