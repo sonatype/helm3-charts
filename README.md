@@ -12,7 +12,9 @@ See docs/index.md which is also https://sonatype.github.io/helm3-charts/
 
 ### Updating Charts
 
-Charts for Nexus IQ and for NXRM can be updated in `charts/` directories,
+Charts for Nexus IQ and for NXRM can be updated in `charts/` directories.
+The most common updates will be to use new application images and to bump 
+chart versions for release.
 
 ### Packaging and Indexing
 
@@ -22,6 +24,8 @@ Upon update of the `charts/`, run `build.sh` from here in the project root to
 create `tgz` packages of the latest chart changes and regenerate the `index.yaml`
 file to the `docs/` directory which is the root of the 
 [repo site](https://sonatype.github.io/helm3-charts/).
+
+The build process requires Helm 3.
 
 ### Further Notes on Usage
 
