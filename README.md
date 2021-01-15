@@ -16,6 +16,8 @@ Charts for Nexus IQ and for NXRM can be updated in `charts/` directories.
 The most common updates will be to use new application images and to bump 
 chart versions for release.
 
+There should likely be no reason to update anything in `docs/` by hand.
+
 Test a chart in a local k8s cluster (like minikube) by installing the local copy
 from within each charts directory: 
 
