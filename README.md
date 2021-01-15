@@ -10,7 +10,13 @@ The current releases have been tested on minikube v1.12.3 running k8s v1.18.3
 
 See docs/index.md which is also https://sonatype.github.io/helm3-charts/
 
+### Updating Charts
+
+Charts for Nexus IQ and for NXRM can be updated in `charts/` directories,
+
 ### Packaging and Indexing
+
+*The CI build will do these processes for you, including package, commit, and tag.*
 
 Upon update of the `charts/`, run `build.sh` from here in the project root to
 create `tgz` packages of the latest chart changes and regenerate the `index.yaml`
@@ -23,8 +29,8 @@ file to the `docs/` directory which is the root of the
 
 Use the sample values files provided here.
 
-* `helm install nexus-iq sonatype/nexus-iq-server -f iq-values.yaml`
-* `helm install nexus-repo sonatype/nexus-repository-manager -f repo-values.yaml`
+- `helm install nexus-iq sonatype/nexus-iq-server -f iq-values.yaml`
+- `helm install nexus-repo sonatype/nexus-repository-manager -f repo-values.yaml`
 
 If you want to use the custom values file for the demo environment that expose 
 the apps on a local domain of *.demo which is done by creating a resolver file. 
