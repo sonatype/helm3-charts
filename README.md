@@ -16,6 +16,9 @@ Charts for Nexus IQ and for NXRM can be updated in `charts/` directories.
 The most common updates will be to use new application images and to bump 
 chart versions for release.
 
+Test a chart in a local k8s cluster (like minikube) by installing the local copy
+from within each charts directory: `helm install ./`
+
 ### Packaging and Indexing
 
 *The CI build will do these processes for you, including package, commit, and tag.*
