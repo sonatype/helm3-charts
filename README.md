@@ -34,7 +34,7 @@ Use the sample values files provided here.
 
 If you want to use the custom values file for the demo environment that expose 
 the apps on a local domain of *.demo which is done by creating a resolver file. 
-On a Mac it's `/etc/resolver/minikube-minikube-demo`` with the following entries:
+On a Mac it's `/etc/resolver/minikube-minikube-demo` with the following entries:
 
 ```
 domain demo
