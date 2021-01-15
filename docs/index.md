@@ -16,4 +16,4 @@ The current releases have been tested on minikube v1.12.3 running k8s v1.18.3
 
 ### Source
 
-Visit https://github.com/sonatype/helm3-charts
+Visit https://github.com/sonatype/helm3-charts.
