@@ -11,8 +11,8 @@ The current releases have been tested on minikube v1.12.3 running k8s v1.18.3
 
 ### Install a Server
 
-* NXRM: `helm install nexus-repo sonatype/nexus-repository-manager`
-* Nexus IQ: `helm install nexus-iq sonatype/nexus-iq-server`
+- NXRM: `helm install nexus-repo sonatype/nexus-repository-manager`
+- Nexus IQ: `helm install nexus-iq sonatype/nexus-iq-server`
 
 ### Source
 
