@@ -3,7 +3,7 @@
  * Includes the third-party code listed at http://links.sonatype.com/products/nexus/attributions.
  * "Sonatype" is a trademark of Sonatype, Inc.
  */
-@Library(['private-pipeline-library', 'jenkins-shared', 'int-jenkins-shared', 'iqAzureDevops-pipeline-library']) _
+@Library(['private-pipeline-library', 'jenkins-shared', 'int-jenkins-shared']) _
 
 dockerizedBuildPipeline(
   prepare: {
@@ -16,6 +16,7 @@ dockerizedBuildPipeline(
 
   skipVulnerabilityScan: true,
 
+  /*
   vulnerabilityScan: {
     final stage = isDeployBranch(env, 'master') ? 'build' : 'develop'
 
@@ -25,6 +26,7 @@ dockerizedBuildPipeline(
         iqScanPatterns: [[scanPattern: '**/*']],
         failBuildOnNetworkError: true
   },
+  */
 
   archiveArtifacts: 'docs/*',
   testResults: [],
