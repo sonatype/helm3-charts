@@ -9,32 +9,15 @@ dockerizedBuildPipeline(
   prepare: {
     githubStatusUpdate('pending')
   },
-
   buildAndTest: {
     sh './build.sh'
   },
-
   skipVulnerabilityScan: true,
-
-  /*
-  vulnerabilityScan: {
-    final stage = isDeployBranch(env, 'master') ? 'build' : 'develop'
-
-    nexusPolicyEvaluation
-        iqStage: stage,
-        iqApplication: 'helm3-charts',
-        iqScanPatterns: [[scanPattern: '**/*']],
-        failBuildOnNetworkError: true
-  },
-  */
-
   archiveArtifacts: 'docs/*',
   testResults: [],
-
   onSuccess: {
     buildNotifications(currentBuild, env, 'master')
   },
-
   onFailure: {
     buildNotifications(currentBuild, env, 'master')
   }
