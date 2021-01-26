@@ -15,6 +15,7 @@ dockerizedBuildPipeline(
   skipVulnerabilityScan: true,
   archiveArtifacts: 'docs/*',
   testResults: [],
+  skipDeploy: false,
   deploy: {
     sh """
       git diff
