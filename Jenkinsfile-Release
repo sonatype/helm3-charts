@@ -22,7 +22,7 @@ dockerizedBuildPipeline(
       git log
       git diff origin
     """
-  }
+  },
   onSuccess: {
     buildNotifications(currentBuild, env, 'master')
   },
