@@ -18,6 +18,9 @@ dockerizedBuildPipeline(
   deployCondition: { true },
   deploy: {
     sh """
+      git config --global user.email 'sonatype-ci@sonatype.com'
+      git config --global user.name 'Sonatype CI'
+
       git diff
       git commit -a -m 'Release Update'
       git log
