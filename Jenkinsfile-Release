@@ -25,7 +25,7 @@ dockerizedBuildPipeline(
 
       git checkout ${branch}
       git commit -a -m 'Release Update'
-      git log | head -20
+      # git push
     """
   },
   onSuccess: {
