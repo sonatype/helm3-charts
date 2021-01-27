@@ -20,8 +20,9 @@ There should likely be no reason to update anything in `docs/` by hand.
 
 Test a chart in a local k8s cluster (like minikube) by installing the local copy
 from within each charts directory: 
-
-```helm install ./```
+```
+helm install ./
+```
 
 ### Packaging and Indexing
 
@@ -46,7 +47,6 @@ Use the sample values files provided here.
 If you want to use the custom values file for the demo environment that expose 
 the apps on a local domain of *.demo which is done by creating a resolver file. 
 On a Mac it's `/etc/resolver/minikube-minikube-demo` with the following entries:
-
 ```
 domain demo
 nameserver 192.168.64.8
@@ -64,5 +64,6 @@ https://github.com/kubernetes/minikube/tree/master/deploy/addons/ingress-dns
 
 The default setting for Nginx allows for very small upload sizes. Add this annotation to the ingress 
 for each product to remove the limit:
-
-```nginx.ingress.kubernetes.io/proxy-body-size: "0"```
+```
+nginx.ingress.kubernetes.io/proxy-body-size: "0"
+```
