@@ -17,10 +17,13 @@ dockerizedBuildPipeline(
   testResults: [],
   deployCondition: { true },
   deploy: {
+    final branch = gitBranch(env)
+
     sh """
       git config --global user.email 'sonatype-ci@sonatype.com'
       git config --global user.name 'Sonatype CI'
 
+      git checkout ${branch}
       git commit -a -m 'Release Update'
       git log | head -20
     """
