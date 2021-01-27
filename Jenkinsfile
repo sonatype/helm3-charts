@@ -9,6 +9,7 @@ dockerizedBuildPipeline(
   prepare: {
     githubStatusUpdate('pending')
   },
+  buildImageId: 'docker-all.repo.sonatype.com/alpine/helm',
   buildAndTest: {
     sh './build.sh'
   },
