@@ -1,3 +1,4 @@
 <excludes>
   <exclude>**/*.md</exclude>
+  <exclude>**/.*/**</exclude>
 </excludes>
