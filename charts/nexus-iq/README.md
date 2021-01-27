@@ -74,7 +74,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | `iq.memory`          | The amount of RAM to allocate                                | `1Gi`             |
 | `iq.licenseSecret`   | The base-64 encoded license file to be installed at startup  | `""`              |
 | `iq.configYaml`      | A YAML block which will be used as a configuration block for IQ Server. | See `values.yaml` |
-| `iq.env`             | IQ server environment variables | `[{JAVA_OPTS: -Xms1200M -Xmx1200M}]`
+| `iq.env`             | IQ server environment variables | `[{JAVA_OPTS: -Xms1200M -Xmx1200M}]` |   
 | `ingress.enabled`                           | Create an ingress for Nexus         | `true`                                  |
 | `ingress.annotations`                       | Annotations to enhance ingress configuration  | `{}`                          |
 | `ingress.tls.enabled`                       | Enable TLS                          | `true`                                 |
