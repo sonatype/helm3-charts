@@ -21,11 +21,11 @@ There should likely be no reason to update anything in `docs/` by hand.
 Test a chart in a local k8s cluster (like minikube) by installing the local copy
 from within each charts directory: 
 
-`helm install ./`
+```helm install ./```
 
 ### Packaging and Indexing
 
-*The CI build will do these processes for you, including package, commit, and tag.*
+*Sonatype CI build will package, commit, and publish to the official helm repository.*
 
 Upon update of the `charts/`, run `build.sh` from here in the project root to
 create `tgz` packages of the latest chart changes and regenerate the `index.yaml`
@@ -62,6 +62,7 @@ https://github.com/kubernetes/minikube/tree/master/deploy/addons/ingress-dns
 
 #### 413 Errors with Nginx
 
-The default setting for Nginx allows for very small upload sizes. Add this annotation to the ingress for each product to remove teh limit:
+The default setting for Nginx allows for very small upload sizes. Add this annotation to the ingress 
+for each product to remove the limit:
 
-`nginx.ingress.kubernetes.io/proxy-body-size: "0"`
+```nginx.ingress.kubernetes.io/proxy-body-size: "0"```
