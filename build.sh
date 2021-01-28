@@ -5,6 +5,11 @@
 # "Sonatype" is a trademark of Sonatype, Inc.
 #
 
+set -e
+
+helm lint charts/nexus-iq
+helm lint charts/nexus-repository-manager
+
 # package the charts into tgz archives
 helm package charts/nexus-iq --destination docs
 helm package charts/nexus-repository-manager --destination docs
