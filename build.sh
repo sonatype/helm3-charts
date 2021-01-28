@@ -14,6 +14,7 @@
 
 set -e
 
+# lint yaml of charts
 helm lint charts/nexus-iq
 helm lint charts/nexus-repository-manager
 
