@@ -33,8 +33,11 @@ dockerizedBuildPipeline(
 
       git checkout ${branch}
       git commit -a -m 'Release Update'
-      git push
     """
+
+    sshagent(credentials: [sonatypeZionCredentialsId()]) {
+      sh 'git push'
+    }
   },
   onSuccess: {
     buildNotifications(currentBuild, env, 'master')
