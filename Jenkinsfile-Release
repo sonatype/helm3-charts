@@ -32,7 +32,8 @@ dockerizedBuildPipeline(
       git config --global user.name 'Sonatype CI'
 
       git checkout ${branch}
-      git commit -a -m 'Release Update'
+      git add docs
+      git commit -m 'Release Update'
     """
 
     sshagent(credentials: [sonatypeZionCredentialsId()]) {
