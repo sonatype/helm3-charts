@@ -6,6 +6,7 @@ The current releases have been tested on minikube v1.12.3 running k8s v1.18.3
 
 ### To Add as a Helm Repo
 
+
 ```helm repo add sonatype https://sonatype.github.io/helm3-charts/ ```
 
 ### To install
