@@ -19,9 +19,27 @@ iq:
   # add this line with this file path and the `licenseSecret` above to autoconfigure licensing
   # licenseFile: /etc/nexus-iq-license/license_lic
   extraLabels:
+  # add the following two lines to mount a secrets volume within the container at the specified location  
+  secretName: #secret-jks
+  secretMountName: #/etc/secret-volume
   env:
     - name: JAVA_OPTS
       value: "-Djava.util.prefs.userRoot=${SONATYPE_WORK}/javaprefs"
+      
+# In conjunction with 'secretName' and 'secretMountName' above, this is an example of how to inject required password
+# secrets into the runtime environment, and how to modify the startup of the server to utilize custom Java SSL stores.
+#    - name: TRUSTSTORE_PASSWORD
+#        valueFrom:
+#          secretKeyRef:
+#            name: secret-jks
+#            key: truststorePassword
+#    - name: KEYSTORE_PASSWORD
+#      valueFrom:
+#        secretKeyRef:
+#          name: secret-jks
+#          key: keystorePassword
+#    - name: JAVA_OPTS
+#      value: "-Djavax.net.ssl.keyStoreType=jks -Djavax.net.ssl.keyStore=/etc/secret-volume/keystore.jks -Djavax.net.ssl.keyStorePassword=$(KEYSTORE_PASSWORD) -Djavax.net.ssl.trustStoreType=jks -Djavax.net.ssl.trustStore=/etc/secret-volume/truststore.jks -Djavax.net.ssl.trustStorePassword=$(TRUSTSTORE_PASSWORD) -Djava.util.prefs.userRoot=${SONATYPE_WORK}/javaprefs"
 
 
 deploymentStrategy: Recreate

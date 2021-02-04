@@ -74,7 +74,9 @@ The command removes all the Kubernetes components associated with the chart and 
 | `iq.memory`          | The amount of RAM to allocate                                | `1Gi`             |
 | `iq.licenseSecret`   | The base-64 encoded license file to be installed at startup  | `""`              |
 | `iq.configYaml`      | A YAML block which will be used as a configuration block for IQ Server. | See `values.yaml` |
-| `iq.env`             | IQ server environment variables | `[{JAVA_OPTS: -Xms1200M -Xmx1200M}]` |   
+| `iq.env`             | IQ server environment variables | `[{JAVA_OPTS: -Xms1200M -Xmx1200M}]` |
+| `iq.secretName`      | The name of a secret to mount inside the container  | See `values.yaml` |
+| `iq.secretMountName`      | Where in the container to mount the data from `secretName`  | See `values.yaml` |
 | `ingress.enabled`                           | Create an ingress for Nexus         | `true`                                  |
 | `ingress.annotations`                       | Annotations to enhance ingress configuration  | `{}`                          |
 | `ingress.tls.enabled`                       | Enable TLS                          | `true`                                 |
@@ -106,3 +108,18 @@ when you first enter the GUI.
 
 ## 413 Errors
 The default setting for Nginx allows for very small upload sizes. Add this annotation to the ingress for each product to remove teh limit: nginx.ingress.kubernetes.io/proxy-body-size: "0"
+ 
+## Specifying custom Java keystore/truststore
+There is an example of how to implement this in [the values.yaml file](values.yaml) using secrets to store both the
+Java keystores and their associated passwords. In order to utilize the provided example directly secrets can be created 
+from a directory containing the keystore and truststore files like so:
+```shell
+kubectl create secret generic secret-jks 
+	--from-file=truststore.jks=./truststore.jks 
+	--from-file=keystore.jks=./keystore.jks 
+	--from-literal='keystorePassword=password' 
+	--from-literal='truststorePassword=password'
+```
+
+
+

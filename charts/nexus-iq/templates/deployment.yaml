@@ -58,6 +58,11 @@ spec:
               name: nxiq-pv-data
             - mountPath: /etc/nexus-iq-server
               name: config-volume
+  {{- if and (.Values.iq.secretName) (.Values.iq.secretMountName) }}
+            - mountPath: {{ .Values.iq.secretMountName }}
+              name: secret-volume
+              readOnly: true
+  {{- end }}
   {{- if .Values.iq.licenseSecret }}
             - mountPath: /etc/nexus-iq-license
               name: license-volume
@@ -77,6 +82,11 @@ spec:
           secret:
             secretName: {{ template "iqserver.fullname" . }}-license
   {{- end }}
+  {{- if and (.Values.iq.secretName) (.Values.iq.secretMountName) }}
+        - name: secret-volume
+          secret:
+            secretName: {{ .Values.iq.secretName }}
+  {{- end}}          
         {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
