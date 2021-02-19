@@ -44,6 +44,8 @@ kill -INT $PF_PID
 
 kubectl logs $POD_NAME > test/output/nexus-repository-manager.log
 
+# helm test nexus-repository-manager
+
 helm delete nexus-repository-manager
 
 echo '--------------------'
@@ -71,6 +73,8 @@ curl -v -L  http://localhost:8070/ > test/output/iq.html
 kill -INT $PF_PID
 
 kubectl logs $POD_NAME > test/output/nexus-iq.log
+
+# helm test iq-server
 
 helm delete nexus-iq
 
