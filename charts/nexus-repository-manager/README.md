@@ -67,7 +67,7 @@ You can pass custom configuration values as:
 helm install -f myvalues.yaml ./ --name sonatype-nexus
 ```
 
-The default login is randomized and can be found in sonatype /sonatype-work/admin.password
+The default login is randomized and can be found in sonatype /nexus-data/admin.password
 or you can override this behavior by setting an environmental variable
 NEXUS_SECURITY_RANDOMPASSWORD to 'true'
 
