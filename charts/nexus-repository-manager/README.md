@@ -92,7 +92,7 @@ The following table lists the configurable parameters of the Nexus chart and the
 | ------------------------------------------  | ----------------------------------  | ----------------------------------------|
 | `deploymentStrategy`                        | Deployment Strategy     |  `Recreate` |
 | `nexus.imagePullPolicy`                     | Nexus image pull policy             | `IfNotPresent`                          |
-| `nexus.imagePullSecret`                     | Secret to download Nexus image from private registry      | `nil`             |
+| `nexus.imagePullSecrets`                     | Secret to download Nexus image from private registry      | `nil`             |
 | `nexus.docker.enabled`                      | Enable/disable docker support       | `true`                                  |
 | `nexus.docker.registries`                   | Support multiple docker registries  | (see below)                             |
 | `nexus.docker.registries[0].host`           | Host for the docker registry        | `cluster.local`                         |
