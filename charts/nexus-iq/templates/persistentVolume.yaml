@@ -1,10 +1,11 @@
-{{- if .Values.persistence.volumeConfiguration -}}
+{{- if not .Values.statefulset.enabled }}
+{{- if .Values.persistence.pdName -}}
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: {{ template "iqserver.fullname" . }}-data
+  name: {{ .Values.persistence.pdName }}
   labels:
-    {{- include "iqserver.labels" . | nindent 4 }}
+{{ include "iqserver.labels" . | indent 4 }}
     {{- if .Values.iq.extraLabels }}
       {{- with .Values.iq.extraLabels }}
         {{ toYaml . | indent 4 }}
@@ -16,5 +17,11 @@ spec:
   capacity:
     storage: {{ .Values.persistence.storageSize }}
   persistentVolumeReclaimPolicy: Recycle
-{{ toYaml .Values.persistence.volumeConfiguration | indent 2 }}
+  claimRef:
+    namespace: {{ .Release.Namespace }}
+    name: {{ template "iqserver.fullname" . }}-data
+  gcePersistentDisk:
+    pdName: {{ .Values.persistence.pdName }}
+    fsType: {{ .Values.persistence.fsType }}
+{{- end }}
 {{- end }}
