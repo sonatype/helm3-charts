@@ -115,6 +115,9 @@ ingress:
     #     - nexus.local
     #     - nexus-docker.local
     #     - nexus-docker-hosted.local
+  #additionalHosts:
+  #  - internal.example.com
+  #  - external.example.com
 
 
 service:
