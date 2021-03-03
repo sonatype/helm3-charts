@@ -1,6 +1,9 @@
 # Default values for iqserver.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
+statefulset:
+  # This is not supported
+  enabled: false
 replicaCount: 1
 image:
   # Sonatype Official Public Image
@@ -106,6 +109,7 @@ tolerations: []
 affinity: {}
 
 persistence:
+  enabled: true
   accessMode: ReadWriteOnce
   ## If defined, storageClass: <storageClass>
   ## If set to "-", storageClass: "", which disables dynamic provisioning
@@ -117,10 +121,13 @@ persistence:
   # existingClaim:
   # annotations:
   #  "helm.sh/resource-policy": keep
-  ## Configure the volume type.
+  # storageClass: "-"
   # volumeConfiguration:
   #   hostPath:
   #     path: /data/nxiq/
+  # If PersistentDisk already exists you can create a PV for it by including the 2 following keypairs.
+  # pdName: nexus-data-disk
+  # fsType: ext4
 
 # configYaml is the full text of the config.yml file that will be passed to IQ Server
 configYaml:
