@@ -70,7 +70,7 @@ spec:
       volumes:
         - name: nxiq-pv-data
           persistentVolumeClaim:
-            claimName: {{ .Values.persistence.existingClaim | default (printf "%s-%s" (include "iqserver.fullname" .) "-data") }}
+            claimName: {{ .Values.persistence.existingClaim | default (printf "%s-%s" (include "iqserver.fullname" .) "data") }}
         - name: config-volume
           configMap:
             name: {{ template "iqserver.fullname" . }}-conf
