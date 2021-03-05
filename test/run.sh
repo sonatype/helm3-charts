@@ -18,6 +18,19 @@ function shutdown {
 
 trap shutdown EXIT
 
+function get_pod_name {
+    kubectl get pods \
+        -l "app.kubernetes.io/name=$1,app.kubernetes.io/instance=$1" \
+        -o jsonpath="{.items[0].metadata.name}"
+}
+
+function wait_deployment {
+    kubectl wait \
+            --for=condition=available \
+            --timeout=5m \
+            deployments/$1
+}
+
 BASEDIR=$(pwd)
 
 minikube start -p helm-test --addons=dashboard,metrics-server $MINIKUBE_OPTS
@@ -29,22 +42,17 @@ helm install nexus-repository-manager \
 helm_installs=$(helm list)
 assert_contain "$helm_installs" 3.29.0
 
-kubectl wait \
-        --for=condition=available \
-        --timeout=5m \
-        deployments/nexus-repository-manager
+wait_deployment nexus-repository-manager
 
 helm test nexus-repository-manager \
-     > $BASEDIR/test/output/test-nexus-repostiory-manager.log
+     > $BASEDIR/test/output/test-nexus-repository-manager.log
 
-POD_NAME=$(kubectl get pods \
-                   -l "app.kubernetes.io/name=nexus-repository-manager,app.kubernetes.io/instance=nexus-repository-manager" \
-                   -o jsonpath="{.items[0].metadata.name}")
+POD_NAME=$(get_pod_name 'nexus-repository-manager')
 
 kubectl port-forward $POD_NAME 8081 &
 PF_PID=$!
 
-sleep 4
+sleep 1
 
 curl -L http://localhost:8081/ > test/output/nexus-repository-manager.html 2>&1
 
@@ -64,21 +72,16 @@ helm install nexus-iq \
 helm_installs=$(helm list)
 assert_contain "$helm_installs" 1.105.0 
 
-kubectl wait \
-        --for=condition=available \
-        --timeout=5m \
-        deployments/nexus-iq-nexus-iq-server
+wait_deployment nexus-iq-nexus-iq-server
 
 helm test nexus-iq \
     > $BASEDIR/test/output/test-nexus-iq.log
 
-POD_NAME=$(kubectl get pods \
-    -l "app.kubernetes.io/name=nexus-iq-server,app.kubernetes.io/instance=nexus-iq" \
-    -o jsonpath="{.items[0].metadata.name}")
+POD_NAME=$(get_pod_name nexus-iq)
 kubectl port-forward $POD_NAME 8070 &
 PF_PID=$!
 
-sleep 4
+sleep 1
 
 curl -L  http://localhost:8070/ > test/output/nexus-iq.html
 
