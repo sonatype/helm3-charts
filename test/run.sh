@@ -20,7 +20,7 @@ trap shutdown EXIT
 
 function get_pod_name {
     kubectl get pods \
-        -l "app.kubernetes.io/name=$1,app.kubernetes.io/instance=$1" \
+        -l "app.kubernetes.io/name=$1,app.kubernetes.io/instance=$2" \
         -o jsonpath="{.items[0].metadata.name}"
 }
 
@@ -47,7 +47,7 @@ wait_deployment nexus-repository-manager
 helm test nexus-repository-manager \
      > $BASEDIR/test/output/test-nexus-repository-manager.log
 
-POD_NAME=$(get_pod_name 'nexus-repository-manager')
+POD_NAME=$(get_pod_name nexus-repository-manager nexus-repository-manager)
 
 kubectl port-forward $POD_NAME 8081 &
 PF_PID=$!
@@ -77,7 +77,7 @@ wait_deployment nexus-iq-nexus-iq-server
 helm test nexus-iq \
     > $BASEDIR/test/output/test-nexus-iq.log
 
-POD_NAME=$(get_pod_name nexus-iq)
+POD_NAME=$(get_pod_name nexus-iq-server nexus-iq)
 kubectl port-forward $POD_NAME 8070 &
 PF_PID=$!
 
