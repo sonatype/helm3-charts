@@ -19,11 +19,11 @@ To Add as a Helm Repo
 ## Testing the Chart
 To test the chart:
 ```bash
-$ helm install --dry-run --debug ./
+$ helm install --dry-run --debug --generate-name ./
 ```
 To test the chart with your own values:
 ```bash
-$ helm install --dry-run --debug -f my_values.yaml ./
+$ helm install --dry-run --debug --generate-name -f myvalues.yaml ./ 
 ```
 
 ## Installing the Chart
@@ -38,15 +38,17 @@ The above command deploys IQ on the Kubernetes cluster in the default configurat
 
 You can pass custom configuration values as:
 
-```
-helm install -f myvalues.yaml ./ --name sonatype-
+```bash
+$ helm install -f myvalues.yaml ./ --name nexus-iq
 ```
 
-The default login is admin/admin123
+The default login for the IQ Server is admin/admin123
 
 ## Upgrading the Chart
 
-```helm upgrade nexus-iq sonatype/nexus-iq-server [--version v91.0.0]```
+```bash
+$ helm upgrade nexus-iq sonatype/nexus-iq-server [--version v91.0.0]
+```
 
 Note: optional version flag shown
 
@@ -56,8 +58,8 @@ To uninstall/delete the deployment:
 
 ```bash
 $ helm list
-NAME           	REVISION	UPDATED                 	STATUS  	CHART      	                NAMESPACE
-plinking-gopher	1       	Fri Sep  1 13:19:50 2017	DEPLOYED	iqserver-0.1.0	            default
+NAME                    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
+plinking-gopher	        default         1               2021-03-10 15:13:04.614125 -0800 PST    deployed        nexus-iq-server-106.0.0 1.106.0    
 $ helm delete plinking-gopher
 ```
 
@@ -90,8 +92,6 @@ The command removes all the Kubernetes components associated with the chart and 
 | `persistence.accessMode` | Default access mode                        | `ReadWriteOnce`             |
 | `persistence.volumeConfiguration` | A YAML block to configure the persistent volume type. Defaults to `hostPath` which should not be used in production | `hostPath`             |
 
-
-
 ## Configuring IQ Server
 
 You can define the `config.yml` for IQ Server in your `myvalues.yml` file on startup. 
@@ -107,7 +107,7 @@ If you leave the `licenseFile` field empty/commented, IQ Server will start and p
 when you first enter the GUI.
 
 ## 413 Errors
-The default setting for Nginx allows for very small upload sizes. Add this annotation to the ingress for each product to remove teh limit: nginx.ingress.kubernetes.io/proxy-body-size: "0"
+The default setting for Nginx allows for very small upload sizes. Add this annotation to the ingress for each product to remove the limit: nginx.ingress.kubernetes.io/proxy-body-size: "0"
  
 ## Specifying custom Java keystore/truststore
 There is an example of how to implement this in [the values.yaml file](values.yaml) using secrets to store both the

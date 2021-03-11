@@ -30,17 +30,20 @@ By default, the Chart uses Sonatype's Public Docker image. If you want to use a 
 
 ### With Red Hat Certified container
 
-If you're looking run our Certified Red Hat image in an OpenShift4 environment there is an Certified Operator in OperatorHub
+If you're looking run our Certified Red Hat image in an OpenShift4 environment there is a Certified Operator in OperatorHub.
 
+## Adding the repo
+To Add as a Helm Repo
+```helm repo add sonatype https://sonatype.github.io/helm3-charts/```
 
 ## Testing the Chart
 To test the chart:
 ```bash
-$ helm install --dry-run --debug ./
+$ helm install --dry-run --debug --generate-name ./
 ```
 To test the chart with your own values:
 ```bash
-$ helm install --dry-run --debug -f my_values.yaml ./
+$ helm install --dry-run --debug --generate-name -f myvalues.yaml ./ 
 ```
 
 ## Installing the Chart
@@ -48,23 +51,15 @@ $ helm install --dry-run --debug -f my_values.yaml ./
 To install the chart:
 
 ```bash
-$ helm install -f myvalues.yaml ./
-```
-
-If you are getting the error `Error: no available release name found` during
-`helm install`, grant cluster-admin to kube-system:default service account:
-```bash
-$ kubectl create clusterrolebinding add-on-cluster-admin \
-    --clusterrole=cluster-admin \
-    --serviceaccount=kube-system:default
+$ helm install nexus-rm sonatype/nexus-repository-manager [ --version v29.2.0 ]
 ```
 
 The above command deploys Nexus on the Kubernetes cluster in the default configuration.
 
 You can pass custom configuration values as:
 
-```
-helm install -f myvalues.yaml ./ --name sonatype-nexus
+```bash
+$ helm install -f myvalues.yaml sonatype-nexus ./
 ```
 
 The default login is randomized and can be found in sonatype /nexus-data/admin.password
@@ -77,8 +72,8 @@ To uninstall/delete the deployment:
 
 ```bash
 $ helm list
-NAME           	REVISION	UPDATED                 	STATUS  	CHART      	NAMESPACE
-plinking-gopher	1       	Fri Sep  1 13:19:50 2017	DEPLOYED	sonatype-nexus-0.1.0	default
+NAME                    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                           APP VERSION
+plinking-gopher         default         1               2021-03-10 15:44:57.301847 -0800 PST    deployed        nexus-repository-manager-29.2.0 3.29.2     
 $ helm delete plinking-gopher
 ```
 
@@ -151,9 +146,6 @@ The following table lists the configurable parameters of the Nexus chart and the
 | `serviceAccount.create` | Set to true to create ServiceAccount               | `true` |
 | `serviceAccount.annotations` | Set annotations for ServiceAccount               | `{}` |
 | `serviceAccount.name` | The name of the service account to use. Auto-generate if not set and create is true      | `{}` |
-
-
-
 
 ### Persistence
 
