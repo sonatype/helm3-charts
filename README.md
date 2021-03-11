@@ -21,7 +21,7 @@ There should likely be no reason to update anything in `docs/` by hand.
 Test a chart in a local k8s cluster (like minikube) by installing the local copy
 from within each charts directory: 
 ```
-helm install ./
+helm install --generate-name ./
 ```
 
 ### Packaging and Indexing
