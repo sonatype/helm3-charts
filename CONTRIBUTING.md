@@ -26,7 +26,7 @@ Looking to dive in? FANTASTIC! Reach out to one of our experts and we can help g
 
 ## Submitting a PR
 
-* Add the `@sonatype/integrations` group as a reviewer on the PR
+* For Sonatype submitters, add the `@sonatype/integrations` group as a reviewer on the PR
 * Try to fix one thing per pull request! Many people work on this code, so the more focused your changes are, the less
   of a headache other people will have when they merge their work in.
 * Ensure your Pull Request passes tests either locally or via Jenkins (it will run automatically on your PR)

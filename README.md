@@ -15,7 +15,7 @@ See docs/index.md which is also https://sonatype.github.io/helm3-charts/
 See the [contributing document](./CONTRIBUTING.md) for details.
 
 For Sonatypers, note that external contributors must sign the CLA and
-which the Dev-Ex team must verify prior to accepting any PR.
+the Dev-Ex team must verify this prior to accepting any PR.
 
 ### Updating Charts
 
