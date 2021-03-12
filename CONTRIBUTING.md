@@ -37,8 +37,6 @@ Looking to dive in? FANTASTIC! Reach out to one of our experts and we can help g
 
 Here are the general rules to follow when commenting on PRs for this repo:
 
-* When leaving comments on a PR, leave them all as individual comments as opposed to "Starting a Review".  This is
-  because some people prefer to receive each comment as a separate email.
 * When responding to a comment, always blockquote what you are responding to (even if it is the entire previous
   comment).  This allows the emails to have the necessary conversation context that they otherwise lack
 * When you as the PR author make a change in response to a comment, respond to that comment and include the commit hash
