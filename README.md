@@ -10,6 +10,13 @@ The current releases have been tested on minikube v1.12.3 running k8s v1.18.3
 
 See docs/index.md which is also https://sonatype.github.io/helm3-charts/
 
+### Contributing
+
+See the [contributing document](./CONTRIBUTING.md) for details.
+
+For Sonatypers, note that external contributors must sign the CLA and
+the Dev-Ex team must verify this prior to accepting any PR.
+
 ### Updating Charts
 
 Charts for Nexus IQ and for NXRM can be updated in `charts/` directories.
