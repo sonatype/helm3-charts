@@ -1,4 +1,6 @@
 {{- if .Values.service.enabled -}}
+{{- $labelsExtra := include "nexus.labelsExtra" . -}}
+{{- $selectorLabelsExtra := include "nexus.selectorLabelsExtra" . -}}
 ---
 apiVersion: v1
 kind: Service
@@ -8,59 +10,33 @@ metadata:
   annotations:
 {{ toYaml .Values.service.annotations | indent 4 }}
 {{- end }}
-  labels:
-    {{- include "nexus.labels" . | nindent 4 }}
-    {{- if .Values.nexus.extraLabels }}
-      {{- with .Values.nexus.extraLabels }}
-        {{ toYaml . | indent 4 }}
-      {{- end }}
-    {{- end }}
+  labels: {{- $labelsExtra | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
     - port: {{ .Values.nexus.nexusPort }}
       protocol: TCP
-      name: nexus-ui
-  selector:
-    {{- include "nexus.selectorLabels" . | nindent 4 }}
-    {{- if .Values.nexus.extraSelectorLabels }}
-      {{- with .Values.nexus.extraSelectorLabels }}
-        {{ toYaml . | indent 4 }}
-      {{- end }}
-    {{- end }}
-
-{{- if .Values.nexus.docker.enabled }}
-{{- range $registry := .Values.nexus.docker.registries }}
+      name: http-nexus-ui
+  selector: {{- $selectorLabelsExtra | nindent 4 }}
+...
+{{- range $connector := .Values.ingress.connectors }}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "nexus.fullname" $ | trunc 49 }}-docker-{{ $registry.port }}
+  name: {{ include "nexus.fullname" $ | trunc 49 }}-connector-{{ $connector.port }}
 {{- if $.Values.service.annotations }}
   annotations:
 {{ toYaml $.Values.service.annotations | indent 4 }}
 {{- end }}
-  labels:
-    {{- include "nexus.labels" $ | nindent 4 }}
-    {{- if $.Values.nexus.extraLabels }}
-      {{- with $.Values.nexus.extraLabels }}
-        {{ toYaml . | indent 4 }}
-      {{- end }}
-    {{- end }}
+  labels: {{- $labelsExtra | nindent 4 }}
 spec:
   type: {{ $.Values.service.type }}
   ports:
-    - port: {{ $registry.port }}
+    - port: {{ $connector.port }}
       protocol: TCP
-      name: docker-{{ $registry.port }}
-  selector:
-    {{- include "nexus.selectorLabels" $ | nindent 4 }}
-    {{- if $.Values.nexus.extraSelectorLabels }}
-      {{- with $.Values.nexus.extraSelectorLabels }}
-        {{ toYaml . | indent 4 }}
-      {{- end }}
-    {{- end }}
-{{- end }}
-
+      name: http-{{ $connector.port }}
+  selector: {{- $selectorLabelsExtra | nindent 4 }}
+...
 {{- end }}
 {{- end }}
