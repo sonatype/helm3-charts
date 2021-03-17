@@ -43,12 +43,26 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end -}}
 
+{{- define "nexus.labelsExtra" -}}
+{{- include "nexus.labels" . }}
+{{ with .Values.nexus.extraLabels }}
+{{- toYaml . }}
+{{- end -}}
+{{- end -}}
+
 {{/*
 Selector labels
 */}}
 {{- define "nexus.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "nexus.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end -}}
+
+{{- define "nexus.selectorLabelsExtra" -}}
+{{- include "nexus.selectorLabels" . }}
+{{ with .Values.nexus.extraSelectorLabels }}
+{{- toYaml . }}
+{{- end -}}
 {{- end -}}
 
 {{/*

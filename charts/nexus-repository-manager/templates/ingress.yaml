@@ -1,73 +1,74 @@
 {{- if .Values.ingress.enabled -}}
 {{- $fullName := include "nexus.fullname" . -}}
-{{- $svcPort := .Values.nexus.nexusPort -}}
-{{- $ingressPath := .Values.ingress.path -}}
+{{- $labelsExtra := include "nexus.labelsExtra" . -}}
+---
+{{- if (semverCompare "<=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
 apiVersion: networking.k8s.io/v1beta1
+{{- else }}
+apiVersion: networking.k8s.io/v1
+{{- end }}
 kind: Ingress
 metadata:
   name: {{ $fullName }}
-  labels:
-    {{- include "nexus.labels" . | nindent 4 }}
-    {{- if .Values.nexus.extraLabels }}
-      {{- with .Values.nexus.extraLabels }}
-        {{ toYaml . | indent 4 }}
-      {{- end }}
-    {{- end }}
-  {{- with .Values.ingress.annotations }}
-  annotations:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
+  labels: {{ $labelsExtra | nindent 4 }}
+  annotations: {{- toYaml .Values.ingress.annotations | nindent 4 }}
 spec:
-  {{- if .Values.ingress.tls }}
+  {{- if and (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) .Values.ingress.ingressClass }}
+  ingressClassName: {{ .Values.ingress.ingressClass }}
+  {{- end }}
+  {{- if .Values.ingress.tls.secretName }}
   tls:
-    {{- range .Values.ingress.tls }}
-    - hosts:
-      {{- range .hosts }}
-      - {{ . | quote }}
-      {{- end }}
-      secretName: {{ .secretName }}
-    {{- end }}
+    - hosts: {{- toYaml .Values.ingress.hosts | nindent 8 }}
+      secretName: {{ .Values.ingress.tls.secretName }}
   {{- end }}
   rules:
-    - host: {{ .Values.ingress.hostRepo }}
+    {{- range $host := .Values.ingress.hosts }}
+    - host: {{ $host }}
       http:
         paths:
-          - path: {{ .Values.ingress.hostPath }}
+          - path: {{ $.Values.ingress.path }}
+            {{- if (semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion) }}
+            pathType: Prefix
+            {{- end }}
             backend:
               serviceName: {{ $fullName }}
               servicePort: 8081
-
-{{ if .Values.nexus.docker.enabled }}
-{{ range $registry := .Values.nexus.docker.registries }}
+    {{- end }}
+...
+{{- range $connector := .Values.ingress.connectors }}
 ---
+{{- if (semverCompare "<=1.18-0" $.Capabilities.KubeVersion.GitVersion) }}
 apiVersion: networking.k8s.io/v1beta1
+{{- else }}
+apiVersion: networking.k8s.io/v1
+{{- end }}
 kind: Ingress
 metadata:
-  name: {{ $fullName | trunc 49 }}-docker-{{ $registry.port }}
-  labels:
-    {{- include "nexus.labels" $ | nindent 4 }}
-    {{- if $.Values.nexus.extraLabels }}
-      {{- with $.Values.nexus.extraLabels }}
-        {{ toYaml . | indent 4 }}
-      {{- end }}
-    {{- end }}
-  {{- with $.Values.ingress.annotations }}
-  annotations:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
+  name: {{ $fullName | trunc 49 }}-docker-{{ $connector.port }}
+  labels: {{ $labelsExtra | nindent 4 }}
+  annotations: {{- toYaml $.Values.ingress.annotations | nindent 4 }}
 spec:
+  {{- if and (semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion) (or $connector.ingressClass $.Values.ingress.ingressClass) }}
+  ingressClassName: {{ $connector.ingressClass | default $.Values.ingress.ingressClass }}
+  {{- end }}
+  {{- if $connector.tls.secretName }}
   tls:
-    - hosts:
-      - {{ $registry.host | quote }}
-      secretName: {{ $registry.secretName }}
+    - hosts: {{ toYaml $connector.hosts | nindent 8 }}
+      secretName: {{ $connector.tls.secretName }}
+  {{- end }}
   rules:
-    - host: {{ $registry.host }}
+    {{- range $host := $connector.hosts }}
+    - host: {{ $host }}
       http:
         paths:
           - path: /
+            {{- if (semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion) }}
+            pathType: Prefix
+            {{- end }}
             backend:
-              serviceName: {{ $fullName | trunc 49 }}-docker-{{ $registry.port }}
-              servicePort: {{ $registry.port }}
+              serviceName: {{ $fullName | trunc 49 }}-connector-{{ $connector.port }}
+              servicePort: {{ $connector.port }}
     {{- end }}
-{{- end }}
+...
+{{- end -}}
 {{- end }}
