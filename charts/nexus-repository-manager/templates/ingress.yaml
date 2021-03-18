@@ -44,7 +44,7 @@ apiVersion: networking.k8s.io/v1
 {{- end }}
 kind: Ingress
 metadata:
-  name: {{ $fullName | trunc 49 }}-docker-{{ $connector.port }}
+  name: {{ $fullName | trunc 47 }}-connector-{{ $connector.port }}
   labels: {{ $labelsExtra | nindent 4 }}
   annotations: {{- toYaml $.Values.ingress.annotations | nindent 4 }}
 spec:
