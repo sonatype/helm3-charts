@@ -3,6 +3,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ template "nexus.name" . }}-properties
+  namespace: {{ .Values.namespace }}
   labels: {{- include "nexus.labels" . | nindent 4 }}
     {{- if .Values.nexus.extraLabels }}
       {{- with .Values.nexus.extraLabels }}

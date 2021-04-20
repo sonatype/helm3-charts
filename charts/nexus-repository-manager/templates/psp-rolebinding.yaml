@@ -7,11 +7,14 @@ metadata:
     {{ toYaml . | indent 4 }}
   {{- end }}
   name: {{ template "nexus.name" . }}-psp-use
+  namespace: {{ .Values.namespace }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
   name: {{ template "nexus.name" . }}-psp-use
+  namespace: {{ .Values.namespace }}
 subjects:
 - kind: ServiceAccount
   name: {{ include "nexus.serviceAccountName" . }}
+  namespace: {{ .Values.namespace }}
 {{- end -}}
