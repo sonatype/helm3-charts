@@ -88,7 +88,7 @@ The following table lists the configurable parameters of the Nexus chart and the
 | `deploymentStrategy`                        | Deployment Strategy     |  `Recreate` |
 | `nexus.imagePullPolicy`                     | Nexus image pull policy             | `IfNotPresent`                          |
 | `nexus.imagePullSecrets`                     | Secret to download Nexus image from private registry      | `nil`             |
-| `nexus.docker.enabled`                      | Enable/disable docker support       | `true`                                  |
+| `nexus.docker.enabled`                      | Enable/disable docker support       | `false`                                  |
 | `nexus.docker.registries`                   | Support multiple docker registries  | (see below)                             |
 | `nexus.docker.registries[0].host`           | Host for the docker registry        | `cluster.local`                         |
 | `nexus.docker.registries[0].port`           | Port for the docker registry        | `5000`                                  |
@@ -136,8 +136,9 @@ The following table lists the configurable parameters of the Nexus chart and the
 | `service.labels`                            | Service labels                   | `nil`                                      |
 | `service.annotations`                       | Service annotations              | `nil`                                      |
 | `service.type`                              | Service Type                     | `ClusterIP`                                |
-| `route.enabled`         | Set to true to create route for additional service | `false` |
-| `route.name`            | Name of route                                      | `docker` |
+| `nexusUIRoute.enabled`         | Set to true to create route for Nexus UI (for OpenShift) | `false` |
+| `route.enabled`         | Set to true to create route for additional (eg. docker) service (for OpenShift) | `false` |
+| `route.name`            | Name of route for additional service               | `docker` |
 | `route.portName`        | Target port name of service                        | `docker` |
 | `route.labels`          | Labels to be added to route                        | `{}` |
 | `route.annotations`     | Annotations to be added to route                   | `{}` |
