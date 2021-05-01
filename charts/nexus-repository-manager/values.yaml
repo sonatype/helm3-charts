@@ -43,7 +43,7 @@ nexus:
       # memory: 4800Mi
   # The ports should only be changed if the nexus image uses a different port
   nexusPort: 8081
-
+  imagePullSecrets: []
   securityContext:
     fsGroup: 2000
   podAnnotations: {}
@@ -67,7 +67,6 @@ nexus:
   #   - "www.example.com"
 
 
-imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
