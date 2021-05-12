@@ -1,4 +1,6 @@
 <excludes>
   <exclude>**/*.md</exclude>
   <exclude>**/.*/**</exclude>
+  <exclude>**/test/assert.sh</exclude>
+  <exclude>**/test/output/**</exclude>
 </excludes>
