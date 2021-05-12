@@ -56,6 +56,8 @@ spec:
           volumeMounts:
             - mountPath: /sonatype-work
               name: nxiq-pv-data
+            - mountPath: /var/log/nexus-iq-server
+              name: nxiq-pv-log
             - mountPath: /etc/nexus-iq-server
               name: config-volume
   {{- if and (.Values.iq.secretName) (.Values.iq.secretMountName) }}
@@ -71,6 +73,9 @@ spec:
         - name: nxiq-pv-data
           persistentVolumeClaim:
             claimName: {{ .Values.persistence.existingClaim | default (printf "%s-%s" (include "iqserver.fullname" .) "data") }}
+        - name: nxiq-pv-log
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.existingClaim | default (printf "%s-%s" (include "iqserver.fullname" .) "log") }}
         - name: config-volume
           configMap:
             name: {{ template "iqserver.fullname" . }}-conf

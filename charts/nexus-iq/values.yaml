@@ -125,9 +125,12 @@ persistence:
   # volumeConfiguration:
   #   hostPath:
   #     path: /data/nxiq/
-  # If PersistentDisk already exists you can create a PV for it by including the 2 following keypairs.
+  # If you want to use existing PersistentDisk with data, you can create a PV for it by uncommenting the following lines. (Currently supports GCE PD only)
   # pdName: nexus-data-disk
   # fsType: ext4
+  # Uncomment below 2 lines, if you want to use an existing GCE PersistentDisk for IQ Logs.
+  # logpdName: nexus-log-disk
+  # logfsType: ext4
 
 # configYaml is the full text of the config.yml file that will be passed to IQ Server
 configYaml:
@@ -144,17 +147,20 @@ configYaml:
     requestLog: 
       appenders:
         #All appenders set to console
-        - type: console    
+        - type: file
+          currentLogFilename: /var/log/nexus-iq-server/request.log    
           # Do not display log statements below this threshold to stdout.
-          threshold: INFO
+          # threshold: INFO
           logFormat: "%clientHost %l %user [%date] \"%requestURL\" %statusCode %bytesSent %elapsedTime \"%header{User-Agent}\""
+          archivedLogFilenamePattern: /var/log/nexus-iq-server/request-%d.log.gz
+          archivedFileCount: 50
   
   createSampleData: true
 
   logging:
 
     # The default level of all loggers. Can be OFF, ERROR, WARN, INFO, DEBUG, TRACE, or ALL.
-    level: ERROR
+    level: DEBUG
 
     # Logger-specific settings.
     loggers:
@@ -168,10 +174,12 @@ configYaml:
       "com.sonatype.insight.audit":
         appenders:
           #All appenders set to console
-          - type: console
-    
+          - type: file
+            currentLogFilename: /var/log/nexus-iq-server/audit.log    
             # Do not display log statements below this threshold to stdout.
-            threshold: INFO
+            # threshold: INFO
+            archivedLogFilenamePattern: /var/log/nexus-iq-server/audit-%d.log.gz
+            archivedFileCount: 50
 
       "com.sonatype.insight.policy.violation":
         appenders:
@@ -189,3 +197,16 @@ configYaml:
         threshold: INFO
       
         logFormat: "%d{'yyyy-MM-dd HH:mm:ss,SSSZ'} %level [%thread] %X{username} %logger - %msg%n"
+
+      - type: file
+    
+        # Do not display log statements below this threshold to stdout.
+        threshold: ALL
+      
+        logFormat: "%d{'yyyy-MM-dd HH:mm:ss,SSSZ'} %level [%thread] %X{username} %logger - %msg%n"
+        # The file to which current statements will be logged.
+        currentLogFilename: /var/log/nexus-iq-server/clm-server.log
+        archivedLogFilenamePattern: /var/log/nexus-iq-server/clm-server-%d.log.gz
+        archivedFileCount: 50
+
+

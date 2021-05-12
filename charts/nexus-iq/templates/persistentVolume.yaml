@@ -24,4 +24,30 @@ spec:
     pdName: {{ .Values.persistence.pdName }}
     fsType: {{ .Values.persistence.fsType }}
 {{- end }}
+{{- if .Values.persistence.logpdName -}}
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .Values.persistence.logpdName }}
+  labels:
+{{ include "iqserver.labels" . | indent 4 }}
+    {{- if .Values.iq.extraLabels }}
+      {{- with .Values.iq.extraLabels }}
+        {{ toYaml . | indent 4 }}
+      {{- end }}
+    {{- end }}
+spec:
+  accessModes:
+    - {{ .Values.persistence.accessMode }}
+  capacity:
+    storage: {{ .Values.persistence.storageSize }}
+  persistentVolumeReclaimPolicy: Recycle
+  claimRef:
+    namespace: {{ .Release.Namespace }}
+    name: {{ template "iqserver.fullname" . }}-log
+  gcePersistentDisk:
+    pdName: {{ .Values.persistence.logpdName }}
+    fsType: {{ .Values.persistence.fsType }}
+{{- end }}
 {{- end }}
