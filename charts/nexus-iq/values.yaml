@@ -8,7 +8,7 @@ replicaCount: 1
 image:
   # Sonatype Official Public Image
   repository: sonatype/nexus-iq-server
-  tag: 1.118.0
+  tag: 1.119.0
   pullPolicy: IfNotPresent
   
 iq:
