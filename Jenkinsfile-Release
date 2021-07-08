@@ -28,9 +28,10 @@ dockerizedBuildPipeline(
     final branch = gitBranch(env)
 
     sh """
-      git config user.email 'sonatype-ci@sonatype.com'
-      git config user.name
-      git config user.name 'Sonatype CI'
+      git config --global user.email
+      #git config --global user.email 'sonatype-ci@sonatype.com'
+      git config --global user.name
+      # git config user.name 'Sonatype CI'
 
       git checkout ${branch}
       git add docs
