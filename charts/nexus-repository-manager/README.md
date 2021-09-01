@@ -112,11 +112,15 @@ The following table lists the configurable parameters of the Nexus chart and the
 | `nexus.hostAliases`                         | Aliases for IPs in /etc/hosts       | []                                      |
 | `nexus.properties.override`                 | Set to true to override default nexus.properties | `false`                    |
 | `nexus.properties.data`                 | A map of custom nexus properties if `override` is set to true | `nexus.scripts.allowCreation: true`            |
-| `ingress.enabled`                           | Create an ingress for Nexus         | `true`                                  |
+| `ingress.enabled`                           | Create an ingress for Nexus         | `false`                                 |
 | `ingress.className`                         | The name of the ingress class       | `nginx`                                 |
 | `ingress.annotations`                       | Annotations to enhance ingress configuration  | `[]`                          |
-| `ingress.tls.secretName`                    | Name of the secret storing TLS cert, `false` to use the Ingress' default certificate | `nexus-tls`                             |
-| `ingress.path`                              | Path for ingress rules. GCP users should set to `/*` | `/`                    |
+| `ingress.tls`                       		  | TLS configuration                   | `[]`                                    |
+| `ingress.tls.hosts`                         | Hosts for the TLS secret            | `[]`                                    |
+| `ingress.tls.secretName`                    | Name of the secret storing TLS cert | `nil`                                   |
+| `ingress.hostRepo`                          | Domain of nexus 					| `repo.demo`                             |
+| `ingress.hostPath`                          | Path of nexus 						| `/`                        			  |
+| `ingress.hostPathType`                      | Path type of nexus 			        | `Prefix`                    			  |
 | `tolerations`                               | tolerations list                    | `[]`                                    |
 | `config.enabled`                            | Enable configmap                    | `false`                                 |	
 | `config.mountPath`                          | Path to mount the config            | `/sonatype-nexus-conf`                  |	
