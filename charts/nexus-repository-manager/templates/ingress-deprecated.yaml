@@ -1,9 +1,9 @@
-{{- if .Capabilities.APIVersions.Has "networking.k8s.io/v1" -}}
+{{- if .Capabilities.APIVersions.Has "networking.k8s.io/v1beta1" -}}
 {{- if .Values.ingress.enabled -}}
 {{- $fullName := include "nexus.fullname" . -}}
 {{- $svcPort := .Values.nexus.nexusPort -}}
 {{- $ingressPath := .Values.ingress.path -}}
-apiVersion: networking.k8s.io/v1
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: {{ $fullName }}
@@ -17,11 +17,11 @@ metadata:
   {{- if .Values.ingress.annotations }}
   {{- with .Values.ingress.annotations }}
   annotations:
+    kubernetes.io/ingress.class: {{ .Values.ingress.className }}
     {{- toYaml . | nindent 4 }}
   {{- end }}
   {{- end }}
 spec:
-  ingressClassName: {{ .Values.ingress.className }}
   {{- if .Values.ingress.tls }}
   tls:
     {{- range .Values.ingress.tls }}
@@ -37,17 +37,14 @@ spec:
       http:
         paths:
           - path: {{ .Values.ingress.hostPath }}
-            pathType: {{ .Values.ingress.hostPathType }}
             backend:
-              service:
-                name: {{ $fullName }}
-                port:
-                  number: {{ $svcPort }}
+              serviceName: {{ $fullName }}
+              servicePort: {{ $svcPort }}
 
 {{ if .Values.nexus.docker.enabled }}
 {{ range $registry := .Values.nexus.docker.registries }}
 ---
-apiVersion: networking.k8s.io/v1
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: {{ $fullName | trunc 49 }}-docker-{{ $registry.port }}
@@ -61,11 +58,11 @@ metadata:
   {{- if $.Values.ingress.annotations }}
   {{- with $.Values.ingress.annotations }}
   annotations:
+    kubernetes.io/ingress.class: {{ .Values.ingress.className }}
     {{- toYaml . | nindent 4 }}
   {{- end }}
   {{- end }}
 spec:
-  ingressClassName: {{ .Values.ingress.className }}
   tls:
     - hosts:
       - {{ $registry.host | quote }}
@@ -75,12 +72,9 @@ spec:
       http:
         paths:
           - path: /
-            pathType: Prefix
             backend:
-              service:
-                name: {{ $fullName | trunc 49 }}-docker-{{ $registry.port }}
-                port:
-                  number: {{ $registry.port }}
+              serviceName: {{ $fullName | trunc 49 }}-docker-{{ $registry.port }}
+              servicePort: {{ $registry.port }}
 {{- end }}
 {{- end }}
 {{- end }}
