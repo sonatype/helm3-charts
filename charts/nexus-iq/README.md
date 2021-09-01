@@ -79,11 +79,18 @@ The command removes all the Kubernetes components associated with the chart and 
 | `iq.env`             | IQ server environment variables | `[{JAVA_OPTS: -Xms1200M -Xmx1200M}]` |
 | `iq.secretName`      | The name of a secret to mount inside the container  | See `values.yaml` |
 | `iq.secretMountName`      | Where in the container to mount the data from `secretName`  | See `values.yaml` |
-| `ingress.enabled`                           | Create an ingress for Nexus         | `true`                                  |
-| `ingress.annotations`                       | Annotations to enhance ingress configuration  | `{}`                          |
-| `ingress.tls.enabled`                       | Enable TLS                          | `true`                                 |
-| `ingress.tls.secretName`                    | Name of the secret storing TLS cert, `false` to use the Ingress' default certificate | `nexus-tls`                             |
-| `ingress.path`                              | Path for ingress rules. GCP users should set to `/*` | `/`                    |
+| `ingress.enabled`                           | Create an ingress for Nexus         | `false`                                 |
+| `ingress.className`                         | The name of the ingress class       | `nginx`                                 |
+| `ingress.annotations`                       | Annotations to enhance ingress configuration  | `[]`                          |
+| `ingress.tls`                       		  | TLS configuration                   | `[]`                                    |
+| `ingress.tls.hosts`                         | Hosts for the TLS secret            | `[]`                                    |
+| `ingress.tls.secretName`                    | Name of the secret storing TLS cert | `nil`                                   |
+| `ingress.hostUI`                            | Domain of the ui 					| `iq-server.demo`                        |
+| `ingress.hostUIPath`                        | Path of the ui 						| `/`                        			  |
+| `ingress.hostUIPathType`                    | Path type of the ui 			    | `Prefix`                    			  |
+| `ingress.hostAdmin`                         | Domain of the admin ui 				| `admin.iq-server.demo`                  |
+| `ingress.hostAdminPath`                     | Path of the admin ui 				| `/`                        			  |
+| `ingress.hostAdminPathType`                 | Path type of the admin ui 			| `Prefix`                    			  |
 | `deployment.preStart.command`               | Command to run before starting the IQ Server container  | `nil`                   |
 | `deployment.postStart.command`              | Command to run after starting the IQ Server container  | `nil`                    |
 | `deployment.terminationGracePeriodSeconds`  | Update termination grace period (in seconds)        | 120s                    |
