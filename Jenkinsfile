@@ -24,9 +24,9 @@ dockerizedBuildPipeline(
   archiveArtifacts: 'docs/*',
   testResults: [],
   onSuccess: {
-    buildNotifications(currentBuild, env, 'master')
+    buildNotifications(currentBuild, env, 'main')
   },
   onFailure: {
-    buildNotifications(currentBuild, env, 'master')
+    buildNotifications(currentBuild, env, 'main')
   }
 )
