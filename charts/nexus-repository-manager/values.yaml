@@ -94,13 +94,15 @@ deployment:
   additionalVolumes:
   additionalVolumeMounts:
 
-
 ingress:
   enabled: false
   annotations: {kubernetes.io/ingress.class: nginx}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
+  
   hostPath: /
+  pathType: Prefix
+
   hostRepo: repo.demo
   tls: []
     # - secretName: nexus-local-tls
