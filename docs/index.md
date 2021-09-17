@@ -19,7 +19,7 @@ The current releases have been tested on minikube v1.12.3 running k8s v1.18.3
 - NXRM: `helm show values nexus-repo sonatype/nexus-repository-manager`
 - Nexus IQ: `helm show values nexus-iq sonatype/nexus-iq-server`
 
-Capture that output as your own `values.yaml`, and provide it to the `helm install` 
+Capture that output as your own `values.yaml` file, and provide it to the `helm install` 
 command with the `-f` option.
 
 ### Source
