@@ -29,7 +29,7 @@ keywords:
   - vulnerabilities
   - policy
 home: https://www.sonatype.com/product-nexus-lifecycle
-icon: https://sonatype.github.io/helm3-charts/NexusLifecycle_Icon.svg
+icon: https://sonatype.github.io/helm3-charts/NexusIQServer_Vertical.svg
 maintainers:
   - email:  support@sonatype.com
     name: Sonatype
