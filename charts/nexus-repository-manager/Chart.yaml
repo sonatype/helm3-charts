@@ -32,7 +32,7 @@ keywords:
   - repository-manager
   - nexus3
 home: https://www.sonatype.com/nexus-repository-oss
-icon: https://drive.google.com/file/d/1QAxuVSoNO43S34xSUWyQW9xyYIOUcmb7/view?usp=sharing
+icon: https://sonatype.github.io/helm3-charts/NexusRepo_Icon.svg
 sources:
   - https://github.com/sonatype/nexus-public
 maintainers:
