@@ -136,6 +136,7 @@ persistence:
 configYaml:
   baseUrl: http://iq-server.demo
   sonatypeWork: /sonatype-work
+  licenseFile: /etc/nexus-iq-license/license_lic
   server:
     applicationConnectors:
       - type: http
