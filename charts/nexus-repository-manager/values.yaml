@@ -6,7 +6,7 @@ deploymentStrategy: Recreate
 image:
   # Sonatype Official Public Image
   repository: sonatype/nexus3
-  tag: 3.33.1
+  tag: 3.35.0
   pullPolicy: IfNotPresent
 
 nexus:
@@ -115,7 +115,7 @@ service:
   enabled: true
   labels: {}
   annotations: {}
-  serviceType: ClusterIP
+  type: ClusterIP
 
 
 route:

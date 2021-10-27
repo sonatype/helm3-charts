@@ -8,7 +8,7 @@ replicaCount: 1
 image:
   # Sonatype Official Public Image
   repository: sonatype/nexus-iq-server
-  tag: 1.121.0
+  tag: 1.125.0
   pullPolicy: IfNotPresent
   
 iq:
@@ -136,6 +136,7 @@ persistence:
 configYaml:
   baseUrl: http://iq-server.demo
   sonatypeWork: /sonatype-work
+  licenseFile: /etc/nexus-iq-license/license_lic
   server:
     applicationConnectors:
       - type: http
