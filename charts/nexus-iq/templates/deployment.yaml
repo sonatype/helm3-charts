@@ -75,7 +75,7 @@ spec:
             claimName: {{ .Values.persistence.existingClaim | default (printf "%s-%s" (include "iqserver.fullname" .) "data") }}
         - name: nxiq-pv-log
           persistentVolumeClaim:
-            claimName: {{ .Values.persistence.existingClaim | default (printf "%s-%s" (include "iqserver.fullname" .) "log") }}
+            claimName: {{ .Values.persistence.existingLogClaim | default (printf "%s-%s" (include "iqserver.fullname" .) "log") }}
         - name: config-volume
           configMap:
             name: {{ template "iqserver.fullname" . }}-conf

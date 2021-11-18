@@ -90,6 +90,8 @@ The command removes all the Kubernetes components associated with the chart and 
 | `persistence.storageClass` | The provisioner class                        | `-` (disables dynamic provisioning             |
 | `persistence.storageSize` | The amount of drive space to allocate                        | `1Gi`             |
 | `persistence.accessMode` | Default access mode                        | `ReadWriteOnce`             |
+| `persistence.existingClaim` | Pre-created PVC name for Data Volume                        | `nil`             |
+| `persistence.existingLogClaim` | Pre-created PVC name for Log Volume                        | `nil`             |
 | `persistence.volumeConfiguration` | A YAML block to configure the persistent volume type. Defaults to `hostPath` which should not be used in production | `hostPath`             |
 
 ## Configuring IQ Server
