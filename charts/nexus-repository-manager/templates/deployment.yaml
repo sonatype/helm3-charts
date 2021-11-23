@@ -24,7 +24,7 @@ spec:
         {{- with .Values.nexus.extraSelectorLabels }}
           {{ toYaml . | indent 6 }}
         {{- end }}
-      {{- end }}      
+      {{- end }}
   template:
     metadata:
       annotations:
@@ -104,7 +104,7 @@ spec:
             timeoutSeconds: {{ .Values.nexus.readinessProbe.timeoutSeconds }}
             {{- end }}
           volumeMounts:
-            - mountPath: /nexus-data	
+            - mountPath: /nexus-data
               name: {{ template "nexus.name" . }}-data
             {{- if .Values.config.enabled }}
             - mountPath: {{ .Values.config.mountPath }}
@@ -161,5 +161,9 @@ spec:
         {{- end }}
     {{- with .Values.tolerations }}
       tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
 {{ toYaml . | indent 8 }}
     {{- end }}
