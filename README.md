@@ -42,6 +42,27 @@ file to the `docs/` directory which is the root of the
 
 The build process requires Helm 3.
 
+### Testing the Helm Charts
+To test Helm Charts locally you will need to follow the next steps:
+
+1. Install docker, helm, kubectl, and [minikube](https://minikube.sigs.k8s.io/docs/start/), if you don't already have it on your local workstation.
+2. Start up minikube: `minikube start`
+3. Confirm minikube is up and running: `minikube status`
+4. List the existing pods in the cluster: `kubectl get pods`  (There should not be anything listed at this point.)
+5. Install the helm chart in any of these ways:
+    * From a copy of the source: `helm install iq {path/to/your/helm3-charts}/charts/nexus-iq` 
+    * From our production online repo: Add our helm repo locally as instructed at `https://sonatype.github.io/helm3-charts/`
+6. Install a server from the production chart: helm install iq sonatype/nexus-iq-server 
+7. List installed servers with helm: helm list 
+8. Watch the server start in kubernetes by repeatedly running: `kubectl get pods`
+9. Use the pod name you get from last command to follow the console logs: `kubectl logs -f iq-nexus-iq-server-xxx` 
+10. Confirm expected version numbers in those logs.
+11. Forward a localhost port to a port on the running pod: `kubectl port-forward iq-nexus-iq-server-xxx 8070`
+12. Connect and check that your fresh new server is successfully running: `http://localhost:8070/`
+13. Uninstall the server with helm: `helm delete iq` 
+14. Confirm it's gone: `helm list && kubectl get pods`
+15. Shutdown minikube: `minikube stop`
+
 ### Further Notes on Usage
 
 #### Resolver File and Ingress-DNS

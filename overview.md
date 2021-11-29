@@ -53,12 +53,4 @@ N/A
 
 
 ## Localhost Development
-See [Helm Charts](https://docs.sonatype.com/display/INT/Helm+Charts) internal documentation.
-
-
-## Architecture Diagram
-See [Helm Charts](https://docs.sonatype.com/display/INT/Helm+Charts) internal documentation.
-
-
-## Release Plan
-See [Helm Charts](https://docs.sonatype.com/display/INT/Helm+Charts) internal documentation.
+See [README.md](./README.md) file
