@@ -25,7 +25,7 @@ As described earlier in this project we use Helm, a package manager for Kubernet
 
 In the repository we have two Charts, one for Nexus IQ `\charts\nexus-iq`,  and other for Nexus Repository Manager `\charts\nexus-repository-manager`. 
 
-Each Charts is composed for a set of **templates** that are basically `yaml` files that descibe the different Kubernetes resources along with a templating syntaxys to define variables, that is used by Helm. Also, for each chart, we have a `values.yaml` file, with the default values for the different varaibles that you will find in the different **templates**.
+Each Charts is composed for a set of **templates** that are basically `yaml` files that describe the different Kubernetes resources along with a templating syntax to define variables, that is used by Helm. Also, for each chart, we have a `values.yaml` file, with the default values for the different variables that you will find in the different **templates**.
 
 Finally these charts are indexed and promoted at ArtifactHub. The Helm repository's `index.yaml` and all charts binaries are in `\docs` folder. The index we publish lives in a **GitHub Pages site**: https://sonatype.github.io/helm3-charts/index.yaml. The repository is exposed to the public using **GitHub pages**.
 
