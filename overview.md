@@ -16,7 +16,7 @@ This page provides high-level technical information regarding the **Helm3 Charts
 
 [Helm](https://helm.sh/) is a package manager and templating engine for installing software in [Kubernetes](https://kubernetes.io/). We provide our [own Helm Charts](https://sonatype.github.io/helm3-charts/) to help people install our servers in Kubernetes. 
 
-These charts are indexed and promoted at ArtifactHub. The index we publish lives in a GitHub Pages site: https://sonatype.github.io/helm3-charts/index.yaml. With helm charts, the user can change settings by modifying a copy of the `values.yaml` before installing the chart.
+These charts are indexed and promoted at [ArtifactHub](https://artifacthub.io/packages/search?page=1&repo=sonatype). The index we publish lives in a GitHub Pages site: https://sonatype.github.io/helm3-charts/index.yaml. With helm charts, the user can change settings by modifying a copy of the `values.yaml` before installing the chart.
 
 
 ## High-Level Technical Description
