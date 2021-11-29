@@ -14,22 +14,22 @@ This page provides high-level technical information regarding the **Helm3 Charts
 
 ## Product Overview
 
-[Helm](https://helm.sh/) is a package manager and templating engine for installing softare in [Kubernetes](https://kubernetes.io/). We provide our [own Helm Charts](https://sonatype.github.io/helm3-charts/) to help people install our servers in Kubernetes. 
+[Helm](https://helm.sh/) is a package manager and templating engine for installing software in [Kubernetes](https://kubernetes.io/). We provide our [own Helm Charts](https://sonatype.github.io/helm3-charts/) to help people install our servers in Kubernetes. 
 
 These charts are indexed and promoted at ArtifactHub. The index we publish lives in a GitHub Pages site: https://sonatype.github.io/helm3-charts/index.yaml. With helm charts, the user can change settings by modifying a copy of the `values.yaml` before installing the chart.
 
 
 ## High-Level Technical Description
 
-As described earlier in this project we use Helm, a package manager for Kubernetes. Helm will help us to quickly install/upgrade/mantain Nexus IQ and Nexus Repository Manager on a Kubernetes cluster.
+As described earlier in this project we use Helm, a package manager for Kubernetes. Helm will help us to quickly install/upgrade/maintain Nexus IQ and Nexus Repository Manager on a Kubernetes cluster.
 
 In this repository, we have two charts: 
 * Nexus IQ `\charts\nexus-iq`
 * Nexus Repository Manager `\charts\nexus-repository-manager`
 
-Each Charts is composed for a set of **templates** that are `yaml` files that describe the different Kubernetes resources along with a templating syntax to define variables, that is used by Helm. Also, for each chart, we have a `values.yaml` file, with the default values for the different variables that you will find in the different **templates**.
+Each chart is composed for a set of **templates** that are `yaml` files that describe the different Kubernetes resources along with a templating syntax to define variables, that is used by Helm. Also, for each chart, we have a `values.yaml` file, with the default values for the different variables that you will find in the different **templates**.
 
-Finally these charts are indexed and promoted at ArtifactHub. The Helm repository's `index.yaml` and all charts binaries are in `\docs` folder. The index we publish lives in a **GitHub Pages site**: https://sonatype.github.io/helm3-charts/index.yaml. The repository is exposed to the public using **GitHub pages**.
+Finally these charts are indexed and promoted at [ArtifactHub](https://artifacthub.io/packages/search?page=1&repo=sonatype). The Helm repository's `index.yaml` and all charts binaries are in `\docs` folder. The index we publish lives in a **GitHub Pages site**: https://sonatype.github.io/helm3-charts/index.yaml. The repository is exposed to the public using **GitHub pages**.
 
 
 ## Internal Dependencies
