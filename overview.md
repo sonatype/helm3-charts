@@ -23,7 +23,9 @@ These charts are indexed and promoted at ArtifactHub. The index we publish lives
 
 As described earlier in this project we use Helm, a package manager for Kubernetes. Helm will help us to quickly install/upgrade/mantain Nexus IQ and Nexus Repository Manager on a Kubernetes cluster.
 
-In the repository we have two Charts, one for Nexus IQ `\charts\nexus-iq`,  and other for Nexus Repository Manager `\charts\nexus-repository-manager`. 
+In this repository, we have two charts: 
+* Nexus IQ `\charts\nexus-iq`
+* Nexus Repository Manager `\charts\nexus-repository-manager`
 
 Each Charts is composed for a set of **templates** that are basically `yaml` files that describe the different Kubernetes resources along with a templating syntax to define variables, that is used by Helm. Also, for each chart, we have a `values.yaml` file, with the default values for the different variables that you will find in the different **templates**.
 
