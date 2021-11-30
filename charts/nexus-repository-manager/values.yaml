@@ -117,6 +117,13 @@ service:
   annotations: {}
   type: ClusterIP
 
+secondaryService:
+  name: nexus3-internal
+  enabled: true
+  port: 8082
+  annotations: {}
+  type: ClusterIP
+
 
 route:
   enabled: false

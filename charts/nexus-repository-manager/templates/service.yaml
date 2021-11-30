@@ -29,38 +29,6 @@ spec:
       {{- end }}
     {{- end }}
 
-
-{{- if .Values.secondaryService.enabled -}}
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: {{ include "nexus.fullname" . }}-secondary-{{- if .Values.secondaryService.name }}
-{{- if .Values.secondaryService.annotations }}
-  annotations:
-{{ toYaml .Values.secondaryService.annotations | indent 4 }}
-{{- end }}
-  labels:
-    {{- include "nexus.labels" . | nindent 4 }}
-    {{- if .Values.nexus.extraLabels }}
-      {{- with .Values.nexus.extraLabels }}
-        {{ toYaml . | indent 4 }}
-      {{- end }}
-    {{- end }}
-spec:
-  type: {{ .Values.secondaryService.type }}
-  ports:
-    - port: {{ .Values.secondaryService.port }}
-      protocol: TCP
-      name: nexus-ui-secondary
-  selector:
-    {{- include "nexus.selectorLabels" . | nindent 4 }}
-    {{- if .Values.nexus.extraSelectorLabels }}
-      {{- with .Values.nexus.extraSelectorLabels }}
-        {{ toYaml . | indent 4 }}
-      {{- end }}
-    {{- end }}
-
 {{- if .Values.nexus.docker.enabled }}
 {{- range $registry := .Values.nexus.docker.registries }}
 ---
