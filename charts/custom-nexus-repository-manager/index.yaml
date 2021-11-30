@@ -27,6 +27,6 @@ entries:
     - https://github.com/sonatype/nexus-public
     type: application
     urls:
-    - nexus-repository-manager-37.0.0.tgz
+    - https://github.com/nielsen-vbrand/helm3-charts/blob/main/charts/custom-nexus-repository-manager/nexus-repository-manager-37.0.0.tgz
     version: 37.0.0
 generated: "2021-11-30T14:19:30.038036+02:00"
