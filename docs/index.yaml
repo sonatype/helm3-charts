@@ -4,7 +4,7 @@ entries:
   - apiVersion: v2
     appVersion: 1.130.0
     created: "2021-12-17T16:55:50.252406807Z"
-    description: Sonatype Nexus IQ Server continuously monitors your entire software
+    description: Sonatype Nexus IQ Server continuously monitors your entire software ecosystem
       supply chain
     digest: 37ca06a3f1e65dbd3743480da6b5bcb3c30325b2962258474c1a6f83f9134b69
     home: https://www.sonatype.com/product-nexus-lifecycle
