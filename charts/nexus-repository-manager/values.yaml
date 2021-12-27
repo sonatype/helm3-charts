@@ -97,10 +97,12 @@ deployment:
 
 ingress:
   enabled: false
-  annotations: {kubernetes.io/ingress.class: nginx}
+  annotations:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
+  #className: nginx
   hostPath: /
+  #hostPathType: ImplementationSpecific
   hostRepo: repo.demo
   tls: []
     # - secretName: nexus-local-tls
