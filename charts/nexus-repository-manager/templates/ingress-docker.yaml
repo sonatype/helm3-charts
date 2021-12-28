@@ -1,0 +1,64 @@
+{{- if .Values.ingress.enabled -}}
+{{- if .Values.nexus.docker.enabled }}
+{{- $fullName := include "nexus.fullname" . -}}
+{{- $svcPort := .Values.nexus.nexusPort -}}
+{{- $ingressPath := .Values.ingress.path -}}
+{{- $ingressClass := .Values.ingress.className }}
+{{- $GitVersion := .Capabilities.KubeVersion.GitVersion }}
+{{- $hostPathType := .Values.ingress.hostPathType }}
+{{ range $registry := .Values.nexus.docker.registries }}
+{{- if and $ingressClass (not (semverCompare ">=1.18-0" $GitVersion)) }}
+  {{- if not (hasKey .Values.ingress.annotations "kubernetes.io/ingress.class") }}
+  {{- $_ := set .Values.ingress.annotations "kubernetes.io/ingress.class" $ingressClass}}
+  {{- end }}
+{{- end }}
+{{- if semverCompare ">=1.19-0" $GitVersion -}}
+apiVersion: networking.k8s.io/v1
+{{- else if semverCompare ">=1.14-0" $GitVersion -}}
+apiVersion: networking.k8s.io/v1beta1
+{{- else -}}
+apiVersion: extensions/v1beta1
+{{- end }}
+kind: Ingress
+metadata:
+  name: {{ $fullName | trunc 49 }}-docker-{{ $registry.port }}
+  labels:
+    {{- include "nexus.labels" $ | nindent 4 }}
+    {{- if $.Values.nexus.extraLabels }}
+      {{- with $.Values.nexus.extraLabels }}
+        {{ toYaml . | indent 4 }}
+      {{- end }}
+    {{- end }}
+  {{- with $.Values.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- if and $ingressClass (semverCompare ">=1.18-0" $GitVersion) }}
+  ingressClassName: {{ $ingressClass }}
+  {{- end }}
+  tls:
+    - hosts:
+      - {{ $registry.host | quote }}
+      secretName: {{ $registry.secretName }}
+  rules:
+    - host: {{ $registry.host }}
+      http:
+        paths:
+          - path: /
+            {{- if and $hostPathType (semverCompare ">=1.18-0" $GitVersion) }}
+            pathType: {{ $hostPathType }}
+            {{- end }}
+            backend:
+              {{- if semverCompare ">=1.19-0" $GitVersion }}
+              service:
+                name: {{ $fullName | trunc 49 }}-docker-{{ $registry.port }}
+                port:
+                  number: {{ $registry.port }}
+              {{- else }}
+              serviceName: {{ $fullName | trunc 49 }}-docker-{{ $registry.port }}
+              servicePort: {{ $registry.port }}
+              {{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
