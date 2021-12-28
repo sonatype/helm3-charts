@@ -114,8 +114,10 @@ The following table lists the configurable parameters of the Nexus chart and the
 | `nexus.properties.data`                 | A map of custom nexus properties if `override` is set to true | `nexus.scripts.allowCreation: true`            |
 | `ingress.enabled`                           | Create an ingress for Nexus         | `true`                                  |
 | `ingress.annotations`                       | Annotations to enhance ingress configuration  | `{kubernetes.io/ingress.class: nginx}`                          |
-| `ingress.tls.secretName`                    | Name of the secret storing TLS cert, `false` to use the Ingress' default certificate | `nexus-tls`                             |
+| `ingress.className`                         | Ingress Class to use                | `nginx`                                   |
 | `ingress.path`                              | Path for ingress rules. GCP users should set to `/*` | `/`                    |
+| `ingress.hostPathType`                      | pathType e.G. Exact, Prefix         | `ImplementationSpecific`                |
+| `ingress.tls.secretName`                    | Name of the secret storing TLS cert, `false` to use the Ingress' default certificate | `nexus-tls`                             |
 | `tolerations`                               | tolerations list                    | `[]`                                    |
 | `config.enabled`                            | Enable configmap                    | `false`                                 |	
 | `config.mountPath`                          | Path to mount the config            | `/sonatype-nexus-conf`                  |	
