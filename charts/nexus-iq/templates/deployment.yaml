@@ -47,10 +47,20 @@ spec:
             httpGet:
               path: /ping
               port: admin
+            initialDelaySeconds: {{ .Values.iq.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.iq.livenessProbe.periodSeconds }}
+            failureThreshold: {{ .Values.iq.livenessProbe.failureThreshold }}
+            timeoutSeconds: {{ .Values.iq.livenessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.iq.livenessProbe.successThreshold }}
           readinessProbe:
             httpGet:
               path: /
               port: application
+            initialDelaySeconds: {{ .Values.iq.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.iq.readinessProbe.periodSeconds }}
+            failureThreshold: {{ .Values.iq.readinessProbe.failureThreshold }}
+            timeoutSeconds: {{ .Values.iq.readinessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.iq.readinessProbe.successThreshold }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:

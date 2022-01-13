@@ -76,9 +76,19 @@ The command removes all the Kubernetes components associated with the chart and 
 | `iq.memory`          | The amount of RAM to allocate                                | `1Gi`             |
 | `iq.licenseSecret`   | The base-64 encoded license file to be installed at startup  | `""`              |
 | `iq.configYaml`      | A YAML block which will be used as a configuration block for IQ Server. | See `values.yaml` |
-| `iq.env`             | IQ server environment variables | `[{JAVA_OPTS: -Xms1200M -Xmx1200M}]` |
-| `iq.secretName`      | The name of a secret to mount inside the container  | See `values.yaml` |
+| `iq.env`             | IQ server environment variables 							  | `[{JAVA_OPTS: -Xms1200M -Xmx1200M}]` |
+| `iq.secretName`      | The name of a secret to mount inside the container  		  | See `values.yaml` |
 | `iq.secretMountName`      | Where in the container to mount the data from `secretName`  | See `values.yaml` |
+| `iq.livenessProbe.initialDelaySeconds`   | LivenessProbe initial delay              | 10                |
+| `iq.livenessProbe.periodSeconds`         | Seconds between polls                    | 10                |
+| `iq.livenessProbe.failureThreshold`      | Number of attempts before failure   	  | 3                 |
+| `iq.livenessProbe.timeoutSeconds`        | Time in seconds after liveness probe times out    			   | 2 |
+| `iq.livenessProbe.successThreshold`      | Number of attempts for the probe to be considered successful  | 1 |
+| `iq.readinessProbe.initialDelaySeconds`  | ReadinessProbe initial delay        	  | 10                |
+| `iq.readinessProbe.periodSeconds`        | Seconds between polls               	  | 10                |
+| `iq.readinessProbe.failureThreshold`     | Number of attempts before failure   	  | 3                 |
+| `iq.readinessProbe.timeoutSeconds`       | Time in seconds after readiness probe times out    		   | 2 |
+| `iq.readinessProbe.successThreshold`     | Number of attempts for the probe to be considered successful  | 1 |
 | `ingress.enabled`                           | Create an ingress for Nexus         | `true`                                  |
 | `ingress.annotations`                       | Annotations to enhance ingress configuration  | `{}`                          |
 | `ingress.tls.enabled`                       | Enable TLS                          | `true`                                 |
