@@ -75,10 +75,10 @@ The command removes all the Kubernetes components associated with the chart and 
 | `iq.adminPort`       | Port of the application connector. Must match the value in the `configYaml` property | `8071`            |
 | `iq.memory`          | The amount of RAM to allocate                                | `1Gi`             |
 | `iq.licenseSecret`   | The base-64 encoded license file to be installed at startup  | `""`              |
-| `iq.configYaml`      | A YAML block which will be used as a configuration block for IQ Server. | See `values.yaml` |
 | `iq.env`             | IQ server environment variables | `[{JAVA_OPTS: -Xms1200M -Xmx1200M}]` |
 | `iq.secretName`      | The name of a secret to mount inside the container  | See `values.yaml` |
-| `iq.secretMountName`      | Where in the container to mount the data from `secretName`  | See `values.yaml` |
+| `iq.secretMountName` | Where in the container to mount the data from `secretName`  | See `values.yaml` |
+| `configYaml`         | A YAML block which will be used as a configuration block for IQ Server. | See `values.yaml` |
 | `ingress.enabled`                           | Create an ingress for Nexus         | `true`                                  |
 | `ingress.annotations`                       | Annotations to enhance ingress configuration  | `{}`                          |
 | `ingress.tls.enabled`                       | Enable TLS                          | `true`                                 |
