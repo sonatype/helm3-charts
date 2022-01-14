@@ -95,7 +95,7 @@ The command removes all the Kubernetes components associated with the chart and 
 ## Configuring IQ Server
 
 You can define the `config.yml` for IQ Server in your `myvalues.yml` file on startup. 
-It is the `iq.configYaml` property. For more details, see the [Configuring IQ Server](https://help.sonatype.com/iqserver/configuring) help page.
+It is the `configYaml` property. For more details, see the [Configuring IQ Server](https://help.sonatype.com/iqserver/configuring) help page.
 Additionally the server can be started with JAVA_OPTS exported to the environment. This will be added to the server 
 process invocation and can be used for purposes such as changing the server memory settings. See the defaults set in
 [the values.yaml file](values.yaml).

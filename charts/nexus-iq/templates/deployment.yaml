@@ -35,6 +35,8 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
+            - name: SONATYPE_WORK
+              value: {{ .Values.configYaml.sonatypeWork }}
 {{ toYaml .Values.iq.env | indent 12 }}
           ports:
             - name: application
@@ -54,7 +56,7 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
-            - mountPath: /sonatype-work
+            - mountPath: {{ .Values.configYaml.sonatypeWork }}
               name: nxiq-pv-data
             - mountPath: /var/log/nexus-iq-server
               name: nxiq-pv-log

@@ -27,7 +27,7 @@ iq:
   secretMountName: #/etc/secret-volume
   env:
     - name: JAVA_OPTS
-      value: "-Djava.util.prefs.userRoot=${SONATYPE_WORK}/javaprefs"
+      value: "-Djava.util.prefs.userRoot=$(SONATYPE_WORK)/javaprefs"
       
 # In conjunction with 'secretName' and 'secretMountName' above, this is an example of how to inject required password
 # secrets into the runtime environment, and how to modify the startup of the server to utilize custom Java SSL stores.
