@@ -49,16 +49,16 @@ spec:
             httpGet:
               path: /ping
               port: admin
-    {{- if .Values.iq.livenessProbe }}
-            {{- toYaml .Values.iq.livenessProbe | nindent 12 }}
-    {{- end }}
+              {{- if .Values.iq.livenessProbe }}
+                {{- toYaml .Values.iq.livenessProbe | nindent 12 }}
+              {{- end }}
           readinessProbe:
             httpGet:
               path: /
               port: application
-    {{- if .Values.iq.livenessProbe }}
-            {{- toYaml .Values.iq.readinessProbe | nindent 12 }}
-    {{- end }} 
+              {{- if .Values.iq.livenessProbe }}
+                {{- toYaml .Values.iq.readinessProbe | nindent 12 }}
+              {{- end }} 
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
