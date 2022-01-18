@@ -30,18 +30,18 @@ iq:
       value: "-Djava.util.prefs.userRoot=${SONATYPE_WORK}/javaprefs"
   # Configures the liveness probe for IQ pod
   livenessProbe:
-  #  initialDelaySeconds: 10
-  #  periodSeconds: 10
-  #  failureThreshold: 3
-  #  timeoutSeconds: 2
-  #  successThreshold: 1
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    failureThreshold: 3
+    timeoutSeconds: 2
+    successThreshold: 1
   # Configures the readiness probe for IQ pod
   readinessProbe:
-  #  initialDelaySeconds: 10
-  #  periodSeconds: 10
-  #  failureThreshold: 3
-  #  timeoutSeconds: 2
-  #  successThreshold: 1
+    initialDelaySeconds: 120
+    periodSeconds: 30
+    failureThreshold: 10
+    timeoutSeconds: 2
+    successThreshold: 1
       
 # In conjunction with 'secretName' and 'secretMountName' above, this is an example of how to inject required password
 # secrets into the runtime environment, and how to modify the startup of the server to utilize custom Java SSL stores.
