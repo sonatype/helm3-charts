@@ -9,7 +9,7 @@
 # when the hash of the last commit in the branch you set up changes. This does
 # NOT apply to ownership claim operations, which are processed immediately.
 #
-#repositoryID:
+repositoryID: 5c0441e1-fd91-48d8-b0b8-7dd8fd5b7269
 owners: # (optional, used to claim repository ownership)
   - name: Sonatype
     email: support@sonatype.com
