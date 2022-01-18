@@ -119,6 +119,7 @@ persistence:
   # storageClass: "-"
   storageSize: 1Gi
   # existingClaim:
+  # existingLogClaim:
   # annotations:
   #  "helm.sh/resource-policy": keep
   # storageClass: "-"
