@@ -37,7 +37,7 @@ iq:
     successThreshold: 1
   # Configures the readiness probe for IQ pod
   readinessProbe:
-    initialDelaySeconds: 120
+    initialDelaySeconds: 30
     periodSeconds: 30
     failureThreshold: 10
     timeoutSeconds: 2
