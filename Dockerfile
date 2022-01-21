@@ -18,4 +18,4 @@ RUN apk update && apk upgrade && \
 
 #RUN helm plugin install https://github.com/quintush/helm-unittest
 
-RUN mkdir /.local && chmod 777 /.local
+RUN mkdir /.local /.cache && chmod 777 /.local /.cache
