@@ -16,6 +16,5 @@ FROM docker-all.repo.sonatype.com/alpine/helm:3.7.2
 RUN apk update && apk upgrade && \
     apk add --no-cache bash git openssh
 
-#RUN helm plugin install https://github.com/quintush/helm-unittest
-
 RUN mkdir /.local /.cache && chmod 777 /.local /.cache
+
