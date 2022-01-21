@@ -49,6 +49,28 @@ tests:
             - name: admin
               containerPort: 8071
               protocol: TCP
+      - equal:
+          path: spec.template.spec.containers[0].livenessProbe
+          value:
+            failureThreshold: 3
+            httpGet:
+              path: /ping
+              port: admin
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 2
+      - equal:
+          path: spec.template.spec.containers[0].readinessProbe
+          value:
+            failureThreshold: 10
+            httpGet:
+              path: /
+              port: application
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 2
   - it: should use our simple values
     set:
       replicaCount: 2
