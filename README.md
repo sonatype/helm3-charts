@@ -62,6 +62,13 @@ To test Helm Charts locally you will need to follow the next steps:
 13. Confirm it's gone: `helm list && kubectl get pods`
 14. Shutdown minikube: `minikube stop`
 
+To run unit tests:
+
+1. Install the unittest plugin for Helm: https://github.com/quintush/helm-unittest
+2. Run the tests for each individual chart:
+   * `cd charts/nexus-iq; helm unittest -3 -t junit -o test-output.xml .`
+   * `cd charts/nexus-repository-manager; helm unittest -3 -t junit -o test-output.xml .`
+
 ### Further Notes on Usage
 
 #### Resolver File and Ingress-DNS

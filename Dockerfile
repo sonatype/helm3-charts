@@ -1,4 +1,3 @@
-#!/bin/sh
 #
 # Copyright (c) 2020-present Sonatype, Inc. All rights reserved.
 #
@@ -12,22 +11,10 @@
 # See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
 #
 
-helm plugin install https://github.com/quintush/helm-unittest
+FROM docker-all.repo.sonatype.com/alpine/helm:3.7.2
 
-set -e
+RUN apk update && apk upgrade && \
+    apk add --no-cache bash git openssh
 
-# lint yaml of charts
-helm lint charts/nexus-iq
-helm lint charts/nexus-repository-manager
+RUN mkdir /.local /.cache && chmod 777 /.local /.cache
 
-# unit test
-(cd charts/nexus-iq; helm unittest -3 -t junit -o test-output.xml .)
-(cd charts/nexus-repository-manager; helm unittest -3 -t junit -o test-output.xml .)
-
-# package the charts into tgz archives
-helm package charts/nexus-iq --destination docs
-helm package charts/nexus-repository-manager --destination docs
-
-# index the existing tgz archives
-cd docs
-helm repo index . --url https://sonatype.github.io/helm3-charts
