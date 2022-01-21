@@ -17,3 +17,5 @@ RUN apk update && apk upgrade && \
     apk add --no-cache bash git openssh
 
 #RUN helm plugin install https://github.com/quintush/helm-unittest
+
+RUN mkdir /.local && chmod 777 /.local
