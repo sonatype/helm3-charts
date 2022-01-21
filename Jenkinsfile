@@ -21,7 +21,7 @@ dockerizedBuildPipeline(
   },
   skipVulnerabilityScan: true,
   archiveArtifacts: 'docs/*',
-  testResults: [],
+  testResults: ['**/test-output.xml'],
   onSuccess: {
     buildNotifications(currentBuild, env, 'main')
   },
