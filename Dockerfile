@@ -2,7 +2,7 @@
 # Includes the third-party code listed at http://links.sonatype.com/products/nexus/attributions.
 # "Sonatype" is a trademark of Sonatype, Inc.
 
-FROM docker-all.repo.sonatype.com/alpine/helm:3.5.0
+FROM docker-all.repo.sonatype.com/alpine/helm:3.7.2
 
 RUN apk update && apk upgrade && \
     apk add --no-cache bash git openssh
