@@ -19,16 +19,36 @@ tests:
           pattern: nexus-iq-server
       - matchRegex:
           path: metadata.labels.[app.kubernetes.io/version]
-          pattern: 1\.\d+\.\d
-      - matchRegex:
-          path: spec.template.spec.containers[0].image
-          pattern: sonatype/nexus-iq-server:.*
+          pattern: 1\.\d+\.\d+
       - equal:
           path: spec.replicas
           value: 1
       - equal:
           path: spec.strategy.type
           value: Recreate
+      - matchRegex:
+          path: spec.template.spec.containers[0].image
+          pattern: sonatype/nexus-iq-server:1\.\d+\.\d+
+      - equal:
+          path: spec.template.spec.containers[0].securityContext
+          value: {}
+      - equal:
+          path: spec.template.spec.containers[0].imagePullPolicy
+          value: IfNotPresent
+      - equal:
+          path: spec.template.spec.containers[0].env[0]
+          value:
+            name: SONATYPE_WORK
+            value: /sonatype-work
+      - equal:
+          path: spec.template.spec.containers[0].ports
+          value: 
+            - name: application
+              containerPort: 8070
+              protocol: TCP
+            - name: admin
+              containerPort: 8071
+              protocol: TCP
   - it: should use our simple values
     set:
       replicaCount: 2
