@@ -33,14 +33,20 @@ spec:
       http:
         paths:
           - path: {{ .Values.ingress.hostUIPath }}
+            pathType: Prefix
             backend:
-              serviceName: {{ $fullName }}
-              servicePort: 8070
+              service:
+                name: {{ $fullName }}
+                port:
+                  number: 8070
     - host: {{ .Values.ingress.hostAdmin }}
       http:
         paths:
           - path: {{ .Values.ingress.hostAdminPath }}
+            pathType: Prefix
             backend:
-              serviceName: {{ $fullName }}
-              servicePort: 8071
+              service:
+                name: {{ $fullName }}
+                port:
+                  number: 8071
 {{- end }}

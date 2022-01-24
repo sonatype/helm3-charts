@@ -36,8 +36,7 @@ tests:
 
       - equal:
           path: metadata.annotations
-          value:
-            kubernetes.io/ingress.class: nginx
+          value: null
 
       - equal:
           path: spec
@@ -46,21 +45,24 @@ tests:
               - host: iq-server.demo
                 http:
                   paths:
-                  - backend:
-                      serviceName: RELEASE-NAME-nexus-iq-server
-                      servicePort: 8070
-                    path: /
+                    - path: /
+                      pathType: Prefix
+                      backend:
+                        service:
+                          name: RELEASE-NAME-nexus-iq-server
+                          port:
+                            number: 8070
               - host: admin.iq-server.demo
                 http:
                   paths:
-                  - backend:
-                      serviceName: RELEASE-NAME-nexus-iq-server
-                      servicePort: 8071
-                    path: /
-  - it: doesn't render when disabled
-    set:
-      ingress:
-        enabled: false
+                    - path: /
+                      pathType: Prefix
+                      backend:
+                        service:
+                          name: RELEASE-NAME-nexus-iq-server
+                          port:
+                            number: 8071
+  - it: is disabled by default
     asserts:
       - hasDocuments:
           count: 0

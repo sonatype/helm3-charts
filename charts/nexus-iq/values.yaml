@@ -90,8 +90,7 @@ service:
 
 ingress:
   enabled: false
-  annotations: {kubernetes.io/ingress.class: nginx}
-    # kubernetes.io/ingress.class: nginx
+  annotations: {}
     # kubernetes.io/tls-acme: "true"
   hostUI: iq-server.demo
   hostUIPath: /
