@@ -62,7 +62,24 @@ tests:
                           name: RELEASE-NAME-nexus-iq-server
                           port:
                             number: 8071
+
   - it: is disabled by default
     asserts:
       - hasDocuments:
           count: 0
+
+  - it: renders with tls config when provided
+    set:
+      ingress:
+        enabled: true
+        tls:
+          - secretName: nexus-tls-local
+            hosts:
+              - iq.host
+    asserts:
+      - equal:
+          path: spec.tls
+          value:
+            - secretName: nexus-tls-local
+              hosts:
+                - iq.host
