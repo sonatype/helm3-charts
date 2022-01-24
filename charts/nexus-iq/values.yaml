@@ -91,17 +91,16 @@ service:
 ingress:
   enabled: false
   annotations: {}
-    # kubernetes.io/tls-acme: "true"
   hostUI: iq-server.demo
   hostUIPath: /
   hostAdmin: admin.iq-server.demo
   hostAdminPath: /
 
-  tls: []
-    # - secretName: nexus-local-tls
-    #   hosts:
-    #     - iqserver.local
-    #     - admin.iqserver.local
+  # tls:
+  #   - secretName: nexus-local-tls
+  #     hosts:
+  #       - iq-server.demo
+  #       - admin.iq-server.demo
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
