@@ -63,7 +63,7 @@ $ helm install -f myvalues.yaml sonatype-nexus ./
 ```
 
 The default login is randomized and can be found in sonatype /nexus-data/admin.password
-or you can get the initial static passwords (admin/admin123) by setting an environmental 
+or you can get the initial static passwords (admin/admin123) by setting the environment
 variable `NEXUS_SECURITY_RANDOMPASSWORD` to `false` in your `values.yaml`.
  
 
