@@ -4,19 +4,21 @@
 
 ### Prerequisites
 
-- Kubernetes 1.8+ with Beta APIs enabled
+- Kubernetes 1.19+
 - PV provisioner support in the underlying infrastructure
 - Helm 3
 
 These charts are designed to work out of the box with minikube using both ingess and ingress-dns addons.
 
-The current releases have been tested on minikube v1.14.2 running k8s v1.19.2
+The current releases have been tested on minikube v1.25.1 running Kubernetes v1.23.1.
 
-## Adding the repo
+## Adding the Sonatype Repo to your Helm
+
 To Add as a Helm Repo
 ```helm repo add sonatype https://sonatype.github.io/helm3-charts/```
 
 ## Testing the Chart
+
 To test the chart:
 ```bash
 $ helm install --dry-run --debug --generate-name ./
