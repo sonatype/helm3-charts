@@ -13,10 +13,10 @@ image:
 nexus:
   docker:
     enabled: false
-    registries: []
-    #  - host: chart.local
-    #    port: 5000
-    #    secretName: registrySecret
+    # registries:
+    #   - host: chart.local
+    #     port: 5000
+    #     secretName: registrySecret
   env:
     - name: INSTALL4J_ADD_VM_PARAMS
       value: "-Xms1200M -Xmx1200M -XX:MaxDirectMemorySize=2G -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
