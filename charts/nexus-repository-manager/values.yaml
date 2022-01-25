@@ -1,3 +1,4 @@
+---
 statefulset:
   # This is not supported
   enabled: false
@@ -26,21 +27,21 @@ nexus:
     data:
       nexus.scripts.allowCreation: true
       # See this article for ldap configuratioon options https://support.sonatype.com/hc/en-us/articles/216597138-Setting-Advanced-LDAP-Connection-Properties-in-Nexus-Repository-Manager
-      #nexus.ldap.env.java.naming.security.authentication: simple
+      # nexus.ldap.env.java.naming.security.authentication: simple
   # nodeSelector:
   #   cloud.google.com/gke-nodepool: default-pool
   resources: {}
-    # requests:
-      ## Based on https://support.sonatype.com/hc/en-us/articles/115006448847#mem
-      ## and https://twitter.com/analytically/status/894592422382063616:
-      ##   Xms == Xmx
-      ##   Xmx <= 4G
-      ##   MaxDirectMemory >= 2G
-      ##   Xmx + MaxDirectMemory <= RAM * 2/3 (hence the request for 4800Mi)
-      ##   MaxRAMFraction=1 is not being set as it would allow the heap
-      ##     to use all the available memory.
-      # cpu: 250m
-      # memory: 4800Mi
+  #   requests:
+  #    Based on https://support.sonatype.com/hc/en-us/articles/115006448847#mem
+  #    and https://twitter.com/analytically/status/894592422382063616:
+  #      Xms == Xmx
+  #      Xmx <= 4G
+  #      MaxDirectMemory >= 2G
+  #      Xmx + MaxDirectMemory <= RAM * 2/3 (hence the request for 4800Mi)
+  #      MaxRAMFraction=1 is not being set as it would allow the heap
+  #        to use all the available memory.
+  #     cpu: 250m
+  #     memory: 4800Mi
   # The ports should only be changed if the nexus image uses a different port
   nexusPort: 8081
 
@@ -77,14 +78,14 @@ deployment:
   # # Add init containers. e.g. to be used to give specific permissions for nexus-data.
   # # Add your own init container or uncomment and modify the given example.
   initContainers:
-  # - name: fmp-volume-permission
-    # image: busybox
-    # imagePullPolicy: IfNotPresent
-    # command: ['chown','-R', '200', '/nexus-data']
-    # volumeMounts:
-      # - name: nexus-data
-        # mountPath: /nexus-data
-  # # Uncomment and modify this to run a command after starting the nexus container.
+  #   - name: fmp-volume-permission
+  #   image: busybox
+  #   imagePullPolicy: IfNotPresent
+  #   command: ['chown','-R', '200', '/nexus-data']
+  #   volumeMounts:
+  #     - name: nexus-data
+  #       mountPath: /nexus-data
+  # Uncomment and modify this to run a command after starting the nexus container.
   postStart:
     command:    # '["/bin/sh", "-c", "ls"]'
   preStart:
@@ -147,10 +148,10 @@ persistence:
 
 tolerations: []
 
-# # Enable configmap and add data in configmap	
-config:	
-  enabled: false	
-  mountPath: /sonatype-nexus-conf	
+# Enable configmap and add data in configmap
+config:
+  enabled: false
+  mountPath: /sonatype-nexus-conf
   data: []
 
 # # To use an additional secret, set enable to true and add data
