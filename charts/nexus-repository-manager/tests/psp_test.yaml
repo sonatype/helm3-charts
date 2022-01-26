@@ -1,0 +1,67 @@
+suite: psp
+templates:
+  - psp.yaml
+tests:
+  - it: is disabled by default
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: renders with defaults
+    set:
+      psp:
+        create: true
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isKind:
+          of: PodSecurityPolicy
+      - equal:
+          path: apiVersion
+          value: policy/v1beta1
+      - equal:
+          path: metadata.labels.[app.kubernetes.io/instance]
+          value: RELEASE-NAME
+      - equal:
+          path: metadata.labels.[app.kubernetes.io/managed-by]
+          value: Helm
+      - matchRegex:
+          path: metadata.labels.[app.kubernetes.io/version]
+          pattern: \d+\.\d+\.\d+
+      - matchRegex:
+          path: metadata.labels.[helm.sh/chart]
+          pattern: nexus-repository-manager-\d+\.\d+\.\d+
+      - equal:
+          path: metadata.labels.[app.kubernetes.io/name]
+          value: nexus-repository-manager
+      - equal:
+          path: metadata.annotations
+          value: null
+      - equal:
+          path: spec
+          value:
+            requiredDropCapabilities:
+              - ALL
+            volumes:
+              - configMap
+              - downwardAPI
+              - emptyDir
+              - persistentVolumeClaim
+              - secret
+              - projected
+            runAsUser:
+              rule: 'RunAsAny'
+            seLinux:
+              rule: RunAsAny
+            supplementalGroups:
+              rule: 'MustRunAs'
+              ranges:
+                # Forbid adding the root group.
+                - min: 1
+                  max: 65535
+            fsGroup:
+              rule: 'MustRunAs'
+              ranges:
+                # Forbid adding the root group.
+                - min: 1
+                  max: 65535
