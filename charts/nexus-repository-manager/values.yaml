@@ -96,10 +96,10 @@ deployment:
   additionalVolumeMounts:
 
 ingress:
-  enabled: true
+  enabled: false
   annotations: {}
   hostPath: /
-  hostRepo: repo.mini
+  hostRepo: repo.demo
   # tls:
   #   - secretName: nexus-local-tls
   #     hosts:
@@ -169,4 +169,4 @@ serviceAccount:
   name: ""
 
 psp:
-  create: true
+  create: false
