@@ -46,7 +46,9 @@ nexus:
   nexusPort: 8081
 
   securityContext:
-    fsGroup: 2000
+    runAsUser: 200
+    runAsGroup: 200
+    fsGroup: 200
   podAnnotations: {}
   livenessProbe:
     initialDelaySeconds: 30
