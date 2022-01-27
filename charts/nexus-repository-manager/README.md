@@ -143,7 +143,6 @@ The following table lists the configurable parameters of the Nexus chart and the
 | `route.labels`          | Labels to be added to route                        | `{}` |
 | `route.annotations`     | Annotations to be added to route                   | `{}` |
 | `route.path`            | Host name of Route e.g jenkins.example.com         | nil |
-| `psp.create`            | Set to true to create PodSecurityPolicy            | `false` |
 | `serviceAccount.create` | Set to true to create ServiceAccount               | `true` |
 | `serviceAccount.annotations` | Set annotations for ServiceAccount               | `{}` |
 | `serviceAccount.name` | The name of the service account to use. Auto-generate if not set and create is true      | `{}` |
