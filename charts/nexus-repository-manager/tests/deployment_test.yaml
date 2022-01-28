@@ -24,7 +24,7 @@ tests:
           pattern: 3\.\d+\.\d+
       - matchRegex:
           path: spec.template.metadata.annotations.[checksum/configmap-properties]
-          pattern: .*
+          pattern: .+
       - equal:
           path: spec.replicas
           value: 1
