@@ -45,8 +45,13 @@ nexus:
   # The ports should only be changed if the nexus image uses a different port
   nexusPort: 8081
 
+  # Default the pods UID and GID to match the nexus3 container.
+  # Customize or remove these values from the securityContext as appropriate for
+  # your deployment environment.
   securityContext:
-    fsGroup: 2000
+    runAsUser: 200
+    runAsGroup: 200
+    fsGroup: 200
   podAnnotations: {}
   livenessProbe:
     initialDelaySeconds: 30
