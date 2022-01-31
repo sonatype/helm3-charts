@@ -31,7 +31,8 @@ tests:
           value: nexus-repository-manager
       - equal:
           path: metadata.annotations
-          value: null
+          value:
+            kubernetes.io/ingress.class: nginx
 
       - documentIndex: 0
         equal:
@@ -88,7 +89,8 @@ tests:
           value: nexus-repository-manager
       - equal:
           path: metadata.annotations
-          value: null
+          value:
+            kubernetes.io/ingress.class: nginx
 
       - documentIndex: 0
         equal:

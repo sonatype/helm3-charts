@@ -36,7 +36,8 @@ tests:
 
       - equal:
           path: metadata.annotations
-          value: null
+          value: 
+            kubernetes.io/ingress.class: nginx
 
       - equal:
           path: spec
