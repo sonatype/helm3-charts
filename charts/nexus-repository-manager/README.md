@@ -20,7 +20,7 @@ This chart bootstraps a Nexus OSS deployment on a cluster using Helm.
 
 ## Prerequisites
 
-- Kubernetes 1.8+ with Beta APIs enabled
+- Kubernetes 1.19+
 - PV provisioner support in the underlying infrastructure
 - Helm 3
 
