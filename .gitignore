@@ -1,2 +1,4 @@
 ﻿.vs/**
 .idea/**
+
+**/test-output.xml

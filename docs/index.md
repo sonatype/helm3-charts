@@ -3,7 +3,7 @@
 These charts are designed to work out of the box with minikube using both Ingress
 and Ingress DNS addons.
 
-The current releases have been tested on minikube v1.12.3 running k8s v1.18.3
+The current releases have been tested on minikube v1.25.1 running Kubernetes v1.23.1.
 
 ### Add the Sonatype Repo to Your Helm
 
