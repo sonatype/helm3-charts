@@ -163,5 +163,5 @@ spec:
     {{- end }}
     {{- with .Values.affinity }}
       affinity:
-{{ toYaml . | indent 8 }}
+        {{ toYaml . | nindent 8 }}
     {{- end }}
