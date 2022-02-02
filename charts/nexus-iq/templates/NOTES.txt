@@ -1,11 +1,9 @@
-1. Get the application URL by running these commands:
 {{- if .Values.ingress.enabled }}
-{{- range $host := .Values.ingress.hosts }}
-  {{- range .paths }}
-  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host.host }}{{ . }}
-  {{- end }}
-{{- end }}
+1. Your ingresses are available here:
+  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $.Values.ingress.hostUI }}{{ $.Values.ingress.hostUIPath }}
+  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $.Values.ingress.hostAdmin }}{{ $.Values.ingress.hostAdminPath }}
 {{- else if contains "NodePort" .Values.service.type }}
+1. Get the application URL by running these commands:
   export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "iqserver.fullname" . }})
   export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
   Your application is available at http://$NODE_IP:$NODE_PORT
@@ -15,6 +13,7 @@
   export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "iqserver.fullname" . }} --template "{{"{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"}}")
   Your application is available at http://$SERVICE_IP:{{ .Values.service.appliocationPort }}
 {{- else if contains "ClusterIP" .Values.service.type }}
+1. Get the application URL by running these commands:
   export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "iqserver.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
   kubectl --namespace {{ .Release.Namespace }} port-forward $POD_NAME {{ .Values.iq.applicationPort}}:{{ .Values.iq.applicationPort}}
   Your application is available at http://127.0.0.1:{{ .Values.iq.applicationPort}}

@@ -20,7 +20,7 @@ This chart bootstraps a Nexus OSS deployment on a cluster using Helm.
 
 ## Prerequisites
 
-- Kubernetes 1.8+ with Beta APIs enabled
+- Kubernetes 1.19+
 - PV provisioner support in the underlying infrastructure
 - Helm 3
 
@@ -63,8 +63,9 @@ $ helm install -f myvalues.yaml sonatype-nexus ./
 ```
 
 The default login is randomized and can be found in sonatype /nexus-data/admin.password
-or you can override this behavior by setting an environmental variable
-NEXUS_SECURITY_RANDOMPASSWORD to 'true'
+or you can get the initial static passwords (admin/admin123) by setting the environment
+variable `NEXUS_SECURITY_RANDOMPASSWORD` to `false` in your `values.yaml`.
+ 
 
 ## Uninstalling the Chart
 
@@ -93,7 +94,7 @@ The following table lists the configurable parameters of the Nexus chart and the
 | `nexus.docker.registries[0].host`           | Host for the docker registry        | `cluster.local`                         |
 | `nexus.docker.registries[0].port`           | Port for the docker registry        | `5000`                                  |
 | `nexus.docker.registries[0].secretName`     | TLS Secret Name for the ingress     | `registrySecret`                        |
-| `nexus.env`                                 | Nexus environment variables         | `[{install4jAddVmParams: -Xms1200M -Xmx1200M -XX:MaxDirectMemorySize=2G -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap}]` |
+| `nexus.env`                                 | Nexus environment variables         | `[{INSTALL4J_ADD_VM_PARAMS: -Xms1200M -Xmx1200M -XX:MaxDirectMemorySize=2G -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap}]` |
 | `nexus.resources`                           | Nexus resource requests and limits  | `{}`                                    |
 | `nexus.nexusPort`                           | Internal port for Nexus service     | `8081`                                  |
 | `nexus.securityContext`                     | Security Context (for enabling official image use `fsGroup: 2000`) | `{}`     |
@@ -142,7 +143,6 @@ The following table lists the configurable parameters of the Nexus chart and the
 | `route.labels`          | Labels to be added to route                        | `{}` |
 | `route.annotations`     | Annotations to be added to route                   | `{}` |
 | `route.path`            | Host name of Route e.g jenkins.example.com         | nil |
-| `psp.create`            | Set to true to create PodSecurityPolicy            | `false` |
 | `serviceAccount.create` | Set to true to create ServiceAccount               | `true` |
 | `serviceAccount.annotations` | Set annotations for ServiceAccount               | `{}` |
 | `serviceAccount.name` | The name of the service account to use. Auto-generate if not set and create is true      | `{}` |

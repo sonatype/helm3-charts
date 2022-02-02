@@ -1,3 +1,4 @@
+---
 # Default values for iqserver.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
@@ -8,9 +9,9 @@ replicaCount: 1
 image:
   # Sonatype Official Public Image
   repository: sonatype/nexus-iq-server
-  tag: 1.131.0
+  tag: 1.132.0
   pullPolicy: IfNotPresent
-  
+
 iq:
   name: nxiq
   hostname: iq-server.demo
@@ -22,13 +23,27 @@ iq:
   # add this line with this file path and the `licenseSecret` above to autoconfigure licensing
   # licenseFile: /etc/nexus-iq-license/license_lic
   extraLabels:
-  # add the following two lines to mount a secrets volume within the container at the specified location  
-  secretName: #secret-jks
-  secretMountName: #/etc/secret-volume
+  # add the following two lines to mount a secrets volume within the container at the specified location
+  # secretName: secret-jks
+  # secretMountName: /etc/secret-volume
   env:
     - name: JAVA_OPTS
-      value: "-Djava.util.prefs.userRoot=${SONATYPE_WORK}/javaprefs"
-      
+      value: "-Djava.util.prefs.userRoot=$(SONATYPE_WORK)/javaprefs"
+  # Configures the liveness probe for IQ pod
+  livenessProbe:
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    failureThreshold: 3
+    timeoutSeconds: 2
+    successThreshold: 1
+  # Configures the readiness probe for IQ pod
+  readinessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 30
+    failureThreshold: 10
+    timeoutSeconds: 2
+    successThreshold: 1
+
 # In conjunction with 'secretName' and 'secretMountName' above, this is an example of how to inject required password
 # secrets into the runtime environment, and how to modify the startup of the server to utilize custom Java SSL stores.
 #    - name: TRUSTSTORE_PASSWORD
@@ -60,15 +75,15 @@ serviceAccount:
   name:
 
 podSecurityContext: {}
-  # fsGroup: 2000
+#  fsGroup: 2000
 
 securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
+#  capabilities:
+#    drop:
+#    - ALL
+#  readOnlyRootFilesystem: true
+#  runAsNonRoot: true
+#  runAsUser: 1000
 
 service:
   type: "ClusterIP"
@@ -76,31 +91,29 @@ service:
 
 ingress:
   enabled: false
-  annotations: {kubernetes.io/ingress.class: nginx}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
   hostUI: iq-server.demo
   hostUIPath: /
   hostAdmin: admin.iq-server.demo
   hostAdminPath: /
-
-  tls: []
-    # - secretName: nexus-local-tls
-    #   hosts:
-    #     - iqserver.local
-    #     - admin.iqserver.local
+  # tls:
+  #   - secretName: nexus-local-tls
+  #     hosts:
+  #       - iq-server.demo
+  #       - admin.iq-server.demo
 
 resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+# We usually recommend not to specify default resources and to leave this as a conscious
+# choice for the user. This also increases chances charts run on environments with little
+# resources, such as Minikube. If you do want to specify resources, uncomment the following
+# lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+#  limits:
+#    cpu: 100m
+#    memory: 128Mi
+#  requests:
+#    cpu: 100m
+#    memory: 128Mi
 
 nodeSelector: {}
 
@@ -119,6 +132,7 @@ persistence:
   # storageClass: "-"
   storageSize: 1Gi
   # existingClaim:
+  # existingLogClaim:
   # annotations:
   #  "helm.sh/resource-policy": keep
   # storageClass: "-"
@@ -145,17 +159,17 @@ configYaml:
       - type: http
         port: 8071
     # HTTP request log settings.
-    requestLog: 
+    requestLog:
       appenders:
-        #All appenders set to console
+        # All appenders set to console
         - type: file
-          currentLogFilename: /var/log/nexus-iq-server/request.log    
+          currentLogFilename: /var/log/nexus-iq-server/request.log
           # Do not display log statements below this threshold to stdout.
           # threshold: INFO
           logFormat: "%clientHost %l %user [%date] \"%requestURL\" %statusCode %bytesSent %elapsedTime \"%header{User-Agent}\""
           archivedLogFilenamePattern: /var/log/nexus-iq-server/request-%d.log.gz
           archivedFileCount: 50
-  
+
   createSampleData: true
 
   logging:
@@ -174,9 +188,9 @@ configYaml:
       "org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter": INFO   # WARNING: This reveals credentials at DEBUG level
       "com.sonatype.insight.audit":
         appenders:
-          #All appenders set to console
+          # All appenders set to console
           - type: file
-            currentLogFilename: /var/log/nexus-iq-server/audit.log    
+            currentLogFilename: /var/log/nexus-iq-server/audit.log
             # Do not display log statements below this threshold to stdout.
             # threshold: INFO
             archivedLogFilenamePattern: /var/log/nexus-iq-server/audit-%d.log.gz
@@ -185,29 +199,27 @@ configYaml:
       "com.sonatype.insight.policy.violation":
         appenders:
           - type: console
-    
+
             # Do not display log statements below this threshold to stdout.
             threshold: INFO
 
     appenders:
-  
+
       # Settings for logging to stdout.
       - type: console
-    
+
         # Do not display log statements below this threshold to stdout.
         threshold: INFO
-      
+
         logFormat: "%d{'yyyy-MM-dd HH:mm:ss,SSSZ'} %level [%thread] %X{username} %logger - %msg%n"
 
       - type: file
-    
+
         # Do not display log statements below this threshold to stdout.
         threshold: ALL
-      
+
         logFormat: "%d{'yyyy-MM-dd HH:mm:ss,SSSZ'} %level [%thread] %X{username} %logger - %msg%n"
         # The file to which current statements will be logged.
         currentLogFilename: /var/log/nexus-iq-server/clm-server.log
         archivedLogFilenamePattern: /var/log/nexus-iq-server/clm-server-%d.log.gz
         archivedFileCount: 50
-
-
