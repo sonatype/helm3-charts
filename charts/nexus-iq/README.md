@@ -76,7 +76,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | `iq.applicationPort` | Port of the application connector. Must match the value in the `configYaml` property | `8070`            |
 | `iq.adminPort`       | Port of the application connector. Must match the value in the `configYaml` property | `8071`            |
 | `iq.licenseSecret`   | The base-64 encoded license file to be installed at startup  | `""`              |
-| `iq.env`             | IQ server environment variables | `[{JAVA_OPTS: -Xms1200M -Xmx1200M}]` |
+| `iq.env`             | IQ server environment variables, including JAVA_OPTS | See `values.yaml` |
 | `iq.secretName`      | The name of a secret to mount inside the container  | See `values.yaml` |
 | `iq.secretMountName` | Where in the container to mount the data from `secretName`  | See `values.yaml` |
 | `iq.livenessProbe.initialDelaySeconds`   | LivenessProbe initial delay              | 10                |

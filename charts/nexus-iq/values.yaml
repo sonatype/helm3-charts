@@ -28,21 +28,6 @@ iq:
   env:
     - name: JAVA_OPTS
       value: "-Djava.util.prefs.userRoot=$(SONATYPE_WORK)/javaprefs"
-  # Configures the liveness probe for IQ pod
-  livenessProbe:
-    initialDelaySeconds: 10
-    periodSeconds: 10
-    failureThreshold: 3
-    timeoutSeconds: 2
-    successThreshold: 1
-  # Configures the readiness probe for IQ pod
-  readinessProbe:
-    initialDelaySeconds: 30
-    periodSeconds: 30
-    failureThreshold: 10
-    timeoutSeconds: 2
-    successThreshold: 1
-
 # In conjunction with 'secretName' and 'secretMountName' above, this is an example of how to inject required password
 # secrets into the runtime environment, and how to modify the startup of the server to utilize custom Java SSL stores.
 #    - name: TRUSTSTORE_PASSWORD
@@ -58,6 +43,20 @@ iq:
 #    - name: JAVA_OPTS
 #      value: "-Djavax.net.ssl.keyStoreType=jks -Djavax.net.ssl.keyStore=/etc/secret-volume/keystore.jks -Djavax.net.ssl.keyStorePassword=$(KEYSTORE_PASSWORD) -Djavax.net.ssl.trustStoreType=jks -Djavax.net.ssl.trustStore=/etc/secret-volume/truststore.jks -Djavax.net.ssl.trustStorePassword=$(TRUSTSTORE_PASSWORD) -Djava.util.prefs.userRoot=${SONATYPE_WORK}/javaprefs"
 
+  # Configures the liveness probe for IQ pod
+  livenessProbe:
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    failureThreshold: 3
+    timeoutSeconds: 2
+    successThreshold: 1
+  # Configures the readiness probe for IQ pod
+  readinessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 30
+    failureThreshold: 10
+    timeoutSeconds: 2
+    successThreshold: 1
 
 deploymentStrategy: Recreate
 imagePullSecrets: []
@@ -102,17 +101,18 @@ ingress:
   #       - iq-server.demo
   #       - admin.iq-server.demo
 
-resources: {}
-# We usually recommend not to specify default resources and to leave this as a conscious
-# choice for the user. This also increases chances charts run on environments with little
-# resources, such as Minikube. If you do want to specify resources, uncomment the following
-# lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+resources:
+# We usually recommend not to specify default resources and to leave this as a
+# conscious choice for the user. This also increases chances charts run on
+# environments with little resources, such as Minikube. If you do want to specify
+# resources, uncomment the lines below. These values ensure minimum resources
+# for production.
 #  limits:
-#    cpu: 100m
-#    memory: 128Mi
+#    cpu: 8
+#    memory: 8Gi
 #  requests:
-#    cpu: 100m
-#    memory: 128Mi
+#    cpu: 8
+#    memory: 8Gi
 
 nodeSelector: {}
 
