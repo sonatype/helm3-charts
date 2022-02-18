@@ -17,7 +17,6 @@ iq:
   hostname: iq-server.demo
   applicationPort: 8070
   adminPort: 8071
-  memory: 1Gi
   # base 64 encoded license file with no line breaks
   licenseSecret: ""
   # add this line with this file path and the `licenseSecret` above to autoconfigure licensing
