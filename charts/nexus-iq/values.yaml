@@ -91,8 +91,8 @@ service:
 
 ingress:
   enabled: false
-  annotations:
-    kubernetes.io/ingress.class: "nginx"
+  ingressClassName: nginx
+  annotations: {}
   hostUI: iq-server.demo
   hostUIPath: /
   hostAdmin: admin.iq-server.demo

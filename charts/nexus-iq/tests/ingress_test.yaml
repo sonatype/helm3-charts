@@ -36,12 +36,13 @@ tests:
 
       - equal:
           path: metadata.annotations
-          value: 
-            kubernetes.io/ingress.class: nginx
+          value:
+            null
 
       - equal:
           path: spec
           value:
+            ingressClassName: nginx
             rules:
               - host: iq-server.demo
                 http:
