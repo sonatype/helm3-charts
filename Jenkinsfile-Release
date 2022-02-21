@@ -12,6 +12,16 @@
  */
 @Library(['private-pipeline-library', 'jenkins-shared', 'int-jenkins-shared']) _
 
+def jira = [
+    versionPrefix: '', project: 'INT', projectId: '12410',
+    credentialId : 'jenkins-jira', autoRelease: true, failOnError: true
+]
+
+def jiraVersionMappings = [
+    'nexus-iq-server':'helm-iq', 
+    'nexus-repository-manager':'helm-nxrm'
+]
+
 dockerizedBuildPipeline(
   prepare: {
     githubStatusUpdate('pending')
@@ -38,6 +48,14 @@ dockerizedBuildPipeline(
     sshagent(credentials: [sonatypeZionCredentialsId()]) {
       sh 'git push'
     }
+  },
+  postDeploy: {
+    def chart = params.chart
+    def indexFile = readYaml file: 'docs/index.yaml'
+    def version = indexFile.entries[chart][0].version
+
+    jira.versionPrefix = jiraVersionMappings[chart]
+    jiraSetFixVersion(jira, version)
   },
   onSuccess: {
     buildNotifications(currentBuild, env, 'main')
