@@ -104,7 +104,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | `persistence.existingClaim`                | Pre-created PVC name for Data Volume                                                                                | `nil`                                                       |
 | `persistence.existingLogClaim`             | Pre-created PVC name for Log Volume                                                                                 | `nil`                                                       |
 | `persistence.volumeConfiguration`          | A YAML block to configure the persistent volume type. Defaults to `hostPath` which should not be used in production | `hostPath`                                                  |
-| `resources'`                               | Resource requests and limits for the IQ pod in the cluster.                                                         | See `values.yaml` for suggested minimum recommended values. |
+| `resources`                                | Resource requests and limits for the IQ pod in the cluster.                                                         | See `values.yaml` for suggested minimum recommended values. |
 
 ## Configuring IQ Server
 
