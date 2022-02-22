@@ -75,7 +75,6 @@ The command removes all the Kubernetes components associated with the chart and 
 | `iq.imagePullSecret` | The base-64 encoded secret to pull a container from Red Hat  | `""`              |
 | `iq.applicationPort` | Port of the application connector. Must match the value in the `configYaml` property | `8070`            |
 | `iq.adminPort`       | Port of the application connector. Must match the value in the `configYaml` property | `8071`            |
-| `iq.memory`          | The amount of RAM to allocate                                | `1Gi`             |
 | `iq.licenseSecret`   | The base-64 encoded license file to be installed at startup  | `""`              |
 | `iq.env`             | IQ server environment variables | `[{JAVA_OPTS: -Xms1200M -Xmx1200M}]` |
 | `iq.secretName`      | The name of a secret to mount inside the container  | See `values.yaml` |
