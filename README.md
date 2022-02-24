@@ -74,7 +74,7 @@ To run unit tests:
 #### Resolver File and Ingress-DNS
 
 Get the default `values.yaml` for each chart.
-- NXRM: `helm show values nexus-repo sonatype/nexus-repository-manager > iq-values.yaml`
+- Nexus Repository: `helm show values nexus-repo sonatype/nexus-repository-manager > iq-values.yaml`
 - Nexus IQ: `helm show values nexus-iq sonatype/nexus-iq-server > repo-values.yaml`
 
 Edit the values file you just downloaded to enable ingress support, and install the chart 
