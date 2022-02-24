@@ -122,9 +122,11 @@ If you leave the `licenseFile` field empty/commented, IQ Server will start and p
 when you first enter the GUI.
 
 ## 413 Errors
+
 The default setting for Nginx allows for very small upload sizes. Add this annotation to the ingress for each product to remove the limit: nginx.ingress.kubernetes.io/proxy-body-size: "0"
  
 ## Specifying custom Java keystore/truststore
+
 There is an example of how to implement this in [the values.yaml file](values.yaml) using secrets to store both the
 Java keystores and their associated passwords. In order to utilize the provided example directly secrets can be created 
 from a directory containing the keystore and truststore files like so:
@@ -136,7 +138,7 @@ kubectl create secret generic secret-jks
 	--from-literal='truststorePassword=password'
 ```
 
-## Using the Image from the Red Hat Repository
+## Using the Image from the Red Hat Registry
 
 To use the [IQ image available from Red Hat's registry](https://catalog.redhat.com/software/containers/sonatype/nexus-repository-manager/594c281c1fbe9847af657690),
 you'll need to:
