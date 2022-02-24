@@ -36,6 +36,9 @@ tests:
           path: spec.template.spec.containers[0].imagePullPolicy
           value: IfNotPresent
       - equal:
+          path: spec.template.spec.imagePullSecrets
+          value: null
+      - equal:
           path: spec.template.spec.containers[0].env[0]
           value:
             name: SONATYPE_WORK
@@ -75,6 +78,8 @@ tests:
     set:
       replicaCount: 2
       deploymentStrategy: my-strategy
+      imagePullSecrets:
+        - name: top-secret
     asserts:
       - equal:
           path: spec.replicas
@@ -82,3 +87,7 @@ tests:
       - equal:
           path: spec.strategy.type
           value: my-strategy
+      - equal:
+          path: spec.template.spec.imagePullSecrets
+          value:
+            - name: top-secret
