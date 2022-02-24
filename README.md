@@ -77,8 +77,8 @@ Get the default `values.yaml` for each chart.
 - NXRM: `helm show values nexus-repo sonatype/nexus-repository-manager > iq-values.yaml`
 - Nexus IQ: `helm show values nexus-iq sonatype/nexus-iq-server > repo-values.yaml`
 
-Edit the values file you just downloaded to enable ingress support, install the chart 
-with it:
+Edit the values file you just downloaded to enable ingress support, and install the chart 
+with those values:
 
 - NXRM `helm install nexus-repo sonatype/nexus-repository-manager -f repo-values.yaml`
 - Nexus IQ: `helm install nexus-iq sonatype/nexus-iq-server -f iq-values.yaml`
