@@ -98,11 +98,3 @@ Use `minikube ip` to get the address
 
 Docs for Ingress-dns are here
 https://github.com/kubernetes/minikube/tree/master/deploy/addons/ingress-dns
-
-#### 413 Errors with Nginx
-
-The default setting for Nginx allows for very small upload sizes. Add this annotation to the ingress 
-for each product to remove the limit:
-```
-nginx.ingress.kubernetes.io/proxy-body-size: "0"
-```

@@ -121,10 +121,6 @@ The license file can be installed via the UI when IQ server is running, or it ca
 If you leave the `licenseFile` field empty/commented, IQ Server will start and prompt you to manually install the license 
 when you first enter the GUI.
 
-## 413 Errors
-
-The default setting for Nginx allows for very small upload sizes. Add this annotation to the ingress for each product to remove the limit: nginx.ingress.kubernetes.io/proxy-body-size: "0"
- 
 ## Specifying custom Java keystore/truststore
 
 There is an example of how to implement this in [the values.yaml file](values.yaml) using secrets to store both the

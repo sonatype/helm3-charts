@@ -93,7 +93,8 @@ service:
 ingress:
   enabled: false
   ingressClassName: nginx
-  annotations: {}
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
   hostUI: iq-server.demo
   hostUIPath: /
   hostAdmin: admin.iq-server.demo
