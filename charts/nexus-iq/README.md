@@ -71,8 +71,9 @@ The command removes all the Kubernetes components associated with the chart and 
 
 | Parameter                                  | Description                                                                                                         | Default                                                     |
 |--------------------------------------------|---------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------|
-| `iq.imageName`                             | The image name to use for the IQ Container, eg `sonatype/nexus-iq-server`                                           | `"registry.connect.redhat.com/sonatype/nexus-iq-server"`    |
-| `iq.imagePullSecret`                       | The base-64 encoded secret to pull a container from Red Hat                                                         | `""`                                                        |
+| `image.name`                               | The image name to use for the IQ Container                                                                          | `sonatype/nexus-iq-server`                                  |
+| `image.tag`                                | The version/tag to use for the IQ Container                                                                         | See `values.yaml`                                           |
+| `imagePullSecrets`                         | The names of the kubernetes secrets with credentials to login to a registry                                         | `[]`                                                        |
 | `iq.applicationPort`                       | Port of the application connector. Must match the value in the `configYaml` property                                | `8070`                                                      |
 | `iq.adminPort`                             | Port of the application connector. Must match the value in the `configYaml` property                                | `8071`                                                      |
 | `iq.licenseSecret`                         | The base-64 encoded license file to be installed at startup                                                         | `""`                                                        |
@@ -121,9 +122,11 @@ If you leave the `licenseFile` field empty/commented, IQ Server will start and p
 when you first enter the GUI.
 
 ## 413 Errors
+
 The default setting for Nginx allows for very small upload sizes. Add this annotation to the ingress for each product to remove the limit: nginx.ingress.kubernetes.io/proxy-body-size: "0"
  
 ## Specifying custom Java keystore/truststore
+
 There is an example of how to implement this in [the values.yaml file](values.yaml) using secrets to store both the
 Java keystores and their associated passwords. In order to utilize the provided example directly secrets can be created 
 from a directory containing the keystore and truststore files like so:
@@ -135,5 +138,28 @@ kubectl create secret generic secret-jks
 	--from-literal='truststorePassword=password'
 ```
 
+## Using the Image from the Red Hat Registry
 
-
+To use the [IQ image available from Red Hat's registry](https://catalog.redhat.com/software/containers/sonatype/nexus-repository-manager/594c281c1fbe9847af657690),
+you'll need to:
+* Load the credentials for the registry as a secret in your cluster
+  ```shell
+  kubectl create secret docker-registry redhat-pull-secret \
+    --docker-server=registry.connect.redhat.com \
+    --docker-username=<user_name> \
+    --docker-password=<password> \
+    --docker-email=<email>
+  ```
+  See Red Hat's [Registry Authentication documentation](https://access.redhat.com/RegistryAuthentication)
+  for further details.
+* Provide the name of the secret in `imagePullSecrets` in this chart's `values.yaml`
+  ```yaml
+  imagePullSecrets:
+    - name: redhat-pull-secret
+  ```
+* Set `image.name` and `image.tag` in `values.yaml`
+  ```yaml
+  image:
+    repository: registry.connect.redhat.com/sonatype/nexus-iq-server
+    tag: 1.132.0-ubi-1
+  ```
