@@ -103,7 +103,8 @@ deployment:
 ingress:
   enabled: false
   ingressClassName: nginx
-  annotations: {}
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
   hostPath: /
   hostRepo: repo.demo
   # tls:
