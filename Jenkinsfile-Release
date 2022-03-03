@@ -56,6 +56,11 @@ dockerizedBuildPipeline(
 
     jira.versionPrefix = jiraVersionMappings[chart]
     jiraSetFixVersion(jira, version)
+
+    verifyDownloadLinks(
+        urlParts: ['https://artifacthub.io/api/v1/packages/helm/sonatype/', chart, '/'],
+        urlSuffixes: [version]
+    )
   },
   onSuccess: {
     buildNotifications(currentBuild, env, 'main')
