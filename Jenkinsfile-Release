@@ -58,8 +58,8 @@ dockerizedBuildPipeline(
     jiraSetFixVersion(jira, version)
 
     verifyDownloadLinks(
-        urlParts: ['https://artifacthub.io/api/v1/packages/helm/sonatype/', chart, '/'],
-        urlSuffixes: [version]
+        urlParts: ['https://sonatype.github.io/helm3-charts/', chart, '-', version],
+        urlSuffixes: ['.tgz']
     )
   },
   onSuccess: {
