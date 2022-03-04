@@ -35,6 +35,8 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
+            - name: SONATYPE_INTERNAL_HOST_SYSTEM
+              value: Helm
             - name: SONATYPE_WORK
               value: {{ .Values.configYaml.sonatypeWork }}
 {{ toYaml .Values.iq.env | indent 12 }}

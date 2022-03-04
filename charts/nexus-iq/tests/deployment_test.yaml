@@ -39,10 +39,14 @@ tests:
           path: spec.template.spec.imagePullSecrets
           value: null
       - equal:
-          path: spec.template.spec.containers[0].env[0]
+          path: spec.template.spec.containers[0].env
           value:
-            name: SONATYPE_WORK
-            value: /sonatype-work
+            - name: SONATYPE_INTERNAL_HOST_SYSTEM
+              value: Helm
+            - name: SONATYPE_WORK
+              value: /sonatype-work
+            - name: JAVA_OPTS
+              value: -Djava.util.prefs.userRoot=$(SONATYPE_WORK)/javaprefs
       - equal:
           path: spec.template.spec.containers[0].ports
           value: 
