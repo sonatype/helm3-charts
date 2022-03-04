@@ -56,6 +56,11 @@ dockerizedBuildPipeline(
 
     jira.versionPrefix = jiraVersionMappings[chart]
     jiraSetFixVersion(jira, version)
+
+    verifyDownloadLinks(
+        urlParts: ['https://sonatype.github.io/helm3-charts/', chart, '-', version],
+        urlSuffixes: ['.tgz']
+    )
   },
   onSuccess: {
     buildNotifications(currentBuild, env, 'main')
