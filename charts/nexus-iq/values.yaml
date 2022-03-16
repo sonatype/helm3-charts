@@ -155,6 +155,9 @@ configYaml:
   baseUrl: http://iq-server.demo
   sonatypeWork: /sonatype-work
   licenseFile: /etc/nexus-iq-license/license_lic
+  initialAdminPassword: admin123
+  features:
+    enableUnauthenticatedPages: true
   server:
     applicationConnectors:
       - type: http
