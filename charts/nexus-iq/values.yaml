@@ -9,15 +9,18 @@ replicaCount: 1
 image:
   # Sonatype Official Public Image
   repository: sonatype/nexus-iq-server
-  tag: 1.132.0
+  tag: 1.134.0
   pullPolicy: IfNotPresent
+imagePullSecrets:
+# for image registries that require login, specify the name of the existing
+# kubernetes secret
+#   - name: <pull-secret-name>
 
 iq:
   name: nxiq
   hostname: iq-server.demo
   applicationPort: 8070
   adminPort: 8071
-  memory: 1Gi
   # base 64 encoded license file with no line breaks
   licenseSecret: ""
   # add this line with this file path and the `licenseSecret` above to autoconfigure licensing
@@ -29,21 +32,6 @@ iq:
   env:
     - name: JAVA_OPTS
       value: "-Djava.util.prefs.userRoot=$(SONATYPE_WORK)/javaprefs"
-  # Configures the liveness probe for IQ pod
-  livenessProbe:
-    initialDelaySeconds: 10
-    periodSeconds: 10
-    failureThreshold: 3
-    timeoutSeconds: 2
-    successThreshold: 1
-  # Configures the readiness probe for IQ pod
-  readinessProbe:
-    initialDelaySeconds: 30
-    periodSeconds: 30
-    failureThreshold: 10
-    timeoutSeconds: 2
-    successThreshold: 1
-
 # In conjunction with 'secretName' and 'secretMountName' above, this is an example of how to inject required password
 # secrets into the runtime environment, and how to modify the startup of the server to utilize custom Java SSL stores.
 #    - name: TRUSTSTORE_PASSWORD
@@ -59,9 +47,22 @@ iq:
 #    - name: JAVA_OPTS
 #      value: "-Djavax.net.ssl.keyStoreType=jks -Djavax.net.ssl.keyStore=/etc/secret-volume/keystore.jks -Djavax.net.ssl.keyStorePassword=$(KEYSTORE_PASSWORD) -Djavax.net.ssl.trustStoreType=jks -Djavax.net.ssl.trustStore=/etc/secret-volume/truststore.jks -Djavax.net.ssl.trustStorePassword=$(TRUSTSTORE_PASSWORD) -Djava.util.prefs.userRoot=${SONATYPE_WORK}/javaprefs"
 
+  # Configures the liveness probe for IQ pod
+  livenessProbe:
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    failureThreshold: 3
+    timeoutSeconds: 2
+    successThreshold: 1
+  # Configures the readiness probe for IQ pod
+  readinessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 30
+    failureThreshold: 10
+    timeoutSeconds: 2
+    successThreshold: 1
 
 deploymentStrategy: Recreate
-imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
@@ -92,7 +93,8 @@ service:
 ingress:
   enabled: false
   ingressClassName: nginx
-  annotations: {}
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
   hostUI: iq-server.demo
   hostUIPath: /
   hostAdmin: admin.iq-server.demo
@@ -103,17 +105,19 @@ ingress:
   #       - iq-server.demo
   #       - admin.iq-server.demo
 
-resources: {}
-# We usually recommend not to specify default resources and to leave this as a conscious
-# choice for the user. This also increases chances charts run on environments with little
-# resources, such as Minikube. If you do want to specify resources, uncomment the following
-# lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-#  limits:
-#    cpu: 100m
-#    memory: 128Mi
+resources:
+# We usually recommend not to specify default resources and to leave this as a
+# conscious choice for the user. This also increases chances charts run on
+# environments with little resources, such as Minikube. If you do want to
+# specify resources, uncomment the lines below. These values ensure minimum
+# resources for production.
 #  requests:
-#    cpu: 100m
-#    memory: 128Mi
+#    cpu: 8
+#    memory: 8Gi
+# Optionally limit the resources to the recommended minimum requirements.
+#  limits:
+#    cpu: 8
+#    memory: 8Gi
 
 nodeSelector: {}
 
@@ -151,6 +155,9 @@ configYaml:
   baseUrl: http://iq-server.demo
   sonatypeWork: /sonatype-work
   licenseFile: /etc/nexus-iq-license/license_lic
+  initialAdminPassword: admin123
+  features:
+    enableUnauthenticatedPages: true
   server:
     applicationConnectors:
       - type: http

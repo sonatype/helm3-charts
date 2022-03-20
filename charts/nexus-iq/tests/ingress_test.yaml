@@ -37,7 +37,7 @@ tests:
       - equal:
           path: metadata.annotations
           value:
-            null
+            nginx.ingress.kubernetes.io/proxy-body-size: "0"
 
       - equal:
           path: spec
