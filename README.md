@@ -73,10 +73,15 @@ To run unit tests:
 
 #### Resolver File and Ingress-DNS
 
-Use the sample values files provided here.
+Get the default `values.yaml` for each chart.
+- Nexus Repository: `helm show values nexus-repo sonatype/nexus-repository-manager > iq-values.yaml`
+- Nexus IQ: `helm show values nexus-iq sonatype/nexus-iq-server > repo-values.yaml`
 
-- `helm install nexus-iq sonatype/nexus-iq-server -f iq-values.yaml`
-- `helm install nexus-repo sonatype/nexus-repository-manager -f repo-values.yaml`
+Edit the values file you just downloaded to enable ingress support, and install the chart 
+with those values:
+
+- Nexus Repository: `helm install nexus-repo sonatype/nexus-repository-manager -f repo-values.yaml`
+- Nexus IQ: `helm install nexus-iq sonatype/nexus-iq-server -f iq-values.yaml`
 
 If you want to use the custom values file for the demo environment that expose 
 the apps on a local domain of *.demo which is done by creating a resolver file. 
@@ -93,11 +98,3 @@ Use `minikube ip` to get the address
 
 Docs for Ingress-dns are here
 https://github.com/kubernetes/minikube/tree/master/deploy/addons/ingress-dns
-
-#### 413 Errors with Nginx
-
-The default setting for Nginx allows for very small upload sizes. Add this annotation to the ingress 
-for each product to remove the limit:
-```
-nginx.ingress.kubernetes.io/proxy-body-size: "0"
-```
