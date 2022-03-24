@@ -84,7 +84,7 @@ String verifyIndexYaml(String chart) {
   String repositoryVersion = repositoryIndexFile.entries[chart][0].version
 
   if (!version.equals(repositoryVersion)) {
-    error "Released version: ${version} is different" + 
+    error "Released version: ${version} is different " + 
           "from helm repository version: ${repositoryVersion}"
   }
   
