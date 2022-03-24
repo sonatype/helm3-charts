@@ -59,7 +59,7 @@ If you're looking run our Certified Red Hat image in an OpenShift4 environment, 
 ---
 
 ## Adding the repo
-To Add as a Helm Repo, use the following:
+To add as a Helm Repo, use the following:
 ```helm repo add sonatype https://sonatype.github.io/helm3-charts/```
 
 ---
@@ -84,7 +84,7 @@ To install the chart, use the following:
 $ helm install nexus-rm sonatype/nexus-repository-manager [ --version v29.2.0 ]
 ```
 
-The above command deploys Nexus on the Kubernetes cluster in the default configuration.
+The above command deploys Nexus Repository on the Kubernetes cluster in the default configuration.
 
 You can pass custom configuration values as follows:
 
