@@ -136,7 +136,7 @@ nexusProxyRoute:
   # path: /nexus
 
 persistence:
-  enabled: true
+  enabled: false
   accessMode: ReadWriteOnce
   ## If defined, storageClass: <storageClass>
   ## If set to "-", storageClass: "", which disables dynamic provisioning
