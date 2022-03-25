@@ -49,7 +49,7 @@ dockerizedBuildPipeline(
   postDeploy: {
     // Verify Index.yaml
     String chart = params.chart    
-    String version = verifyIndexYaml(chart)
+    String version = verifyIndexYamlAndTarFile(chart)
     
     // Set Jira Fix Version
     jira.versionPrefix = jiraVersionMappings[chart]
@@ -70,15 +70,21 @@ dockerizedBuildPipeline(
   }
 )
 
-String verifyIndexYaml(String chart) {
+String verifyIndexYamlAndTarFile(String chart) {
   // Get current version
   def indexFile = readYaml file: 'docs/index.yaml'
   String version = indexFile.entries[chart][0].version
 
   sleep(60) // seconds
 
-  // Get repository version
+  // Check tar file
   String repo_url = 'https://sonatype.github.io/helm3-charts/'
+  verifyDownloadLinks(
+    urlParts: [repo_url, chart, '-', version],
+    urlSuffixes: ['.tgz']
+  )
+
+  // Get repository version
   def response = httpRequest "${repo_url}/index.yaml"
   def repositoryIndexFile = readYaml text:response.content
   String repositoryVersion = repositoryIndexFile.entries[chart][0].version

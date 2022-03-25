@@ -1,3 +1,5 @@
+# This test checks the logs to confirm the running app version is the same as the chart app version
+# This test will run only if the flag persistence.enabled is true on the values.yaml file
 {{- if .Values.persistence.enabled }}
 apiVersion: v1
 kind: Pod

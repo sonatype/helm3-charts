@@ -1,3 +1,4 @@
+# This test checks that the server is up and running by making a wget
 apiVersion: v1
 kind: Pod
 metadata:

@@ -1,3 +1,4 @@
+# This test checks the logs to confirm the running app version is the same as the chart app version
 apiVersion: v1
 kind: Pod
 metadata:
