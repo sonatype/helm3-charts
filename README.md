@@ -77,7 +77,8 @@ You can run the integration tests for the helm charts by running the next comman
 Before running the integration tests:
 * Install docker, helm, kubectl, and [minikube](https://minikube.sigs.k8s.io/docs/start/), if you don't already have it on your local workstation.
   * You could also use docker with k8s enabled instead of minikube.
-* The integration tests will be executed on a running cluster. Each test will create a new POD that will connect to our helm chart to execute the test. Check [this](https://helm.sh/docs/topics/chart_tests/)
+* The integration tests will be executed on a running cluster. Each test will create a new POD that will connect to the server installed by our 
+helm chart. Check [this](https://helm.sh/docs/topics/chart_tests/)
 
 Running integration tests for Nexus IQ:
 1. From source code: `helm install iq ./charts/nexus-iq --wait`
