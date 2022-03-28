@@ -1,0 +1,25 @@
+# This test checks the logs to confirm the running app version is the same as the chart app version
+# This test will run only if the flag persistence.enabled is true on the values.yaml file
+{{- if .Values.persistence.enabled }}
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ .Release.Name }}-test-check-logs"
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded,hook-failed
+spec:
+  containers:
+    - name: {{ .Release.Name }}-test-check-logs
+      image: busybox
+      command: ["/bin/sh"]
+      args: ["-c", "cat /nexus-data/log/nexus.log | grep {{ .Chart.AppVersion }} || exit 1"]
+      volumeMounts:
+         - mountPath: /nexus-data	
+           name: {{ template "nexus.name" . }}-data
+  volumes:
+    - name: {{ template "nexus.name" . }}-data          
+      persistentVolumeClaim:
+        claimName: {{ .Values.persistence.existingClaim | default (printf "%s-%s" (include "nexus.fullname" .) "data") }}         
+  restartPolicy: Never
+{{- end }}

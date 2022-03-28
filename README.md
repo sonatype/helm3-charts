@@ -46,14 +46,15 @@ The build process requires Helm 3.
 To test Helm Charts locally you will need to follow the next steps:
 
 1. Install docker, helm, kubectl, and [minikube](https://minikube.sigs.k8s.io/docs/start/), if you don't already have it on your local workstation.
+    * You could also use docker with k8s enabled instead of minikube. You don't need both.
 2. Start up minikube: `minikube start`
 3. Confirm minikube is up and running: `minikube status`
 4. List the existing pods in the cluster: `kubectl get pods`  (There should not be anything listed at this point.)
 5. Install the helm chart in any of these ways:
-    * From a copy of the source: `helm install iq {path/to/your/helm3-charts}/charts/nexus-iq` 
+    * From a copy of the source: `helm install iq {path/to/your/helm3-charts}/charts/nexus-iq --wait` 
     * From our production online repo: Add our helm repo locally as instructed at https://sonatype.github.io/helm3-charts/
 6. List installed servers with helm: helm list 
-7. Watch the server start in kubernetes by repeatedly running: `kubectl get pods`
+7. Watch the server start in kubernetes by running: `kubectl get pods`
 8. Use the pod name you get from last command to follow the console logs: `kubectl logs -f iq-nexus-iq-server-xxx` 
 9. Confirm expected version numbers in those logs.
 10. Forward a localhost port to a port on the running pod: `kubectl port-forward iq-nexus-iq-server-xxx 8070`
@@ -62,12 +63,30 @@ To test Helm Charts locally you will need to follow the next steps:
 13. Confirm it's gone: `helm list && kubectl get pods`
 14. Shutdown minikube: `minikube stop`
 
-To run unit tests:
+### Running Unit Tests
+To unit test the helm charts you can follow the next steps:
 
 1. Install the unittest plugin for Helm: https://github.com/quintush/helm-unittest
 2. Run the tests for each individual chart:
    * `cd charts/nexus-iq; helm unittest -3 -t junit -o test-output.xml .`
    * `cd charts/nexus-repository-manager; helm unittest -3 -t junit -o test-output.xml .`
+
+### Running Integration Tests
+You can run the integration tests for the helm charts by running the next commands. 
+
+Before running the integration tests:
+* Install docker, helm, kubectl, and [minikube](https://minikube.sigs.k8s.io/docs/start/), if you don't already have it on your local workstation.
+  * You could also use docker with k8s enabled instead of minikube.
+* The integration tests will be executed on a running cluster. Each test will create a new POD that will connect to the server installed by our 
+helm chart. Check [this](https://helm.sh/docs/topics/chart_tests/)
+
+Running integration tests for Nexus IQ:
+1. From source code: `helm install iq ./charts/nexus-iq --wait`
+2. Run the tests: `helm test iq`
+
+Running integration tests for Nexus Repository Manager:
+1. From source code: `helm install nxrm ./charts/nexus-repository-manager --wait`
+3. Run the tests: `helm test nxrm`
 
 ### Further Notes on Usage
 

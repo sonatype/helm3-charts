@@ -1,0 +1,15 @@
+# This test checks that the server is up and running by making a wget
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ .Release.Name }}-test-connection"
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded,hook-failed
+spec:
+  containers:
+    - name: {{ .Release.Name }}-test-connection
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "iqserver.fullname" . }}:{{ .Values.iq.applicationPort }}']
+  restartPolicy: Never
