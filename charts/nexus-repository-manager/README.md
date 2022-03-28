@@ -2,9 +2,9 @@
 
 [Nexus Repository OSS](https://www.sonatype.com/nexus-repository-oss) provides universal support for all major build tools.
 
-- Store and distribute Maven/Java, npm, NuGet, Helm, Docker, p2, OBR, APT, GO, R, Conan components and more.
+- Store and distribute Maven/Java, npm, NuGet, Helm, Docker, p2, OBR, APT, Go, R, Conan components and more.
 - Manage components from dev through delivery: binaries, containers, assemblies, and finished goods.
-- Awesome support for the Java Virtual Machine (JVM) ecosystem, including Gradle, Ant, Maven, and Ivy.
+- Support for the Java Virtual Machine (JVM) ecosystem, including Gradle, Ant, Maven, and Ivy.
 - Compatible with popular tools like Eclipse, IntelliJ, Hudson, Jenkins, Puppet, Chef, Docker, and more.
 
 *Efficiency and Flexibility to Empower Development Teams*
