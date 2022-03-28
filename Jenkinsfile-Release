@@ -68,7 +68,7 @@ String verifyIndexYamlAndTarFile(String chart) {
   // Check tar file
   String repo_url = 'https://sonatype.github.io/helm3-charts/'
   verifyDownloadLinks(
-    urlParts: [repo_url, chart, '-', version],
+    urlParts: [repo_url, chart, '-', 'nexus-iq-server-136.0.0.tgz'],
     urlSuffixes: ['.tgz'], retryCount: 2, retryDelay: 60
   )
 
