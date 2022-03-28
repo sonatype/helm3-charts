@@ -75,8 +75,6 @@ String verifyIndexYamlAndTarFile(String chart) {
   def indexFile = readYaml file: 'docs/index.yaml'
   String version = indexFile.entries[chart][0].version
 
-  sleep(60) // seconds
-
   // Check tar file
   String repo_url = 'https://sonatype.github.io/helm3-charts/'
   verifyDownloadLinks(
