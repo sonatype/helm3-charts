@@ -27,7 +27,7 @@ dockerizedBuildPipeline(
     githubStatusUpdate('pending')
   },
   buildAndTest: {
-    sh './build.sh'
+    //sh './build.sh'
   },
   skipVulnerabilityScan: true,
   archiveArtifacts: 'docs/*',
@@ -40,33 +40,23 @@ dockerizedBuildPipeline(
     runSafely 'git config user.name "Sonatype CI"'
     runSafely "git checkout ${branch}"
     runSafely 'git add docs'
-    runSafely 'git commit -m "Release Update"'    
-
-    sshagent(credentials: [sonatypeZionCredentialsId()]) {
-      runSafely 'git push'
-    }
+    runSafely 'git status'    
   },
   postDeploy: {
     // Verify Index.yaml
     String chart = params.chart    
     String version = verifyIndexYamlAndTarFile(chart)
     
-    // Set Jira Fix Version
-    jira.versionPrefix = jiraVersionMappings[chart]
-    jiraSetFixVersion(jira, version)    
-
     // Create tags
     String tagName = "${chart}-${version}"
-    runSafely "git tag -a ${tagName} -m 'Release Update: ${version}'"
-    sshagent(credentials: [sonatypeZionCredentialsId()]) {
-      runSafely "git push origin ${tagName}"
-    }
+    runSafely "git tag -a ${tagName}-test -m 'Release Update: ${version}'"
+    runSafely "git tag -l"
   },
   onSuccess: {
-    buildNotifications(currentBuild, env, 'main')
+    //buildNotifications(currentBuild, env, 'main')
   },
   onFailure: {
-    buildNotifications(currentBuild, env, 'main')
+    //buildNotifications(currentBuild, env, 'main')
   }
 )
 
@@ -74,8 +64,6 @@ String verifyIndexYamlAndTarFile(String chart) {
   // Get current version
   def indexFile = readYaml file: 'docs/index.yaml'
   String version = indexFile.entries[chart][0].version
-
-  sleep(60) // seconds
 
   // Check tar file
   String repo_url = 'https://sonatype.github.io/helm3-charts/'
