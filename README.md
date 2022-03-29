@@ -31,7 +31,7 @@ from within each charts directory:
 helm install --generate-name ./
 ```
 
-### Packaging and Indexing
+### Packaging and Indexing for Release
 
 *Sonatype CI build will package, commit, and publish to the official helm repository.*
 
@@ -42,7 +42,7 @@ file to the `docs/` directory which is the root of the
 
 The build process requires Helm 3.
 
-### Testing the Helm Charts
+### Manually Testing the Helm Charts
 To test Helm Charts locally you will need to follow the next steps:
 
 1. Install docker, helm, kubectl, and [minikube](https://minikube.sigs.k8s.io/docs/start/), if you don't already have it on your local workstation.
@@ -62,6 +62,12 @@ To test Helm Charts locally you will need to follow the next steps:
 12. Uninstall the server with helm: `helm delete iq` 
 13. Confirm it's gone: `helm list && kubectl get pods`
 14. Shutdown minikube: `minikube stop`
+
+### Running Lint
+Helm's Lint command will highlight formatting problems in the charts that need to be corrected.
+```
+helm lint charts/nexus-iq charts/nexus-repository-manager
+```
 
 ### Running Unit Tests
 To unit test the helm charts you can follow the next steps:

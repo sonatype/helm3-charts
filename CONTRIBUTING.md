@@ -18,27 +18,25 @@ Looking to dive in? FANTASTIC! Reach out to one of our experts and we can help g
 * Hit us up on our Slack channel #integrations.
 * Please fill out an issue (Jira INT project) for your PR so that we have traceability as to what you are trying to fix,
   versus how you fixed it.
+* Add the `@sonatype/integrations` group as a reviewer on any PR.
 
 ### For Non-Sonatypers
 
-* Come hang out with us at our [gitter channel](https://gitter.im/sonatype/nexus-developers) so we can try to understand the problem you are trying to solve.
-* Sign the [Sonatype CLA](https://sonatypecla.herokuapp.com/sign-cla)
+* Sign the [Sonatype CLA](https://sonatypecla.herokuapp.com/sign-cla).
+* Submit a Pull Request.
 
-## Submitting a PR
+## Submitting a Pull Request
 
-* For Sonatype submitters, add the `@sonatype/integrations` group as a reviewer on the PR
 * Try to fix one thing per pull request! Many people work on this code, so the more focused your changes are, the less
   of a headache other people will have when they merge their work in.
 * Ensure your Pull Request passes tests either locally or via Jenkins (it will run automatically on your PR)
-* If you're stuck, ask our [gitter channel](https://gitter.im/sonatype/nexus-developers) or #integrations in Slack! There are a number of
-  experienced programmers who are happy to help with learning and troubleshooting.
 
-### PR commenting protocol
+### Protocol of Commenting on a Pull Request
 
 Here are the general rules to follow when commenting on PRs for this repo:
 
 * Unless stated otherwise by the commenter, or clearly not meant to be responded to, all comments on a PR are expected
   to be addressed before it is merged. Sometimes it is alright for a reviewer to approve the PR before all of their
   comments are addressed, but generally only when those comments are expected to be easily addressable without further
-  discussion (for example simple formatting issues).  Even in this case though, the comments should still be addressed
-  post-approval
+  discussion (for example simple formatting issues). Even in this case though, the comments should still be addressed
+  after approval.
