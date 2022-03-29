@@ -35,8 +35,8 @@ Looking to dive in? FANTASTIC! Reach out to one of our experts and we can help g
 
 Here are the general rules to follow when commenting on PRs for this repo:
 
-* Unless stated otherwise by the commenter, or clearly not meant to be responded to, all comments on a PR are expected.
+* Unless stated otherwise by the commenter, or clearly not meant to be responded to, all comments on a PR are expected
   to be addressed before it is merged. Sometimes it is alright for a reviewer to approve the PR before all of their
-  comments are addressed, but generally only when those comments are expected to be easily addressable without further.
-  discussion (for example simple formatting issues).  Even in this case though, the comments should still be addressed
+  comments are addressed, but generally only when those comments are expected to be easily addressable without further
+  discussion (for example simple formatting issues). Even in this case though, the comments should still be addressed
   after approval.
