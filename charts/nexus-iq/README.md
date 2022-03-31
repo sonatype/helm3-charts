@@ -99,11 +99,13 @@ The command removes all the Kubernetes components associated with the chart and 
 | `deployment.preStart.command`              | Command to run before starting the IQ Server container                                                              | `nil`                                                       |
 | `deployment.postStart.command`             | Command to run after starting the IQ Server container                                                               | `nil`                                                       |
 | `deployment.terminationGracePeriodSeconds` | Update termination grace period (in seconds)                                                                        | 120s                                                        |
-| `persistence.storageClass`                 | The provisioner class                                                                                               | `-` (disables dynamic provisioning                          |
+| `persistence.storageClass`          | The provisioner class   | `-` (disables dynamic provisioning       |
 | `persistence.storageSize`                  | The amount of drive space to allocate                                                                               | `1Gi`                                                       |
 | `persistence.accessMode`                   | Default access mode                                                                                                 | `ReadWriteOnce`                                             |
 | `persistence.existingClaim`                | Pre-created PVC name for Data Volume                                                                                | `nil`                                                       |
 | `persistence.existingLogClaim`             | Pre-created PVC name for Log Volume                                                                                 | `nil`                                                       |
+| `persistence.pvName` | The name for the persistentVolume being created to hold IQ Data | `nil` |
+| `persistence.logpvName` | The name for the persistentVolume being created to hold IQ Logs | `nil` |
 | `persistence.gcePersistentDisk`          | A block for using existing gcePersistentDisks | `nil`                                                  |
 | `persistence.gcePersistentDisk.pdName`    | GCE PersistentDisk to use for IQ Data | `nil` |
 | `persistence.gcePersistentDisk.fsType`    | File system type for the IQ Data disk | `nil` |
