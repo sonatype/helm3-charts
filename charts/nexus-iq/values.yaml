@@ -159,6 +159,7 @@ persistence:
   # # Uncomment the next two lines if you want to use an existing GCE PersistentDisk for IQ Logs.
   #   logpdName: nexus-log-disk
   #   logfsType: ext4
+
   # #Uncomment the following section for using an existing AWS EBS Volume for data and/or logs
   # awsElasticBlockStore:
   #   # Uncomment the next two lines if you want to use an existing AWS EBS Volume for IQ Data.
@@ -167,11 +168,13 @@ persistence:
   #   # Uncomment the next two lines if you want to use an existing AWS EBS Volume for IQ Data.
   #   logvolumeID: vol-xxxxxxxxxxxxxxxxx
   #   logfsType: ext4
+
   # # Uncomment the following block if you want to use ANY CSI Storage Driver
   # # The YAML under csi: is taken as you choose to write it in order to support any CSI
   # csi:
   #   driver: ebs.csi.aws.com
   #   volumeHandle: vol-xxxxxxxxxxxxxxxxx
+  
   # # Uncomment the following block if you need PV affinity
   # # The nodeSelectorTerms block is taken as you choose to write it in whole
   # affinity:
