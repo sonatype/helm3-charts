@@ -1,9 +1,9 @@
 {{- if not .Values.statefulset.enabled }}
-{{- if .Values.persistence.persistentVolumeName }}
+{{- if .Values.persistence.pvName }}
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: {{ .Values.persistence.persistentVolumeName }}
+  name: {{ .Values.persistence.pvName }}
   labels:
 {{ include "iqserver.labels" . | indent 4 }}
     {{- if .Values.iq.extraLabels }}
@@ -20,32 +20,32 @@ spec:
   claimRef:
     namespace: {{ .Release.Namespace }}
     name: {{ template "iqserver.fullname" . }}-data
-{{- if .Values.persistence.pdName }}
+{{- if .Values.persistence.gcePersistentDisk }}
   gcePersistentDisk:
-    pdName: {{ .Values.persistence.pdName }}
-    fsType: {{ .Values.persistence.fsType }}
-{{ end }}
+    pdName: {{ .Values.persistence.gcePersistentDisk.pdName }}
+    fsType: {{ .Values.persistence.gcePersistentDisk.fsType }}
+{{- end }}
 {{- if .Values.persistence.awsElasticBlockStore }}
   awsElasticBlockStore:
     volumeID: {{ .Values.persistence.awsElasticBlockStore.volumeID }}
     fsType: {{ .Values.persistence.awsElasticBlockStore.fsType }}
-{{ end }}
+{{- end }}
 {{- if .Values.persistence.csi }}
   csi: {{ toYaml .Values.persistence.csi | nindent 4 }}
 {{- end }}
-{{- if .Values.persistence.affinity.nodeSelectorTerms }}
+{{- if .Values.persistence.affinity }}
   nodeAffinity:
     required:
       nodeSelectorTerms: {{ toYaml .Values.persistence.affinity.nodeSelectorTerms | nindent 8 }}
 {{- end }}
 {{ end }}
 
-{{ if .Values.persistence.logPersistentVolumeName -}}
+{{ if .Values.persistence.logpvName -}}
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: {{ .Values.persistence.logPersistentVolumeName }}
+  name: {{ .Values.persistence.logpvName }}
   labels:
 {{ include "iqserver.labels" . | indent 4 }}
     {{- if .Values.iq.extraLabels }}
@@ -62,20 +62,20 @@ spec:
   claimRef:
     namespace: {{ .Release.Namespace }}
     name: {{ template "iqserver.fullname" . }}-log
-{{- if .Values.persistence.logpdName }}
+{{- if .Values.persistence.gcePersistentDisk }}
   gcePersistentDisk:
-    pdName: {{ .Values.persistence.logpdName }}
-    fsType: {{ .Values.persistence.logfsType }}
-{{ end }}
+    pdName: {{ .Values.persistence.gcePersistentDisk.logpdName }}
+    fsType: {{ .Values.persistence.gcePersistentDisk.logfsType }}
+{{- end }}
 {{- if .Values.persistence.awsElasticBlockStore }}
   awsElasticBlockStore:
-    volumeID: {{ .Values.persistence.awsElasticBlockStore.logVolumeID }}
+    volumeID: {{ .Values.persistence.awsElasticBlockStore.logvolumeID }}
     fsType: {{ .Values.persistence.awsElasticBlockStore.logfsType }}
-{{ end }}
+{{- end }}
 {{- if .Values.persistence.csi }}
   csi: {{ toYaml .Values.persistence.csi | nindent 4 }}
 {{- end }}
-{{- if .Values.persistence.affinity.nodeSelectorTerms }}
+{{- if .Values.persistence.affinity }}
   nodeAffinity:
     required:
       nodeSelectorTerms: {{ toYaml .Values.persistence.affinity.nodeSelectorTerms | nindent 8 }}

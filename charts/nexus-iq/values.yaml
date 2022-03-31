@@ -128,29 +128,60 @@ affinity: {}
 persistence:
   enabled: true
   accessMode: ReadWriteOnce
-  ## If defined, storageClass: <storageClass>
-  ## If set to "-", storageClass: "", which disables dynamic provisioning
-  ## If undefined (the default) or set to null, no storageClass spec is
-  ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-  ##   GKE, AWS & OpenStack)
-  # storageClass: "-"
   storageSize: 1Gi
-  # existingClaim:
-  # existingLogClaim:
+
+  # # If defined, storageClass: <storageClass>
+  # # If set to "-", storageClass: "", which disables dynamic provisioning
+  # # If undefined (the default) or set to null, no storageClass spec is
+  # #   set, choosing the default provisioner.  (gp2 on AWS, standard on
+  # #   GKE, AWS & OpenStack)
+  # storageClass: "-"
+
+  # # annotations are only applied to persistentVolumeClaim
   # annotations:
   #  "helm.sh/resource-policy": keep
-  # storageClass: "-"
-  # volumeConfiguration:
-  #   hostPath:
-  #     path: /data/nxiq/
-  # If you want to use existing PersistentDisk with data, you can create a PV for it by uncommenting the following lines. (Currently supports GCE PD only)
-  # pdName: nexus-data-disk
-  # fsType: ext4
-  # Uncomment below 2 lines, if you want to use an existing GCE PersistentDisk for IQ Logs.
-  # logpdName: nexus-log-disk
-  # logfsType: ext4
-  affinity:
-    enabled: false
+
+  # # For existing PVCs
+  # existingClaim: nexus-data-disk
+  # existingLogClaim: nexus-log-disk
+
+  # # persistentVolume settings below here
+
+  # # Uncomment these to create a persistentVolume for data and/or logs volumes
+  # pvName: nexus-data-disk
+  # logpvName: nexus-log-disk
+
+  # # Uncomment this for gcePersistentDisk
+  # gcePersistentDisk:
+  # # Uncomment the next two lines if you want to use an existing GCE PersistentDisk for IQ Data.
+  #   pdName: nexus-data-disk
+  #   fsType: ext4
+  # # Uncomment the next two lines if you want to use an existing GCE PersistentDisk for IQ Logs.
+  #   logpdName: nexus-log-disk
+  #   logfsType: ext4
+  # #Uncomment the following section for using an existing AWS EBS Volume for data and/or logs
+  # awsElasticBlockStore:
+  #   # Uncomment the next two lines if you want to use an existing AWS EBS Volume for IQ Data.
+  #   volumeID: vol-xxxxxxxxxxxxxxxxx
+  #   fsType: ext4
+  #   # Uncomment the next two lines if you want to use an existing AWS EBS Volume for IQ Data.
+  #   logvolumeID: vol-xxxxxxxxxxxxxxxxx
+  #   logfsType: ext4
+  # # Uncomment the following block if you want to use ANY CSI Storage Driver
+  # # The YAML under csi: is taken as you choose to write it in order to support any CSI
+  # csi:
+  #   driver: ebs.csi.aws.com
+  #   volumeHandle: vol-xxxxxxxxxxxxxxxxx
+  # # Uncomment the following block if you need PV affinity
+  # # The nodeSelectorTerms block is taken as you choose to write it in whole
+  # affinity:
+  #   nodeSelectorTerms:
+  #     - matchExpressions:
+  #           - key: topology.ebs.csi.aws.com/zone
+  #             operator: In
+  #             values:
+  #               - us-east-2a
+  
 
 # configYaml is the full text of the config.yml file that will be passed to IQ Server
 configYaml:
