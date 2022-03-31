@@ -149,6 +149,8 @@ persistence:
   # Uncomment below 2 lines, if you want to use an existing GCE PersistentDisk for IQ Logs.
   # logpdName: nexus-log-disk
   # logfsType: ext4
+  affinity:
+    enabled: false
 
 # configYaml is the full text of the config.yml file that will be passed to IQ Server
 configYaml:
