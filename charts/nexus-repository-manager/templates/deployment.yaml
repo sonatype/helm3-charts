@@ -50,7 +50,7 @@ spec:
       {{- end }}
       {{- if .Values.nexus.imagePullSecrets }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
+        {{- toYaml .Values.nexus.imagePullSecrets | nindent 8 }}
       {{- end }}
       {{- if .Values.deployment.terminationGracePeriodSeconds }}
       terminationGracePeriodSeconds: {{ .Values.deployment.terminationGracePeriodSeconds }}
