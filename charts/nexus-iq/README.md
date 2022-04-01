@@ -104,6 +104,8 @@ The command removes all the Kubernetes components associated with the chart and 
 | `persistence.accessMode`                   | Default access mode                                                                                                 | `ReadWriteOnce`                                             |
 | `persistence.existingClaim`                | Pre-created PVC name for Data Volume                                                                                | `nil`                                                       |
 | `persistence.existingLogClaim`             | Pre-created PVC name for Log Volume                                                                                 | `nil`                                                       |
+| `persistence.pdName` **DEPRECATED** | Moved to  `persistence.gcePersistentDisk.pdName` | NA |
+| `persistence.fsType` **DEPRECATED** | Moved to  `persistence.gcePersistentDisk.fsType` | NA |
 | `persistence.pvName` | The name for the persistentVolume being created to hold IQ Data | `nil` |
 | `persistence.logpvName` | The name for the persistentVolume being created to hold IQ Logs | `nil` |
 | `persistence.gcePersistentDisk`          | A block for using existing gcePersistentDisks | `nil`                                                  |
