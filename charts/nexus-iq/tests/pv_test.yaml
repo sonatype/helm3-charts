@@ -97,4 +97,3 @@ tests:
       - equal:
           path: spec.nodeAffinity.required.nodeSelectorTerms[0].matchExpressions[0].values[0]
           value: us-east-2a
-  
