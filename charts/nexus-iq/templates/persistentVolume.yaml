@@ -72,8 +72,8 @@ spec:
     volumeID: {{ .Values.persistence.awsElasticBlockStore.logVolumeID }}
     fsType: {{ .Values.persistence.awsElasticBlockStore.logFSType }}
 {{- end }}
-{{- if .Values.persistence.csi }}
-  csi: {{ toYaml .Values.persistence.csi | nindent 4 }}
+{{- if .Values.persistence.logCSI }}
+  csi: {{ toYaml .Values.persistence.logCSI | nindent 4 }}
 {{- end }}
 {{- if .Values.persistence.affinity }}
   nodeAffinity:

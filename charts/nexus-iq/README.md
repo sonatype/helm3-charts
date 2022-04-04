@@ -118,7 +118,8 @@ The command removes all the Kubernetes components associated with the chart and 
 | `persistence.awsElasticBlockStore.fsType`         | File system type for the IQ Data disk | `nil` |
 | `persistence.awsElasticBlockStore.logVolumeID`    | AWS EBS Volume to use for IQ Logs | `nil` |
 | `persistence.awsElasticBlockStore.logFSType`     | File system type for the IQ Logs disk | `nil` |
-| `persistence.csi`| A YAML block for defining CSI Storage Driver configuration for the PV. The entire block is taken as you write it. Should support _any_ csi driver that your cluster has installed. |`nil`|
+| `persistence.csi`| A YAML block for defining CSI Storage Driver configuration for the Data PV. The entire block is taken as you write it. Should support _any_ csi driver that your cluster has installed. |`nil`|
+| `persistence.logCSI` | A YAML block for defining CSI Storage Driver configuration for the Log PV. The entire block is taken as you write it. Should support _any_ csi driver that your cluster has installed. | `nil` |
 | `persistence.affinity.nodeSelectorTerms`| A YAML block for defining the affinity node selection. This block is taken as you write it. |`nil`|
 | `resources`                                | Resource requests and limits for the IQ pod in the cluster.                                                         | See `values.yaml` for suggested minimum recommended values. |
 

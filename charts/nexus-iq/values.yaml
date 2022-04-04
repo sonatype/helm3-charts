@@ -170,8 +170,13 @@ persistence:
   #   logfsType: ext4
 
   # # Uncomment the following block if you want to use ANY CSI Storage Driver
-  # # The YAML under csi: is taken as you choose to write it in order to support any CSI
+  # # The YAML under 'csi:' or 'logCSI:' are taken as you choose to write them in order to support any CSI 
+  # # The following is the csi block for the Data PV
   # csi:
+  #   driver: ebs.csi.aws.com
+  #   volumeHandle: vol-xxxxxxxxxxxxxxxxx
+  # # The following is the csi block for the Log PV
+  # logCSI:
   #   driver: ebs.csi.aws.com
   #   volumeHandle: vol-xxxxxxxxxxxxxxxxx
   
