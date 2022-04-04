@@ -10,12 +10,12 @@ tests:
     set:
       persistence:
         pvName: nexus-data-disk
-        logpvName: nexus-log-disk
+        logPVName: nexus-log-disk
         gcePersistentDisk:
           pdName: nexus-data-disk-pd
           fsType: ext4
-          logpdName: nexus-log-disk-pd
-          logfsType: ext3
+          logPDName: nexus-log-disk-pd
+          logFSType: ext3
     asserts:
       - equal:
           path: spec.gcePersistentDisk.pdName
@@ -37,12 +37,12 @@ tests:
     set:
       persistence:
         pvName: nexus-data-disk
-        logpvName: nexus-log-disk
+        logPVName: nexus-log-disk
         awsElasticBlockStore:
           volumeID: vol-aws-test-data
           fsType: ext4
-          logvolumeID: vol-aws-test-log
-          logfsType: ext3
+          logVolumeID: vol-aws-test-log
+          logFSType: ext3
     asserts:
       - equal:
           path: spec.awsElasticBlockStore.volumeID
@@ -64,7 +64,7 @@ tests:
     set:
       persistence:
         pvName: nexus-data-disk
-        logpvName: nexus-log-disk
+        logPVName: nexus-log-disk
         csi:
           driver: ebs.csi.aws.com
           volumeHandle: ebs-test
@@ -79,7 +79,7 @@ tests:
     set:
       persistence:
         pvName: nexus-data-disk
-        logpvName: nexus-log-disk
+        logPVName: nexus-log-disk
         affinity:
           nodeSelectorTerms:
             - matchExpressions:

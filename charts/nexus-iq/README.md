@@ -107,17 +107,17 @@ The command removes all the Kubernetes components associated with the chart and 
 | `persistence.pdName` **DEPRECATED** | Moved to  `persistence.gcePersistentDisk.pdName` | NA |
 | `persistence.fsType` **DEPRECATED** | Moved to  `persistence.gcePersistentDisk.fsType` | NA |
 | `persistence.pvName` | The name for the persistentVolume being created to hold IQ Data | `nil` |
-| `persistence.logpvName` | The name for the persistentVolume being created to hold IQ Logs | `nil` |
+| `persistence.logPVName` | The name for the persistentVolume being created to hold IQ Logs | `nil` |
 | `persistence.gcePersistentDisk`          | A block for using existing gcePersistentDisks | `nil`                                                  |
 | `persistence.gcePersistentDisk.pdName`    | GCE PersistentDisk to use for IQ Data | `nil` |
 | `persistence.gcePersistentDisk.fsType`    | File system type for the IQ Data disk | `nil` |
-| `persistence.gcePersistentDisk.logpdName` | GCE PersistentDisk to use for IQ Logs | `nil` |
-| `persistence.gcePersistentDisk.logfsType` | File system type for the IQ Logs disk | `nil` |
+| `persistence.gcePersistentDisk.logPDName` | GCE PersistentDisk to use for IQ Logs | `nil` |
+| `persistence.gcePersistentDisk.logFSType` | File system type for the IQ Logs disk | `nil` |
 | `persistence.awsElasticBlockStore`          | A block for using existing AWS EBS Volumes | `nil`                                                  |
 | `persistence.awsElasticBlockStore.volumeID`       | AWS EBS Volume to use for IQ Data | `nil` |
 | `persistence.awsElasticBlockStore.fsType`         | File system type for the IQ Data disk | `nil` |
-| `persistence.awsElasticBlockStore.logvolumeID`    | AWS EBS Volume to use for IQ Logs | `nil` |
-| `persistence.awsElasticBlockStore.logfsType`     | File system type for the IQ Logs disk | `nil` |
+| `persistence.awsElasticBlockStore.logVolumeID`    | AWS EBS Volume to use for IQ Logs | `nil` |
+| `persistence.awsElasticBlockStore.logFSType`     | File system type for the IQ Logs disk | `nil` |
 | `persistence.csi`| A YAML block for defining CSI Storage Driver configuration for the PV. The entire block is taken as you write it. Should support _any_ csi driver that your cluster has installed. |`nil`|
 | `persistence.affinity.nodeSelectorTerms`| A YAML block for defining the affinity node selection. This block is taken as you write it. |`nil`|
 | `resources`                                | Resource requests and limits for the IQ pod in the cluster.                                                         | See `values.yaml` for suggested minimum recommended values. |

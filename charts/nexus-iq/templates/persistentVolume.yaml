@@ -40,12 +40,12 @@ spec:
 {{- end }}
 {{ end }}
 
-{{ if .Values.persistence.logpvName -}}
+{{ if .Values.persistence.logPVName -}}
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: {{ .Values.persistence.logpvName }}
+  name: {{ .Values.persistence.logPVName }}
   labels:
 {{ include "iqserver.labels" . | indent 4 }}
     {{- if .Values.iq.extraLabels }}
@@ -64,13 +64,13 @@ spec:
     name: {{ template "iqserver.fullname" . }}-log
 {{- if .Values.persistence.gcePersistentDisk }}
   gcePersistentDisk:
-    pdName: {{ .Values.persistence.gcePersistentDisk.logpdName }}
-    fsType: {{ .Values.persistence.gcePersistentDisk.logfsType }}
+    pdName: {{ .Values.persistence.gcePersistentDisk.logPDName }}
+    fsType: {{ .Values.persistence.gcePersistentDisk.logFSType }}
 {{- end }}
 {{- if .Values.persistence.awsElasticBlockStore }}
   awsElasticBlockStore:
-    volumeID: {{ .Values.persistence.awsElasticBlockStore.logvolumeID }}
-    fsType: {{ .Values.persistence.awsElasticBlockStore.logfsType }}
+    volumeID: {{ .Values.persistence.awsElasticBlockStore.logVolumeID }}
+    fsType: {{ .Values.persistence.awsElasticBlockStore.logFSType }}
 {{- end }}
 {{- if .Values.persistence.csi }}
   csi: {{ toYaml .Values.persistence.csi | nindent 4 }}
