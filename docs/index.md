@@ -24,4 +24,4 @@ command with the `-f` option.
 
 ### Source
 
-Visit https://github.com/sonatype/helm3-charts.
+Visit <https://github.com/sonatype/helm3-charts>.
