@@ -64,7 +64,7 @@ Create the name of the service account to use
 {{- end -}}
 
 {{/*
-Create the value for internal host system value from the image.repository value.
+Create the value for internal host system value from the image repository value.
 */}}
 {{- define "iqserver.internalHostSystem" -}}
   {{- $systems := dict
