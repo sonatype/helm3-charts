@@ -42,7 +42,7 @@ tests:
           path: spec.template.spec.containers[0].env
           value:
             - name: SONATYPE_INTERNAL_HOST_SYSTEM
-              value: Helm
+              value: Helm+Docker
             - name: SONATYPE_WORK
               value: /sonatype-work
             - name: JAVA_OPTS
@@ -95,3 +95,23 @@ tests:
           path: spec.template.spec.imagePullSecrets
           value:
             - name: top-secret
+  - it: shows the red hat docker image for telemetry
+    set:
+      image:
+        repository: registry.connect.redhat.com/sonatype/nexus-iq-server
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SONATYPE_INTERNAL_HOST_SYSTEM
+            value: Helm+RedHat
+  - it: shows the "other" docker image for telemetry
+    set:
+      image:
+        repository: docker-repo.internal.com/sonatype/nexus-iq-server
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SONATYPE_INTERNAL_HOST_SYSTEM
+            value: Helm+Other
