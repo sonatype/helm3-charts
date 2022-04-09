@@ -30,12 +30,12 @@ spec:
     {{- end }}
 
 {{- if .Values.nexus.docker.enabled }}
-{{- range $registry := .Values.nexus.docker.registries }}
+{{- range $index, $registry := .Values.nexus.docker.registries }}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "nexus.fullname" $ | trunc 49 }}-docker-{{ $registry.port }}
+  name: {{ include "nexus.fullname" $ | trunc 46 }}-{{ $index }}-docker-{{ $registry.port }}
 {{- if $.Values.service.annotations }}
   annotations:
 {{ toYaml $.Values.service.annotations | indent 4 }}
