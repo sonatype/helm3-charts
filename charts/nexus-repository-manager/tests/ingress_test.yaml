@@ -122,6 +122,7 @@ tests:
         equal:
           path: spec
           value:
+            ingressClassName: nginx
             rules:
               - host: docker.repo.demo
                 http:
