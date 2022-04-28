@@ -15,6 +15,8 @@ nexus:
     enabled: false
     # registries:
     #   - host: chart.local
+    #     # Array to use multiple fqdn for the same registry. The host value should be present
+    #     hostMulti: []
     #     port: 5000
     #     secretName: registry-secret
   env:
@@ -107,6 +109,8 @@ ingress:
     nginx.ingress.kubernetes.io/proxy-body-size: "0"
   hostPath: /
   hostRepo: repo.demo
+  # Array to use multiple fqdn for the same registry. The hostRepo value should be present
+  # hostMulti: []
   # tls:
   #   - secretName: nexus-local-tls
   #     hosts:
