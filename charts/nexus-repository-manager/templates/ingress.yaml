@@ -32,6 +32,21 @@ spec:
     {{- end }}
   {{- end }}
   rules:
+{{- if .Values.ingress.hostMulti }}
+{{- $hostPath  := .Values.ingress.hostPath -}}
+{{ range $repo := .Values.ingress.hostMulti }}
+    - host: {{ $repo  }}
+      http:
+        paths:
+          - path: {{ $hostPath }}
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $fullName }}
+                port:
+                  number: 8081
+{{- end }} {{- /* range of .Values.ingress.hostRepo */ -}}
+{{ else }}
     - host: {{ .Values.ingress.hostRepo }}
       http:
         paths:
@@ -42,7 +57,7 @@ spec:
                 name: {{ $fullName }}
                 port:
                   number: 8081
-
+{{- end }} {{- /* .Values.ingress.hostMulti */ -}}
 {{ if .Values.nexus.docker.enabled }}
 {{ range $registry := .Values.nexus.docker.registries }}
 ---
@@ -70,6 +85,20 @@ spec:
       - {{ $registry.host | quote }}
       secretName: {{ $registry.secretName }}
   rules:
+{{- if  $registry.hostMulti }}
+{{ range $repo := $registry.hostMulti }}
+    - host: {{ $repo }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $fullName | trunc 49 }}-docker-{{ $registry.port }}
+                port:
+                  number: {{ $registry.port }}
+{{- end }} {{- /* range of $registry.hostMulti */ -}}
+{{ else }}
     - host: {{ $registry.host }}
       http:
         paths:
@@ -80,6 +109,7 @@ spec:
                 name: {{ $fullName | trunc 49 }}-docker-{{ $registry.port }}
                 port:
                   number: {{ $registry.port }}
+{{- end }} {{- /* registry.hostMulti */ -}}
 {{- end }} {{- /* range of nexus.docker.registries */ -}}
 {{- end }} {{- /* nexus.docker.enabled */ -}}
 {{- end }} {{- /* ingress.enabled */ -}}
