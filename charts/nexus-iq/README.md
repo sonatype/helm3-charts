@@ -4,19 +4,21 @@
 
 ### Prerequisites
 
-- Kubernetes 1.8+ with Beta APIs enabled
+- Kubernetes 1.19+
 - PV provisioner support in the underlying infrastructure
 - Helm 3
 
 These charts are designed to work out of the box with minikube using both ingess and ingress-dns addons.
 
-The current releases have been tested on minikube v1.14.2 running k8s v1.19.2
+The current releases have been tested on minikube v1.25.1 running Kubernetes v1.23.1.
 
-## Adding the repo
+## Adding the Sonatype Repo to your Helm
+
 To Add as a Helm Repo
 ```helm repo add sonatype https://sonatype.github.io/helm3-charts/```
 
 ## Testing the Chart
+
 To test the chart:
 ```bash
 $ helm install --dry-run --debug --generate-name ./
@@ -67,35 +69,64 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ## Chart Configuration Options
 
-| Parameter            | Description                                                  | Default           |
-| -------------------- | ------------------------------------------------------------ | ----------------- |
-| `iq.imageName`       | The image name to use for the IQ Container, eg `sonatype/nexus-iq-server`  | `"registry.connect.redhat.com/sonatype/nexus-iq-server"`              |
-| `iq.imagePullSecret` | The base-64 encoded secret to pull a container from Red Hat  | `""`              |
-| `iq.applicationPort` | Port of the application connector. Must match the value in the `configYaml` property | `8070`            |
-| `iq.adminPort`       | Port of the application connector. Must match the value in the `configYaml` property | `8071`            |
-| `iq.memory`          | The amount of RAM to allocate                                | `1Gi`             |
-| `iq.licenseSecret`   | The base-64 encoded license file to be installed at startup  | `""`              |
-| `iq.configYaml`      | A YAML block which will be used as a configuration block for IQ Server. | See `values.yaml` |
-| `iq.env`             | IQ server environment variables | `[{JAVA_OPTS: -Xms1200M -Xmx1200M}]` |
-| `iq.secretName`      | The name of a secret to mount inside the container  | See `values.yaml` |
-| `iq.secretMountName`      | Where in the container to mount the data from `secretName`  | See `values.yaml` |
-| `ingress.enabled`                           | Create an ingress for Nexus         | `true`                                  |
-| `ingress.annotations`                       | Annotations to enhance ingress configuration  | `{}`                          |
-| `ingress.tls.enabled`                       | Enable TLS                          | `true`                                 |
-| `ingress.tls.secretName`                    | Name of the secret storing TLS cert, `false` to use the Ingress' default certificate | `nexus-tls`                             |
-| `ingress.path`                              | Path for ingress rules. GCP users should set to `/*` | `/`                    |
-| `deployment.preStart.command`               | Command to run before starting the IQ Server container  | `nil`                   |
-| `deployment.postStart.command`              | Command to run after starting the IQ Server container  | `nil`                    |
-| `deployment.terminationGracePeriodSeconds`  | Update termination grace period (in seconds)        | 120s                    |
-| `persistence.storageClass` | The provisioner class                        | `-` (disables dynamic provisioning             |
-| `persistence.storageSize` | The amount of drive space to allocate                        | `1Gi`             |
-| `persistence.accessMode` | Default access mode                        | `ReadWriteOnce`             |
-| `persistence.volumeConfiguration` | A YAML block to configure the persistent volume type. Defaults to `hostPath` which should not be used in production | `hostPath`             |
+| Parameter                                  | Description                                                                                                         | Default                                                     |
+|--------------------------------------------|---------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------|
+| `image.name`                               | The image name to use for the IQ Container                                                                          | `sonatype/nexus-iq-server`                                  |
+| `image.tag`                                | The version/tag to use for the IQ Container                                                                         | See `values.yaml`                                           |
+| `imagePullSecrets`                         | The names of the kubernetes secrets with credentials to login to a registry                                         | `[]`                                                        |
+| `iq.applicationPort`                       | Port of the application connector. Must match the value in the `configYaml` property                                | `8070`                                                      |
+| `iq.adminPort`                             | Port of the application connector. Must match the value in the `configYaml` property                                | `8071`                                                      |
+| `iq.licenseSecret`                         | The base-64 encoded license file to be installed at startup                                                         | `""`                                                        |
+| `iq.env`                                   | IQ server environment variables, including JAVA_OPTS                                                                | See `values.yaml`                                           |
+| `iq.secretName`                            | The name of a secret to mount inside the container                                                                  | See `values.yaml`                                           |
+| `iq.secretMountName`                       | Where in the container to mount the data from `secretName`                                                          | See `values.yaml`                                           |
+| `iq.livenessProbe.initialDelaySeconds`     | LivenessProbe initial delay                                                                                         | 10                                                          |
+| `iq.livenessProbe.periodSeconds`           | Seconds between polls                                                                                               | 10                                                          |
+| `iq.livenessProbe.failureThreshold`        | Number of attempts before failure                                                                                   | 3                                                           |
+| `iq.livenessProbe.timeoutSeconds`          | Time in seconds after liveness probe times out                                                                      | 2                                                           |
+| `iq.livenessProbe.successThreshold`        | Number of attempts for the probe to be considered successful                                                        | 1                                                           |
+| `iq.readinessProbe.initialDelaySeconds`    | ReadinessProbe initial delay                                                                                        | 10                                                          |
+| `iq.readinessProbe.periodSeconds`          | Seconds between polls                                                                                               | 10                                                          |
+| `iq.readinessProbe.failureThreshold`       | Number of attempts before failure                                                                                   | 3                                                           |
+| `iq.readinessProbe.timeoutSeconds`         | Time in seconds after readiness probe times out                                                                     | 2                                                           |
+| `iq.readinessProbe.successThreshold`       | Number of attempts for the probe to be considered successful                                                        | 1                                                           |
+| `configYaml`                               | A YAML block which will be used as a configuration block for IQ Server.                                             | See `values.yaml`                                           |
+| `ingress.enabled`                          | Create an ingress for Nexus                                                                                         | `true`                                                      |
+| `ingress.annotations`                      | Annotations to enhance ingress configuration                                                                        | `{}`                                                        |
+| `ingress.tls.enabled`                      | Enable TLS                                                                                                          | `true`                                                      |
+| `ingress.tls.secretName`                   | Name of the secret storing TLS cert, `false` to use the Ingress' default certificate                                | `nexus-tls`                                                 |
+| `ingress.path`                             | Path for ingress rules. GCP users should set to `/*`                                                                | `/`                                                         |
+| `deployment.preStart.command`              | Command to run before starting the IQ Server container                                                              | `nil`                                                       |
+| `deployment.postStart.command`             | Command to run after starting the IQ Server container                                                               | `nil`                                                       |
+| `deployment.terminationGracePeriodSeconds` | Update termination grace period (in seconds)                                                                        | 120s                                                        |
+| `persistence.storageClass`          | The provisioner class   | `-` (disables dynamic provisioning)       |
+| `persistence.storageSize`                  | The amount of drive space to allocate                                                                               | `1Gi`                                                       |
+| `persistence.accessMode`                   | Default access mode                                                                                                 | `ReadWriteOnce`                                             |
+| `persistence.existingClaim`                | Pre-created PVC name for Data Volume                                                                                | `nil`                                                       |
+| `persistence.existingLogClaim`             | Pre-created PVC name for Log Volume                                                                                 | `nil`                                                       |
+| `persistence.pdName` **DEPRECATED** | Moved to  `persistence.gcePersistentDisk.pdName` | NA |
+| `persistence.fsType` **DEPRECATED** | Moved to  `persistence.gcePersistentDisk.fsType` | NA |
+| `persistence.pvName` | The name for the persistentVolume being created to hold IQ Data | `nil` |
+| `persistence.logPVName` | The name for the persistentVolume being created to hold IQ Logs | `nil` |
+| `persistence.gcePersistentDisk`          | A block for using existing gcePersistentDisks | `nil`                                                  |
+| `persistence.gcePersistentDisk.pdName`    | GCE PersistentDisk to use for IQ Data | `nil` |
+| `persistence.gcePersistentDisk.fsType`    | File system type for the IQ Data disk | `nil` |
+| `persistence.gcePersistentDisk.logPDName` | GCE PersistentDisk to use for IQ Logs | `nil` |
+| `persistence.gcePersistentDisk.logFSType` | File system type for the IQ Logs disk | `nil` |
+| `persistence.awsElasticBlockStore`          | A block for using existing AWS EBS Volumes | `nil`                                                  |
+| `persistence.awsElasticBlockStore.volumeID`       | AWS EBS Volume to use for IQ Data | `nil` |
+| `persistence.awsElasticBlockStore.fsType`         | File system type for the IQ Data disk | `nil` |
+| `persistence.awsElasticBlockStore.logVolumeID`    | AWS EBS Volume to use for IQ Logs | `nil` |
+| `persistence.awsElasticBlockStore.logFSType`     | File system type for the IQ Logs disk | `nil` |
+| `persistence.csi`| A YAML block for defining CSI Storage Driver configuration for the Data PV. The entire block is taken as you write it. Should support _any_ csi driver that your cluster has installed. |`nil`|
+| `persistence.logCSI` | A YAML block for defining CSI Storage Driver configuration for the Log PV. The entire block is taken as you write it. Should support _any_ csi driver that your cluster has installed. | `nil` |
+| `persistence.affinity.nodeSelectorTerms`| A YAML block for defining the affinity node selection. This block is taken as you write it. |`nil`|
+| `resources`                                | Resource requests and limits for the IQ pod in the cluster.                                                         | See `values.yaml` for suggested minimum recommended values. |
 
 ## Configuring IQ Server
 
 You can define the `config.yml` for IQ Server in your `myvalues.yml` file on startup. 
-It is the `iq.configYaml` property. For more details, see the [Configuring IQ Server](https://help.sonatype.com/iqserver/configuring) help page.
+It is the `configYaml` property. For more details, see the [Configuring IQ Server](https://help.sonatype.com/iqserver/configuring) help page.
 Additionally the server can be started with JAVA_OPTS exported to the environment. This will be added to the server 
 process invocation and can be used for purposes such as changing the server memory settings. See the defaults set in
 [the values.yaml file](values.yaml).
@@ -106,10 +137,8 @@ The license file can be installed via the UI when IQ server is running, or it ca
 If you leave the `licenseFile` field empty/commented, IQ Server will start and prompt you to manually install the license 
 when you first enter the GUI.
 
-## 413 Errors
-The default setting for Nginx allows for very small upload sizes. Add this annotation to the ingress for each product to remove the limit: nginx.ingress.kubernetes.io/proxy-body-size: "0"
- 
 ## Specifying custom Java keystore/truststore
+
 There is an example of how to implement this in [the values.yaml file](values.yaml) using secrets to store both the
 Java keystores and their associated passwords. In order to utilize the provided example directly secrets can be created 
 from a directory containing the keystore and truststore files like so:
@@ -121,5 +150,28 @@ kubectl create secret generic secret-jks
 	--from-literal='truststorePassword=password'
 ```
 
+## Using the Image from the Red Hat Registry
 
-
+To use the [IQ image available from Red Hat's registry](https://catalog.redhat.com/software/containers/sonatype/nexus-repository-manager/594c281c1fbe9847af657690),
+you'll need to:
+* Load the credentials for the registry as a secret in your cluster
+  ```shell
+  kubectl create secret docker-registry redhat-pull-secret \
+    --docker-server=registry.connect.redhat.com \
+    --docker-username=<user_name> \
+    --docker-password=<password> \
+    --docker-email=<email>
+  ```
+  See Red Hat's [Registry Authentication documentation](https://access.redhat.com/RegistryAuthentication)
+  for further details.
+* Provide the name of the secret in `imagePullSecrets` in this chart's `values.yaml`
+  ```yaml
+  imagePullSecrets:
+    - name: redhat-pull-secret
+  ```
+* Set `image.name` and `image.tag` in `values.yaml`
+  ```yaml
+  image:
+    repository: registry.connect.redhat.com/sonatype/nexus-iq-server
+    tag: 1.132.0-ubi-1
+  ```

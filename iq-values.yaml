@@ -1,7 +1,0 @@
-ingress:
-  enabled: true
-  annotations: {kubernetes.io/ingress.class: nginx}
-  hostUI: iq-server.demo
-  hostUIPath: /
-  hostAdmin: admin.iq-server.demo
-  hostAdminPath: /

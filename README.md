@@ -31,7 +31,7 @@ from within each charts directory:
 helm install --generate-name ./
 ```
 
-### Packaging and Indexing
+### Packaging and Indexing for Release
 
 *Sonatype CI build will package, commit, and publish to the official helm repository.*
 
@@ -42,14 +42,71 @@ file to the `docs/` directory which is the root of the
 
 The build process requires Helm 3.
 
+### Manually Testing the Helm Charts
+To test Helm Charts locally you will need to follow the next steps:
+
+1. Install docker, helm, kubectl, and [minikube](https://minikube.sigs.k8s.io/docs/start/), if you don't already have it on your local workstation.
+    * You could also use docker with k8s enabled instead of minikube. You don't need both.
+2. Start up minikube: `minikube start`
+3. Confirm minikube is up and running: `minikube status`
+4. List the existing pods in the cluster: `kubectl get pods`  (There should not be anything listed at this point.)
+5. Install the helm chart in any of these ways:
+    * From a copy of the source: `helm install iq {path/to/your/helm3-charts}/charts/nexus-iq --wait` 
+    * From our production online repo: Add our helm repo locally as instructed at https://sonatype.github.io/helm3-charts/
+6. List installed servers with helm: helm list 
+7. Watch the server start in kubernetes by running: `kubectl get pods`
+8. Use the pod name you get from last command to follow the console logs: `kubectl logs -f iq-nexus-iq-server-xxx` 
+9. Confirm expected version numbers in those logs.
+10. Forward a localhost port to a port on the running pod: `kubectl port-forward iq-nexus-iq-server-xxx 8070`
+11. Connect and check that your fresh new server is successfully running: `http://localhost:8070/`
+12. Uninstall the server with helm: `helm delete iq` 
+13. Confirm it's gone: `helm list && kubectl get pods`
+14. Shutdown minikube: `minikube stop`
+
+### Running Lint
+Helm's Lint command will highlight formatting problems in the charts that need to be corrected.
+```
+helm lint charts/nexus-iq charts/nexus-repository-manager
+```
+
+### Running Unit Tests
+To unit test the helm charts you can follow the next steps:
+
+1. Install the unittest plugin for Helm: https://github.com/quintush/helm-unittest
+2. Run the tests for each individual chart:
+   * `cd charts/nexus-iq; helm unittest -3 -t junit -o test-output.xml .`
+   * `cd charts/nexus-repository-manager; helm unittest -3 -t junit -o test-output.xml .`
+
+### Running Integration Tests
+You can run the integration tests for the helm charts by running the next commands. 
+
+Before running the integration tests:
+* Install docker, helm, kubectl, and [minikube](https://minikube.sigs.k8s.io/docs/start/), if you don't already have it on your local workstation.
+  * You could also use docker with k8s enabled instead of minikube.
+* The integration tests will be executed on a running cluster. Each test will create a new POD that will connect to the server installed by our 
+helm chart. Check [this](https://helm.sh/docs/topics/chart_tests/)
+
+Running integration tests for Nexus IQ:
+1. From source code: `helm install iq ./charts/nexus-iq --wait`
+2. Run the tests: `helm test iq`
+
+Running integration tests for Nexus Repository Manager:
+1. From source code: `helm install nxrm ./charts/nexus-repository-manager --wait`
+3. Run the tests: `helm test nxrm`
+
 ### Further Notes on Usage
 
 #### Resolver File and Ingress-DNS
 
-Use the sample values files provided here.
+Get the default `values.yaml` for each chart.
+- Nexus Repository: `helm show values nexus-repo sonatype/nexus-repository-manager > iq-values.yaml`
+- Nexus IQ: `helm show values nexus-iq sonatype/nexus-iq-server > repo-values.yaml`
 
-- `helm install nexus-iq sonatype/nexus-iq-server -f iq-values.yaml`
-- `helm install nexus-repo sonatype/nexus-repository-manager -f repo-values.yaml`
+Edit the values file you just downloaded to enable ingress support, and install the chart 
+with those values:
+
+- Nexus Repository: `helm install nexus-repo sonatype/nexus-repository-manager -f repo-values.yaml`
+- Nexus IQ: `helm install nexus-iq sonatype/nexus-iq-server -f iq-values.yaml`
 
 If you want to use the custom values file for the demo environment that expose 
 the apps on a local domain of *.demo which is done by creating a resolver file. 
@@ -66,11 +123,3 @@ Use `minikube ip` to get the address
 
 Docs for Ingress-dns are here
 https://github.com/kubernetes/minikube/tree/master/deploy/addons/ingress-dns
-
-#### 413 Errors with Nginx
-
-The default setting for Nginx allows for very small upload sizes. Add this annotation to the ingress 
-for each product to remove the limit:
-```
-nginx.ingress.kubernetes.io/proxy-body-size: "0"
-```

@@ -16,13 +16,12 @@ dockerizedBuildPipeline(
   prepare: {
     githubStatusUpdate('pending')
   },
-  buildImageId: 'docker-all.repo.sonatype.com/alpine/helm:3.5.0',
   buildAndTest: {
     sh './build.sh'
   },
   skipVulnerabilityScan: true,
   archiveArtifacts: 'docs/*',
-  testResults: [],
+  testResults: ['**/test-output.xml'],
   onSuccess: {
     buildNotifications(currentBuild, env, 'main')
   },

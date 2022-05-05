@@ -1,0 +1,108 @@
+suite: persistentVolume
+templates:
+  - persistentVolume.yaml
+tests:
+  - it: does not render with defaults
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: gcePersistentDisk check
+    set:
+      persistence:
+        pvName: nexus-data-disk
+        logPVName: nexus-log-disk
+        gcePersistentDisk:
+          pdName: nexus-data-disk-pd
+          fsType: ext4
+          logPDName: nexus-log-disk-pd
+          logFSType: ext3
+    asserts:
+      - equal:
+          path: spec.gcePersistentDisk.pdName
+          value: nexus-data-disk-pd
+        documentIndex: 0
+      - equal:
+          path: spec.gcePersistentDisk.fsType
+          value: ext4
+        documentIndex: 0
+      - equal:
+          path: spec.gcePersistentDisk.pdName
+          value: nexus-log-disk-pd
+        documentIndex: 1
+      - equal:
+          path: spec.gcePersistentDisk.fsType
+          value: ext3
+        documentIndex: 1
+  - it: awsElasticBlockStore check
+    set:
+      persistence:
+        pvName: nexus-data-disk
+        logPVName: nexus-log-disk
+        awsElasticBlockStore:
+          volumeID: vol-aws-test-data
+          fsType: ext4
+          logVolumeID: vol-aws-test-log
+          logFSType: ext3
+    asserts:
+      - equal:
+          path: spec.awsElasticBlockStore.volumeID
+          value: vol-aws-test-data
+        documentIndex: 0
+      - equal:
+          path: spec.awsElasticBlockStore.fsType
+          value: ext4
+        documentIndex: 0
+      - equal:
+          path: spec.awsElasticBlockStore.volumeID
+          value: vol-aws-test-log
+        documentIndex: 1
+      - equal:
+          path: spec.awsElasticBlockStore.fsType
+          value: ext3
+        documentIndex: 1
+  - it: csi values check
+    set:
+      persistence:
+        pvName: nexus-data-disk
+        logPVName: nexus-log-disk
+        csi:
+          driver: ebs.csi.aws.com
+          volumeHandle: data-volume
+        logCSI:
+          driver: ebs.csi.aws.com
+          volumeHandle: log-volume
+    asserts:
+      - equal: 
+          path: spec.csi.driver
+          value: ebs.csi.aws.com
+      - equal:
+          path: spec.csi.volumeHandle
+          value: data-volume
+        documentIndex: 0
+      - equal:
+          path: spec.csi.volumeHandle
+          value: log-volume
+        documentIndex: 1
+
+  - it: affinity values check
+    set:
+      persistence:
+        pvName: nexus-data-disk
+        logPVName: nexus-log-disk
+        affinity:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: topology.ebs.csi.aws.com/zone
+                  operator: In
+                  values:
+                    - us-east-2a
+    asserts:
+      - equal:
+          path: spec.nodeAffinity.required.nodeSelectorTerms[0].matchExpressions[0].key
+          value: topology.ebs.csi.aws.com/zone
+      - equal:
+          path: spec.nodeAffinity.required.nodeSelectorTerms[0].matchExpressions[0].operator
+          value: In
+      - equal:
+          path: spec.nodeAffinity.required.nodeSelectorTerms[0].matchExpressions[0].values[0]
+          value: us-east-2a

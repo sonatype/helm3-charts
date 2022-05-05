@@ -1,3 +1,4 @@
+---
 # Default values for iqserver.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
@@ -8,27 +9,29 @@ replicaCount: 1
 image:
   # Sonatype Official Public Image
   repository: sonatype/nexus-iq-server
-  tag: 1.125.0
+  tag: 1.136.0
   pullPolicy: IfNotPresent
-  
+imagePullSecrets:
+# for image registries that require login, specify the name of the existing
+# kubernetes secret
+#   - name: <pull-secret-name>
+
 iq:
   name: nxiq
   hostname: iq-server.demo
   applicationPort: 8070
   adminPort: 8071
-  memory: 1Gi
   # base 64 encoded license file with no line breaks
   licenseSecret: ""
   # add this line with this file path and the `licenseSecret` above to autoconfigure licensing
   # licenseFile: /etc/nexus-iq-license/license_lic
   extraLabels:
-  # add the following two lines to mount a secrets volume within the container at the specified location  
-  secretName: #secret-jks
-  secretMountName: #/etc/secret-volume
+  # add the following two lines to mount a secrets volume within the container at the specified location
+  # secretName: secret-jks
+  # secretMountName: /etc/secret-volume
   env:
     - name: JAVA_OPTS
-      value: "-Djava.util.prefs.userRoot=${SONATYPE_WORK}/javaprefs"
-      
+      value: "-Djava.util.prefs.userRoot=$(SONATYPE_WORK)/javaprefs"
 # In conjunction with 'secretName' and 'secretMountName' above, this is an example of how to inject required password
 # secrets into the runtime environment, and how to modify the startup of the server to utilize custom Java SSL stores.
 #    - name: TRUSTSTORE_PASSWORD
@@ -44,9 +47,22 @@ iq:
 #    - name: JAVA_OPTS
 #      value: "-Djavax.net.ssl.keyStoreType=jks -Djavax.net.ssl.keyStore=/etc/secret-volume/keystore.jks -Djavax.net.ssl.keyStorePassword=$(KEYSTORE_PASSWORD) -Djavax.net.ssl.trustStoreType=jks -Djavax.net.ssl.trustStore=/etc/secret-volume/truststore.jks -Djavax.net.ssl.trustStorePassword=$(TRUSTSTORE_PASSWORD) -Djava.util.prefs.userRoot=${SONATYPE_WORK}/javaprefs"
 
+  # Configures the liveness probe for IQ pod
+  livenessProbe:
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    failureThreshold: 3
+    timeoutSeconds: 2
+    successThreshold: 1
+  # Configures the readiness probe for IQ pod
+  readinessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 30
+    failureThreshold: 10
+    timeoutSeconds: 2
+    successThreshold: 1
 
 deploymentStrategy: Recreate
-imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
@@ -60,15 +76,15 @@ serviceAccount:
   name:
 
 podSecurityContext: {}
-  # fsGroup: 2000
+#  fsGroup: 2000
 
 securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
+#  capabilities:
+#    drop:
+#    - ALL
+#  readOnlyRootFilesystem: true
+#  runAsNonRoot: true
+#  runAsUser: 1000
 
 service:
   type: "ClusterIP"
@@ -76,31 +92,32 @@ service:
 
 ingress:
   enabled: false
-  annotations: {kubernetes.io/ingress.class: nginx}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
+  ingressClassName: nginx
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
   hostUI: iq-server.demo
   hostUIPath: /
   hostAdmin: admin.iq-server.demo
   hostAdminPath: /
+  # tls:
+  #   - secretName: nexus-local-tls
+  #     hosts:
+  #       - iq-server.demo
+  #       - admin.iq-server.demo
 
-  tls: []
-    # - secretName: nexus-local-tls
-    #   hosts:
-    #     - iqserver.local
-    #     - admin.iqserver.local
-
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+resources:
+# We usually recommend not to specify default resources and to leave this as a
+# conscious choice for the user. This also increases chances charts run on
+# environments with little resources, such as Minikube. If you do want to
+# specify resources, uncomment the lines below. These values ensure minimum
+# resources for production.
+#  requests:
+#    cpu: 8
+#    memory: 8Gi
+# Optionally limit the resources to the recommended minimum requirements.
+#  limits:
+#    cpu: 8
+#    memory: 8Gi
 
 nodeSelector: {}
 
@@ -111,32 +128,77 @@ affinity: {}
 persistence:
   enabled: true
   accessMode: ReadWriteOnce
-  ## If defined, storageClass: <storageClass>
-  ## If set to "-", storageClass: "", which disables dynamic provisioning
-  ## If undefined (the default) or set to null, no storageClass spec is
-  ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-  ##   GKE, AWS & OpenStack)
-  # storageClass: "-"
   storageSize: 1Gi
-  # existingClaim:
+
+  # # If defined, storageClass: <storageClass>
+  # # If set to "-", storageClass: "", which disables dynamic provisioning
+  # # If undefined (the default) or set to null, no storageClass spec is
+  # #   set, choosing the default provisioner.  (gp2 on AWS, standard on
+  # #   GKE, AWS & OpenStack)
+  # storageClass: "-"
+
+  # # annotations are only applied to persistentVolumeClaim
   # annotations:
   #  "helm.sh/resource-policy": keep
-  # storageClass: "-"
-  # volumeConfiguration:
-  #   hostPath:
-  #     path: /data/nxiq/
-  # If you want to use existing PersistentDisk with data, you can create a PV for it by uncommenting the following lines. (Currently supports GCE PD only)
-  # pdName: nexus-data-disk
-  # fsType: ext4
-  # Uncomment below 2 lines, if you want to use an existing GCE PersistentDisk for IQ Logs.
-  # logpdName: nexus-log-disk
-  # logfsType: ext4
+
+  # # For existing PVCs
+  # existingClaim: nexus-data-disk
+  # existingLogClaim: nexus-log-disk
+
+  # # persistentVolume settings below here
+
+  # # Uncomment these to create a persistentVolume for data and/or logs volumes
+  # pvName: nexus-data-disk
+  # logpvName: nexus-log-disk
+
+  # # Uncomment this for gcePersistentDisk
+  # gcePersistentDisk:
+  # # Uncomment the next two lines if you want to use an existing GCE PersistentDisk for IQ Data.
+  #   pdName: nexus-data-disk
+  #   fsType: ext4
+  # # Uncomment the next two lines if you want to use an existing GCE PersistentDisk for IQ Logs.
+  #   logpdName: nexus-log-disk
+  #   logfsType: ext4
+
+  # #Uncomment the following section for using an existing AWS EBS Volume for data and/or logs
+  # awsElasticBlockStore:
+  #   # Uncomment the next two lines if you want to use an existing AWS EBS Volume for IQ Data.
+  #   volumeID: vol-xxxxxxxxxxxxxxxxx
+  #   fsType: ext4
+  #   # Uncomment the next two lines if you want to use an existing AWS EBS Volume for IQ Data.
+  #   logvolumeID: vol-xxxxxxxxxxxxxxxxx
+  #   logfsType: ext4
+
+  # # Uncomment the following block if you want to use ANY CSI Storage Driver
+  # # The YAML under 'csi:' or 'logCSI:' are taken as you choose to write them in order to support any CSI 
+  # # The following is the csi block for the Data PV
+  # csi:
+  #   driver: ebs.csi.aws.com
+  #   volumeHandle: vol-xxxxxxxxxxxxxxxxx
+  # # The following is the csi block for the Log PV
+  # logCSI:
+  #   driver: ebs.csi.aws.com
+  #   volumeHandle: vol-xxxxxxxxxxxxxxxxx
+  
+  # # Uncomment the following block if you need PV affinity
+  # # The nodeSelectorTerms block is taken as you choose to write it in whole
+  # affinity:
+  #   nodeSelectorTerms:
+  #     - matchExpressions:
+  #           - key: topology.ebs.csi.aws.com/zone
+  #             operator: In
+  #             values:
+  #               - us-east-2a
+  
 
 # configYaml is the full text of the config.yml file that will be passed to IQ Server
 configYaml:
   baseUrl: http://iq-server.demo
   sonatypeWork: /sonatype-work
   licenseFile: /etc/nexus-iq-license/license_lic
+  initialAdminPassword: admin123
+  features:
+    enableUnauthenticatedPages: true
   server:
     applicationConnectors:
       - type: http
@@ -145,17 +207,17 @@ configYaml:
       - type: http
         port: 8071
     # HTTP request log settings.
-    requestLog: 
+    requestLog:
       appenders:
-        #All appenders set to console
+        # All appenders set to console
         - type: file
-          currentLogFilename: /var/log/nexus-iq-server/request.log    
+          currentLogFilename: /var/log/nexus-iq-server/request.log
           # Do not display log statements below this threshold to stdout.
           # threshold: INFO
           logFormat: "%clientHost %l %user [%date] \"%requestURL\" %statusCode %bytesSent %elapsedTime \"%header{User-Agent}\""
           archivedLogFilenamePattern: /var/log/nexus-iq-server/request-%d.log.gz
           archivedFileCount: 50
-  
+
   createSampleData: true
 
   logging:
@@ -174,9 +236,9 @@ configYaml:
       "org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter": INFO   # WARNING: This reveals credentials at DEBUG level
       "com.sonatype.insight.audit":
         appenders:
-          #All appenders set to console
+          # All appenders set to console
           - type: file
-            currentLogFilename: /var/log/nexus-iq-server/audit.log    
+            currentLogFilename: /var/log/nexus-iq-server/audit.log
             # Do not display log statements below this threshold to stdout.
             # threshold: INFO
             archivedLogFilenamePattern: /var/log/nexus-iq-server/audit-%d.log.gz
@@ -185,29 +247,27 @@ configYaml:
       "com.sonatype.insight.policy.violation":
         appenders:
           - type: console
-    
+
             # Do not display log statements below this threshold to stdout.
             threshold: INFO
 
     appenders:
-  
+
       # Settings for logging to stdout.
       - type: console
-    
+
         # Do not display log statements below this threshold to stdout.
         threshold: INFO
-      
+
         logFormat: "%d{'yyyy-MM-dd HH:mm:ss,SSSZ'} %level [%thread] %X{username} %logger - %msg%n"
 
       - type: file
-    
+
         # Do not display log statements below this threshold to stdout.
         threshold: ALL
-      
+
         logFormat: "%d{'yyyy-MM-dd HH:mm:ss,SSSZ'} %level [%thread] %X{username} %logger - %msg%n"
         # The file to which current statements will be logged.
         currentLogFilename: /var/log/nexus-iq-server/clm-server.log
         archivedLogFilenamePattern: /var/log/nexus-iq-server/clm-server-%d.log.gz
         archivedFileCount: 50
-
-

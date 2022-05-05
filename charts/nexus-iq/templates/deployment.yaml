@@ -35,6 +35,10 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
+            - name: SONATYPE_INTERNAL_HOST_SYSTEM
+              value: {{ template "iqserver.internalHostSystem" . }}
+            - name: SONATYPE_WORK
+              value: {{ .Values.configYaml.sonatypeWork }}
 {{ toYaml .Values.iq.env | indent 12 }}
           ports:
             - name: application
@@ -47,14 +51,20 @@ spec:
             httpGet:
               path: /ping
               port: admin
+              {{- if .Values.iq.livenessProbe }}
+                {{- toYaml .Values.iq.livenessProbe | nindent 12 }}
+              {{- end }}
           readinessProbe:
             httpGet:
               path: /
               port: application
+              {{- if .Values.iq.livenessProbe }}
+                {{- toYaml .Values.iq.readinessProbe | nindent 12 }}
+              {{- end }} 
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
-            - mountPath: /sonatype-work
+            - mountPath: {{ .Values.configYaml.sonatypeWork }}
               name: nxiq-pv-data
             - mountPath: /var/log/nexus-iq-server
               name: nxiq-pv-log
@@ -75,7 +85,7 @@ spec:
             claimName: {{ .Values.persistence.existingClaim | default (printf "%s-%s" (include "iqserver.fullname" .) "data") }}
         - name: nxiq-pv-log
           persistentVolumeClaim:
-            claimName: {{ .Values.persistence.existingClaim | default (printf "%s-%s" (include "iqserver.fullname" .) "log") }}
+            claimName: {{ .Values.persistence.existingLogClaim | default (printf "%s-%s" (include "iqserver.fullname" .) "log") }}
         - name: config-volume
           configMap:
             name: {{ template "iqserver.fullname" . }}-conf

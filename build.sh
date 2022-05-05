@@ -12,11 +12,17 @@
 # See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
 #
 
+helm plugin install https://github.com/quintush/helm-unittest
+
 set -e
 
 # lint yaml of charts
 helm lint charts/nexus-iq
 helm lint charts/nexus-repository-manager
+
+# unit test
+(cd charts/nexus-iq; helm unittest -3 -t junit -o test-output.xml .)
+(cd charts/nexus-repository-manager; helm unittest -3 -t junit -o test-output.xml .)
 
 # package the charts into tgz archives
 helm package charts/nexus-iq --destination docs

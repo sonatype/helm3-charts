@@ -1,0 +1,117 @@
+suite: deployment
+templates:
+  - deployment.yaml
+tests:
+  - it: renders with defaults
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isKind:
+          of: Deployment
+      - equal:
+          path: apiVersion
+          value: apps/v1
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-nexus-iq-server
+      - matchRegex:
+          path: metadata.labels.[app.kubernetes.io/name]
+          pattern: nexus-iq-server
+      - matchRegex:
+          path: metadata.labels.[app.kubernetes.io/version]
+          pattern: 1\.\d+\.\d+
+      - equal:
+          path: spec.replicas
+          value: 1
+      - equal:
+          path: spec.strategy.type
+          value: Recreate
+      - matchRegex:
+          path: spec.template.spec.containers[0].image
+          pattern: sonatype/nexus-iq-server:1\.\d+\.\d+
+      - equal:
+          path: spec.template.spec.containers[0].securityContext
+          value: {}
+      - equal:
+          path: spec.template.spec.containers[0].imagePullPolicy
+          value: IfNotPresent
+      - equal:
+          path: spec.template.spec.imagePullSecrets
+          value: null
+      - equal:
+          path: spec.template.spec.containers[0].env
+          value:
+            - name: SONATYPE_INTERNAL_HOST_SYSTEM
+              value: Helm+Docker
+            - name: SONATYPE_WORK
+              value: /sonatype-work
+            - name: JAVA_OPTS
+              value: -Djava.util.prefs.userRoot=$(SONATYPE_WORK)/javaprefs
+      - equal:
+          path: spec.template.spec.containers[0].ports
+          value: 
+            - name: application
+              containerPort: 8070
+              protocol: TCP
+            - name: admin
+              containerPort: 8071
+              protocol: TCP
+      - equal:
+          path: spec.template.spec.containers[0].livenessProbe
+          value:
+            httpGet:
+              path: /ping
+              port: admin
+            initialDelaySeconds: 10
+            failureThreshold: 3
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 2
+      - equal:
+          path: spec.template.spec.containers[0].readinessProbe
+          value:
+            httpGet:
+              path: /
+              port: application
+            initialDelaySeconds: 30
+            failureThreshold: 10
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 2
+  - it: should use our simple values
+    set:
+      replicaCount: 2
+      deploymentStrategy: my-strategy
+      imagePullSecrets:
+        - name: top-secret
+    asserts:
+      - equal:
+          path: spec.replicas
+          value: 2
+      - equal:
+          path: spec.strategy.type
+          value: my-strategy
+      - equal:
+          path: spec.template.spec.imagePullSecrets
+          value:
+            - name: top-secret
+  - it: shows the red hat docker image for telemetry
+    set:
+      image:
+        repository: registry.connect.redhat.com/sonatype/nexus-iq-server
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SONATYPE_INTERNAL_HOST_SYSTEM
+            value: Helm+RedHat
+  - it: shows the "other" docker image for telemetry
+    set:
+      image:
+        repository: docker-repo.internal.com/sonatype/nexus-iq-server
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SONATYPE_INTERNAL_HOST_SYSTEM
+            value: Helm+Other
