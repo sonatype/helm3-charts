@@ -21,7 +21,12 @@ nexus:
     # minimum recommended memory settings for a small, person instance from
     # https://help.sonatype.com/repomanager3/product-information/system-requirements
     - name: INSTALL4J_ADD_VM_PARAMS
-      value: "-Xms2703M -Xmx2703M -XX:MaxDirectMemorySize=2703M -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
+      value: |-
+        -Xms2703M -Xmx2703M
+        -XX:MaxDirectMemorySize=2703M
+        -XX:+UnlockExperimentalVMOptions
+        -XX:+UseCGroupMemoryLimitForHeap
+        -Djava.util.prefs.userRoot=/nexus-data/javaprefs
     - name: NEXUS_SECURITY_RANDOMPASSWORD
       value: "true"
   properties:
