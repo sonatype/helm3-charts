@@ -7,7 +7,7 @@ deploymentStrategy: Recreate
 image:
   # Sonatype Official Public Image
   repository: sonatype/nexus3
-  tag: 3.38.0
+  tag: 3.38.1
   pullPolicy: IfNotPresent
 
 nexus:
@@ -16,7 +16,7 @@ nexus:
     # registries:
     #   - host: chart.local
     #     port: 5000
-    #     secretName: registrySecret
+    #     secretName: registry-secret
   env:
     # minimum recommended memory settings for a small, person instance from
     # https://help.sonatype.com/repomanager3/product-information/system-requirements

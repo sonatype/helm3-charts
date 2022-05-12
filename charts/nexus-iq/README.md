@@ -99,12 +99,28 @@ The command removes all the Kubernetes components associated with the chart and 
 | `deployment.preStart.command`              | Command to run before starting the IQ Server container                                                              | `nil`                                                       |
 | `deployment.postStart.command`             | Command to run after starting the IQ Server container                                                               | `nil`                                                       |
 | `deployment.terminationGracePeriodSeconds` | Update termination grace period (in seconds)                                                                        | 120s                                                        |
-| `persistence.storageClass`                 | The provisioner class                                                                                               | `-` (disables dynamic provisioning                          |
+| `persistence.storageClass`          | The provisioner class   | `-` (disables dynamic provisioning)       |
 | `persistence.storageSize`                  | The amount of drive space to allocate                                                                               | `1Gi`                                                       |
 | `persistence.accessMode`                   | Default access mode                                                                                                 | `ReadWriteOnce`                                             |
 | `persistence.existingClaim`                | Pre-created PVC name for Data Volume                                                                                | `nil`                                                       |
 | `persistence.existingLogClaim`             | Pre-created PVC name for Log Volume                                                                                 | `nil`                                                       |
-| `persistence.volumeConfiguration`          | A YAML block to configure the persistent volume type. Defaults to `hostPath` which should not be used in production | `hostPath`                                                  |
+| `persistence.pdName` **DEPRECATED** | Moved to  `persistence.gcePersistentDisk.pdName` | NA |
+| `persistence.fsType` **DEPRECATED** | Moved to  `persistence.gcePersistentDisk.fsType` | NA |
+| `persistence.pvName` | The name for the persistentVolume being created to hold IQ Data | `nil` |
+| `persistence.logPVName` | The name for the persistentVolume being created to hold IQ Logs | `nil` |
+| `persistence.gcePersistentDisk`          | A block for using existing gcePersistentDisks | `nil`                                                  |
+| `persistence.gcePersistentDisk.pdName`    | GCE PersistentDisk to use for IQ Data | `nil` |
+| `persistence.gcePersistentDisk.fsType`    | File system type for the IQ Data disk | `nil` |
+| `persistence.gcePersistentDisk.logPDName` | GCE PersistentDisk to use for IQ Logs | `nil` |
+| `persistence.gcePersistentDisk.logFSType` | File system type for the IQ Logs disk | `nil` |
+| `persistence.awsElasticBlockStore`          | A block for using existing AWS EBS Volumes | `nil`                                                  |
+| `persistence.awsElasticBlockStore.volumeID`       | AWS EBS Volume to use for IQ Data | `nil` |
+| `persistence.awsElasticBlockStore.fsType`         | File system type for the IQ Data disk | `nil` |
+| `persistence.awsElasticBlockStore.logVolumeID`    | AWS EBS Volume to use for IQ Logs | `nil` |
+| `persistence.awsElasticBlockStore.logFSType`     | File system type for the IQ Logs disk | `nil` |
+| `persistence.csi`| A YAML block for defining CSI Storage Driver configuration for the Data PV. The entire block is taken as you write it. Should support _any_ csi driver that your cluster has installed. |`nil`|
+| `persistence.logCSI` | A YAML block for defining CSI Storage Driver configuration for the Log PV. The entire block is taken as you write it. Should support _any_ csi driver that your cluster has installed. | `nil` |
+| `persistence.affinity.nodeSelectorTerms`| A YAML block for defining the affinity node selection. This block is taken as you write it. |`nil`|
 | `resources`                                | Resource requests and limits for the IQ pod in the cluster.                                                         | See `values.yaml` for suggested minimum recommended values. |
 
 ## Configuring IQ Server

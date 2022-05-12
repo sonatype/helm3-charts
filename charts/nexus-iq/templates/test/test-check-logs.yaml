@@ -1,0 +1,22 @@
+# This test checks the logs to confirm the running app version is the same as the chart app version
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ .Release.Name }}-test-check-logs"
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded,hook-failed
+spec:
+  containers:
+    - name: {{ .Release.Name }}-test-check-logs
+      image: busybox
+      command: ["/bin/sh"]
+      args: ["-c", "cat /var/log/nexus-iq-server/clm-server.log | grep {{ .Chart.AppVersion }} || exit 1"]
+      volumeMounts:
+        - mountPath: /var/log/nexus-iq-server
+          name: nexus-logs
+  volumes:
+    - name: nexus-logs
+      persistentVolumeClaim:
+        claimName: {{ .Values.persistence.existingLogClaim | default (printf "%s-%s" (include "iqserver.fullname" .) "log") }}
+  restartPolicy: Never
