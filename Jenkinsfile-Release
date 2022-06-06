@@ -25,7 +25,7 @@ def jiraVersionMappings = [
 properties([
   parameters([
     choice(
-      choices: jiraVersionMappings.keySet(),
+      choices: jiraVersionMappings.keySet() as List,
       name: 'chart',
     ),
   ])
