@@ -31,10 +31,11 @@ properties([
   ])
 ])
 
-if (! params) { return }
-
 dockerizedBuildPipeline(
   prepare: {
+    when {
+      params
+    }
     githubStatusUpdate('pending')
   },
   buildAndTest: {
