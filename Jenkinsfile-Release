@@ -18,8 +18,8 @@ final jira = [
 ]
 
 final jiraVersionMappings = [
-  'nexus-iq-server':'helm-iq',
-  'nexus-repository-manager':'helm-nxrm',
+  'nexus-iq-server': 'helm-iq',
+  'nexus-repository-manager': 'helm-nxrm',
 ]
 
 final chartLocation = [
@@ -119,9 +119,9 @@ String verifyIndexYamlAndTarFile(String chart) {
   String repositoryVersion = repositoryIndexFile.entries[chart][0].version
 
   if (!version.equals(repositoryVersion)) {
-    error "Released version: ${version} is different " + 
+    error "Released version: ${version} is different " +
           "from helm repository version: ${repositoryVersion}"
   }
-  
+
   return repositoryVersion
 }
