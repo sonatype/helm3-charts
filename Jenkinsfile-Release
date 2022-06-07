@@ -45,7 +45,7 @@ properties([
   ])
 ])
 
-String chartVersion = calculateChartVersion(params.chartVersion, params.appVersion)
+final chartVersion = calculateChartVersion(params.chartVersion, params.appVersion)
 
 dockerizedBuildPipeline(
   prepare: {
@@ -62,7 +62,7 @@ dockerizedBuildPipeline(
     runSafely 'git config user.email "sonatype-ci@sonatype.com"'
     runSafely 'git config user.name "Sonatype CI"'
     runSafely "git checkout ${branch}"
-    runSafely "./upgrade.sh charts/${chartLocation[params.chart]} ${params.chartVersion} ${params.appVersion}"
+    runSafely "./upgrade.sh charts/${chartLocation[params.chart]} ${chartVersion} ${params.appVersion}"
     runSafely './build.sh'
     runSafely 'git add charts'
   },
@@ -74,7 +74,7 @@ dockerizedBuildPipeline(
     final branch = gitBranch(env)
 
     runSafely 'git add docs'
-    runSafely "git commit -m 'Release Update for ${params.chart} ${params.chartVersion}'"
+    runSafely "git commit -m 'Release Update for ${params.chart} ${chartVersion}'"
 
     sshagent(credentials: [sonatypeZionCredentialsId()]) {
       runSafely 'git push'
@@ -128,7 +128,7 @@ String verifyIndexYamlAndTarFile(String chart) {
   return repositoryVersion
 }
 
-String calculateChartVersion(String chartVersion, String appVersion) {
+String calculateChartVersion(final String chartVersion, final String appVersion) {
   if (chartVersion) {
     return chartVersion
   }
@@ -137,7 +137,9 @@ String calculateChartVersion(String chartVersion, String appVersion) {
     error 'Failed to calculate chartVersion with no appVersion.'
   }
 
-  final [unused, chartMajor, chartMinor] = appVersion.split(/\./)
+  final versionParts = appVersion.split(/\./)
+  final chartMajor = versionParts[1]
+  final chartMinor = versionParts[2]
 
   if (! chartMajor || ! chartMinor) {
     error "Failed to calculate chartVersion from appVersion: ${appVersion}"
