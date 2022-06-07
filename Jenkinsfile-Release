@@ -12,14 +12,19 @@
  */
 @Library(['private-pipeline-library', 'jenkins-shared', 'int-jenkins-shared']) _
 
-def jira = [
+final jira = [
     versionPrefix: '', project: 'INT', projectId: '12410',
     credentialId : 'jenkins-jira', autoRelease: true, failOnError: true
 ]
 
-def jiraVersionMappings = [
-    'nexus-iq-server':'helm-iq', 
-    'nexus-repository-manager':'helm-nxrm'
+final jiraVersionMappings = [
+  'nexus-iq-server':'helm-iq',
+  'nexus-repository-manager':'helm-nxrm',
+]
+
+final chartLocation = [
+  'nexus-iq-server': 'nexus-iq',
+  'nexus-repository-manager': 'nexus-repository-manager',
 ]
 
 properties([
@@ -52,9 +57,9 @@ dockerizedBuildPipeline(
     runSafely 'git config user.email "sonatype-ci@sonatype.com"'
     runSafely 'git config user.name "Sonatype CI"'
     runSafely "git checkout ${branch}"
-    runSafely "./upgrade.sh charts/${params.chart} ${params.chartVersion} ${params.appVersion}"
+    runSafely "./upgrade.sh charts/${chartLocation[params.chart]} ${params.chartVersion} ${params.appVersion}"
     runSafely './build.sh'
-    runSafely "git add charts/${params.chart}"
+    runSafely 'git add charts'
   },
   skipVulnerabilityScan: true,
   archiveArtifacts: 'docs/*',
@@ -72,8 +77,7 @@ dockerizedBuildPipeline(
   },
   postDeploy: {
     // Verify Index.yaml
-    String chart = params.chart
-    String version = verifyIndexYamlAndTarFile(chart)
+    String version = verifyIndexYamlAndTarFile(params.chart)
 
     // Set Jira Fix Version
     jira.versionPrefix = jiraVersionMappings[chart]
