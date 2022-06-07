@@ -48,7 +48,13 @@ dockerizedBuildPipeline(
     githubStatusUpdate('pending')
   },
   buildAndTest: {
-    sh './build.sh'
+    final branch = gitBranch(env)
+    runSafely 'git config user.email "sonatype-ci@sonatype.com"'
+    runSafely 'git config user.name "Sonatype CI"'
+    runSafely "git checkout ${branch}"
+    runSafely "./upgrade.sh charts/${params.chart} ${params.chartVersion} ${params.appVersion}"
+    runSafely './build.sh'
+    runSafely "git add charts/${params.chart}"
   },
   skipVulnerabilityScan: true,
   archiveArtifacts: 'docs/*',
@@ -57,11 +63,8 @@ dockerizedBuildPipeline(
   deploy: {
     final branch = gitBranch(env)
 
-    runSafely 'git config user.email "sonatype-ci@sonatype.com"'
-    runSafely 'git config user.name "Sonatype CI"'
-    runSafely "git checkout ${branch}"
     runSafely 'git add docs'
-    runSafely 'git commit -m "Release Update"'
+    runSafely "git commit -m 'Release Update for ${params.chartVersion}'"
 
     sshagent(credentials: [sonatypeZionCredentialsId()]) {
       runSafely 'git push'
