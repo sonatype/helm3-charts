@@ -27,15 +27,23 @@ properties([
     choice(
       choices: jiraVersionMappings.keySet() as List,
       name: 'chart',
+      description: 'Chart to deploy.',
+    ),
+    string(
+      name: 'chartVersion',
+      description: 'Version of the Chart, like "139.0.0".'
+    ),
+    string(
+      name: 'appVersion',
+      description: 'Version of the application image, like "1.139.0"',
     ),
   ])
 ])
 
 dockerizedBuildPipeline(
   prepare: {
-    println(params)
-    if (params.isEmpty()) {
-      error('Params required, try again.')
+    if (! params.chartVersion || ! params.appVersion) {
+      error('Version params required.')
     }
     githubStatusUpdate('pending')
   },
