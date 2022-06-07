@@ -69,7 +69,7 @@ dockerizedBuildPipeline(
   skipVulnerabilityScan: true,
   archiveArtifacts: 'docs/*',
   testResults: [],
-  deployCondition: { false },
+  deployCondition: { true },
   deploy: {
     final branch = gitBranch(env)
 
