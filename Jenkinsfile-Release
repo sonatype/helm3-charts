@@ -33,8 +33,8 @@ properties([
 
 dockerizedBuildPipeline(
   prepare: {
-    when {
-      params
+    if (! params) {
+      error('Params required, try again.')
     }
     githubStatusUpdate('pending')
   },
