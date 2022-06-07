@@ -30,13 +30,13 @@ final chartLocation = [
 properties([
   parameters([
     choice(
-      choices: jiraVersionMappings.keySet() as List,
+      choices: ['', 'nexus-iq-server', 'nexus-repository-manager'],
       name: 'chart',
       description: 'Chart to deploy.',
     ),
     string(
       name: 'chartVersion',
-      description: 'Version of the Chart, like "139.0.0".'
+      description: 'Version of the Chart, like "139.0.0".',
     ),
     string(
       name: 'appVersion',
@@ -47,8 +47,11 @@ properties([
 
 dockerizedBuildPipeline(
   prepare: {
+    if (! params.chart) {
+      error('Chart parameter is required.')
+    }
     if (! params.chartVersion || ! params.appVersion) {
-      error('Version params required.')
+      error('Version parameters are required.')
     }
     githubStatusUpdate('pending')
   },
@@ -64,7 +67,7 @@ dockerizedBuildPipeline(
   skipVulnerabilityScan: true,
   archiveArtifacts: 'docs/*',
   testResults: [],
-  deployCondition: { false },
+  deployCondition: { true },
   deploy: {
     final branch = gitBranch(env)
 
