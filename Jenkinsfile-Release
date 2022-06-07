@@ -35,23 +35,25 @@ properties([
       description: 'Chart to deploy.',
     ),
     string(
-      name: 'chartVersion',
-      description: 'Version of the Chart, like "139.0.0".',
-    ),
-    string(
       name: 'appVersion',
       description: 'Version of the application image, like "1.139.0"',
     ),
+    string(
+      name: 'chartVersion',
+      description: '(Optional) Version of the Chart, like "139.0.0". If omitted, it will be calculated from the appVersion.',
+    ),
   ])
 ])
+
+String chartVersion = calculateChartVersion(params.chartVersion, params.appVersion)
 
 dockerizedBuildPipeline(
   prepare: {
     if (! params.chart) {
       error('Chart parameter is required.')
     }
-    if (! params.chartVersion || ! params.appVersion) {
-      error('Version parameters are required.')
+    if (! params.appVersion) {
+      error('The appVersion is required.')
     }
     githubStatusUpdate('pending')
   },
@@ -124,4 +126,22 @@ String verifyIndexYamlAndTarFile(String chart) {
   }
 
   return repositoryVersion
+}
+
+String calculateChartVersion(String chartVersion, String appVersion) {
+  if (chartVersion) {
+    return chartVersion
+  }
+
+  if (! appVersion) {
+    error 'Failed to calculate chartVersion with no appVersion.'
+  }
+
+  final [unused, chartMajor, chartMinor] = appVersion.split(/\./)
+
+  if (! chartMajor || ! chartMinor) {
+    error "Failed to calculate chartVersion from appVersion: ${appVersion}"
+  }
+
+  return [chartMajor, chartMinor, '0'].join('.')
 }
