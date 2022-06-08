@@ -71,8 +71,6 @@ dockerizedBuildPipeline(
   testResults: [],
   deployCondition: { true },
   deploy: {
-    final branch = gitBranch(env)
-
     runSafely 'git add docs'
     runSafely "git commit -m 'Release Update for ${params.chart} ${chartVersion}'"
 
