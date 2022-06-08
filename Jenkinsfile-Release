@@ -12,35 +12,65 @@
  */
 @Library(['private-pipeline-library', 'jenkins-shared', 'int-jenkins-shared']) _
 
-def jira = [
+final jira = [
     versionPrefix: '', project: 'INT', projectId: '12410',
     credentialId : 'jenkins-jira', autoRelease: true, failOnError: true
 ]
 
-def jiraVersionMappings = [
-    'nexus-iq-server':'helm-iq', 
-    'nexus-repository-manager':'helm-nxrm'
+final jiraVersionMappings = [
+  'nexus-iq-server': 'helm-iq',
+  'nexus-repository-manager': 'helm-nxrm',
 ]
+
+final chartLocation = [
+  'nexus-iq-server': 'nexus-iq',
+  'nexus-repository-manager': 'nexus-repository-manager',
+]
+
+properties([
+  parameters([
+    choice(
+      choices: ['', 'nexus-iq-server', 'nexus-repository-manager'],
+      name: 'chart',
+      description: 'Chart to deploy.',
+    ),
+    string(
+      name: 'appVersion',
+      description: 'Version of the application image, like "1.139.0"',
+    ),
+    string(
+      name: 'chartVersion',
+      description: '(Optional) Version of the Chart, like "139.0.0". If omitted, it will be calculated from the appVersion.',
+    ),
+  ])
+])
+
+final chartVersion = calculateChartVersion(params.chartVersion, params.appVersion)
 
 dockerizedBuildPipeline(
   prepare: {
+    if (! params.chart) {
+      error('Chart parameter is required.')
+    }
+    if (! params.appVersion) {
+      error('The appVersion is required.')
+    }
     githubStatusUpdate('pending')
   },
   buildAndTest: {
-    sh './build.sh'
+    sonatypeZionGitConfig()
+    runSafely "git checkout ${gitBranch(env)}"
+    runSafely "./upgrade.sh charts/${chartLocation[params.chart]} ${chartVersion} ${params.appVersion}"
+    runSafely './build.sh'
+    runSafely 'git add charts'
   },
   skipVulnerabilityScan: true,
   archiveArtifacts: 'docs/*',
   testResults: [],
   deployCondition: { true },
   deploy: {
-    final branch = gitBranch(env)
-
-    runSafely 'git config user.email "sonatype-ci@sonatype.com"'
-    runSafely 'git config user.name "Sonatype CI"'
-    runSafely "git checkout ${branch}"
     runSafely 'git add docs'
-    runSafely 'git commit -m "Release Update"'    
+    runSafely "git commit -m 'Release Update for ${params.chart} ${chartVersion}'"
 
     sshagent(credentials: [sonatypeZionCredentialsId()]) {
       runSafely 'git push'
@@ -48,12 +78,11 @@ dockerizedBuildPipeline(
   },
   postDeploy: {
     // Verify Index.yaml
-    String chart = params.chart    
-    String version = verifyIndexYamlAndTarFile(chart)
-    
+    String version = verifyIndexYamlAndTarFile(params.chart)
+
     // Set Jira Fix Version
     jira.versionPrefix = jiraVersionMappings[chart]
-    jiraSetFixVersion(jira, version)    
+    jiraSetFixVersion(jira, version)
 
     // Create tags
     String tagName = "${chart}-${version}"
@@ -88,9 +117,29 @@ String verifyIndexYamlAndTarFile(String chart) {
   String repositoryVersion = repositoryIndexFile.entries[chart][0].version
 
   if (!version.equals(repositoryVersion)) {
-    error "Released version: ${version} is different " + 
+    error "Released version: ${version} is different " +
           "from helm repository version: ${repositoryVersion}"
   }
-  
+
   return repositoryVersion
+}
+
+String calculateChartVersion(final String chartVersion, final String appVersion) {
+  if (chartVersion) {
+    return chartVersion
+  }
+
+  if (! appVersion) {
+    error 'Failed to calculate chartVersion with no appVersion.'
+  }
+
+  final versionParts = parseVersionString(appVersion)
+  final chartMajor = versionParts[1]
+  final chartMinor = versionParts[2]
+
+  if (! chartMajor || ! chartMinor) {
+    error "Failed to calculate chartVersion from appVersion: ${appVersion}"
+  }
+
+  return [chartMajor, chartMinor, '0'].join('.')
 }
