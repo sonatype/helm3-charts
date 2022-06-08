@@ -133,7 +133,7 @@ String calculateChartVersion(final String chartVersion, final String appVersion)
     error 'Failed to calculate chartVersion with no appVersion.'
   }
 
-  final versionParts = appVersion.split(/\./)
+  final versionParts = parseVersionString(appVersion)
   final chartMajor = versionParts[1]
   final chartMinor = versionParts[2]
 
