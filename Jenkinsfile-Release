@@ -58,10 +58,8 @@ dockerizedBuildPipeline(
     githubStatusUpdate('pending')
   },
   buildAndTest: {
-    final branch = gitBranch(env)
-    runSafely 'git config user.email "sonatype-ci@sonatype.com"'
-    runSafely 'git config user.name "Sonatype CI"'
-    runSafely "git checkout ${branch}"
+    sonatypeZionGitConfig()
+    runSafely "git checkout ${gitBranch(env)}"
     runSafely "./upgrade.sh charts/${chartLocation[params.chart]} ${chartVersion} ${params.appVersion}"
     runSafely './build.sh'
     runSafely 'git add charts'
