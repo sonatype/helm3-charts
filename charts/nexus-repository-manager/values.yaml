@@ -76,8 +76,11 @@ nexus:
   #   - "example.com"
   #   - "www.example.com"
 
+imagePullSecrets:
+# for image registries that require login, specify the name of the existing
+# kubernetes secret
+#   - name: <pull-secret-name>
 
-imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 

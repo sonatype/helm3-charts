@@ -88,3 +88,20 @@ tests:
             - name: nexus-repository-manager-data
               persistentVolumeClaim:
                 claimName: RELEASE-NAME-nexus-repository-manager-data
+
+  - it: should use our simple values
+    template: deployment.yaml
+    set:
+      deploymentStrategy: my-strategy
+      imagePullSecrets:
+        - name: top-secret
+    asserts:
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: spec.strategy.type
+          value: my-strategy
+      - equal:
+          path: spec.template.spec.imagePullSecrets
+          value:
+            - name: top-secret
