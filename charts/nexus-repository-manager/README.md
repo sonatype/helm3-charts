@@ -205,8 +205,8 @@ you'll need to:
 * Set `image.name` and `image.tag` in `values.yaml`
   ```yaml
   image:
-    repository: registry.connect.redhat.com/sonatype/nexus-iq-server
-    tag: 1.132.0-ubi-1
+    repository: registry.connect.redhat.com/sonatype/nexus-repository-server
+    tag: 3.39.0-ubi-1
   ```
 
 ---
