@@ -52,14 +52,9 @@ Do not use this Helm chart and, instead, refer to our [resiliency documentation]
 
 By default, this Chart uses Sonatype's Public Docker image. If you want to use a different image, run with the following: `--set nexus.imageName=<my>/<image>`.
 
-### With Red Hat Certified container
+## Adding the Sonatype Repository to your Helm
 
-If you're looking run our Certified Red Hat image in an OpenShift4 environment, there is a Certified Operator in OperatorHub.
-
----
-
-## Adding the repo
-To add as a Helm Repo, use the following:
+To add as a Helm Repo
 ```helm repo add sonatype https://sonatype.github.io/helm3-charts/```
 
 ---
@@ -96,6 +91,7 @@ The default login is randomized and can be found in `/nexus-data/admin.password`
 by setting the environment variable `NEXUS_SECURITY_RANDOMPASSWORD` to `false` in your `values.yaml`.
  
 ---
+
 ## Uninstalling the Chart
 
 To uninstall/delete the deployment, use the following:
@@ -119,7 +115,7 @@ The following table lists the configurable parameters of the Nexus chart and the
 |--------------------------------------------|----------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------|
 | `deploymentStrategy`                       | Deployment Strategy                                                                          | `Recreate`                                                                                                                                      |
 | `nexus.imagePullPolicy`                    | Nexus Repository image pull policy                                                           | `IfNotPresent`                                                                                                                                  |
-| `imagePullSecrets[].name`                  | Secrets to download Nexus Repository image from private registry                              | `nil`                                                                                                                                           |
+| `imagePullSecrets`                         | The names of the kubernetes secrets with credentials to login to a registry                  | `[]`                                                                                                                                            |
 | `nexus.docker.enabled`                     | Enable/disable Docker support                                                                | `false`                                                                                                                                         |
 | `nexus.docker.registries`                  | Support multiple Docker registries                                                           | (see below)                                                                                                                                     |
 | `nexus.docker.registries[0].host`          | Host for the Docker registry                                                                 | `cluster.local`                                                                                                                                 |
@@ -186,3 +182,31 @@ The following table lists the configurable parameters of the Nexus chart and the
 By default, a `PersistentVolumeClaim` is created and mounted into the `/nexus-data` directory. In order to disable this functionality, you can change the `values.yaml` to disable persistence, which will use an `emptyDir` instead.
 
 > *"An emptyDir volume is first created when a Pod is assigned to a Node, and exists as long as that Pod is running on that node. When a Pod is removed from a node for any reason, the data in the emptyDir is deleted forever."*
+
+## Using the Image from the Red Hat Registry
+
+To use the [Nexus Repository Manager image available from Red Hat's registry](https://catalog.redhat.com/software/containers/sonatype/nexus-repository-manager/594c281c1fbe9847af657690),
+you'll need to:
+* Load the credentials for the registry as a secret in your cluster
+  ```shell
+  kubectl create secret docker-registry redhat-pull-secret \
+    --docker-server=registry.connect.redhat.com \
+    --docker-username=<user_name> \
+    --docker-password=<password> \
+    --docker-email=<email>
+  ```
+  See Red Hat's [Registry Authentication documentation](https://access.redhat.com/RegistryAuthentication)
+  for further details.
+* Provide the name of the secret in `imagePullSecrets` in this chart's `values.yaml`
+  ```yaml
+  imagePullSecrets:
+    - name: redhat-pull-secret
+  ```
+* Set `image.name` and `image.tag` in `values.yaml`
+  ```yaml
+  image:
+    repository: registry.connect.redhat.com/sonatype/nexus-iq-server
+    tag: 1.132.0-ubi-1
+  ```
+
+---
