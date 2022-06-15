@@ -6,6 +6,7 @@ statefulset:
   # This is not supported
   enabled: false
 replicaCount: 1
+deploymentStrategy: Recreate
 image:
   # Sonatype Official Public Image
   repository: sonatype/nexus-iq-server
@@ -62,7 +63,6 @@ iq:
     timeoutSeconds: 2
     successThreshold: 1
 
-deploymentStrategy: Recreate
 nameOverride: ""
 fullnameOverride: ""
 

@@ -8,6 +8,10 @@ image:
   repository: sonatype/nexus3
   tag: 3.39.0
   pullPolicy: IfNotPresent
+imagePullSecrets:
+# for image registries that require login, specify the name of the existing
+# kubernetes secret
+#   - name: <pull-secret-name>
 
 nexus:
   docker:
@@ -76,8 +80,6 @@ nexus:
   #   - "example.com"
   #   - "www.example.com"
 
-
-imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
