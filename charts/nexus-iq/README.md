@@ -12,7 +12,7 @@ These charts are designed to work out of the box with minikube using both ingess
 
 The current releases have been tested on minikube v1.25.1 running Kubernetes v1.23.1.
 
-## Adding the Sonatype Repo to your Helm
+## Adding the Sonatype Repository to your Helm
 
 To Add as a Helm Repo
 ```helm repo add sonatype https://sonatype.github.io/helm3-charts/```
@@ -91,7 +91,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | `iq.readinessProbe.timeoutSeconds`         | Time in seconds after readiness probe times out                                                                     | 2                                                           |
 | `iq.readinessProbe.successThreshold`       | Number of attempts for the probe to be considered successful                                                        | 1                                                           |
 | `configYaml`                               | A YAML block which will be used as a configuration block for IQ Server.                                             | See `values.yaml`                                           |
-| `ingress.enabled`                          | Create an ingress for Nexus                                                                                         | `true`                                                      |
+| `ingress.enabled`                          | Create an ingress for Nexus                                                                                         | `false`                                                     |
 | `ingress.annotations`                      | Annotations to enhance ingress configuration                                                                        | `{}`                                                        |
 | `ingress.tls.enabled`                      | Enable TLS                                                                                                          | `true`                                                      |
 | `ingress.tls.secretName`                   | Name of the secret storing TLS cert, `false` to use the Ingress' default certificate                                | `nexus-tls`                                                 |
@@ -152,7 +152,7 @@ kubectl create secret generic secret-jks
 
 ## Using the Image from the Red Hat Registry
 
-To use the [IQ image available from Red Hat's registry](https://catalog.redhat.com/software/containers/sonatype/nexus-repository-manager/594c281c1fbe9847af657690),
+To use the [IQ image available from Red Hat's registry](https://catalog.redhat.com/software/containers/sonatype/nexus-iq-server/5e5d8063ac3db90370816c66),
 you'll need to:
 * Load the credentials for the registry as a secret in your cluster
   ```shell

@@ -2,13 +2,16 @@
 statefulset:
   # This is not supported
   enabled: false
-# By default deploymentStrategy is set to rollingUpdate with maxSurge of 25% and maxUnavailable of 25% . you can change type to `Recreate` or can uncomment `rollingUpdate` specification and adjust them to your usage.
 deploymentStrategy: Recreate
 image:
   # Sonatype Official Public Image
   repository: sonatype/nexus3
-  tag: 3.38.1
+  tag: 3.39.0
   pullPolicy: IfNotPresent
+imagePullSecrets:
+# for image registries that require login, specify the name of the existing
+# kubernetes secret
+#   - name: <pull-secret-name>
 
 nexus:
   docker:
@@ -21,7 +24,12 @@ nexus:
     # minimum recommended memory settings for a small, person instance from
     # https://help.sonatype.com/repomanager3/product-information/system-requirements
     - name: INSTALL4J_ADD_VM_PARAMS
-      value: "-Xms2703M -Xmx2703M -XX:MaxDirectMemorySize=2703M -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
+      value: |-
+        -Xms2703M -Xmx2703M
+        -XX:MaxDirectMemorySize=2703M
+        -XX:+UnlockExperimentalVMOptions
+        -XX:+UseCGroupMemoryLimitForHeap
+        -Djava.util.prefs.userRoot=/nexus-data/javaprefs
     - name: NEXUS_SECURITY_RANDOMPASSWORD
       value: "true"
   properties:
@@ -72,8 +80,6 @@ nexus:
   #   - "example.com"
   #   - "www.example.com"
 
-
-imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
