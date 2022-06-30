@@ -11,7 +11,7 @@ metadata:
 spec:
   host: {{ .Values.nexusProxyRoute.path }}
   port:
-      targetPort: {{ template "nexus.fullname" . }}
+      targetPort: nexus-ui
   tls:
     insecureEdgeTerminationPolicy: Redirect
     termination: edge
