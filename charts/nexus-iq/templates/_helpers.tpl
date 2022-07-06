@@ -67,10 +67,9 @@ Create the name of the service account to use
 Create the value for internal host system value from the image repository value.
 */}}
 {{- define "iqserver.internalHostSystem" -}}
-  {{- $systems := dict
-        "sonatype/nexus-iq-server" "Helm+Docker"
-        "registry.connect.redhat.com/sonatype/nexus-iq-server" "Helm+RedHat"
-  -}}
+  {{- $systems := dict "" "" -}}
+  {{- $_ := set $systems "sonatype/nexus-iq-server" "Helm+Docker" -}}
+  {{- $_ := set $systems "registry.connect.redhat.com/sonatype/nexus-iq-server" "Helm+RedHat" -}}
   {{- .Values.image.repository
       | default ""
       | get $systems
