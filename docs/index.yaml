@@ -47,7 +47,7 @@ entries:
     name: nexus-iq-server
     type: application
     urls:
-    - https://sonatype.github.io/helm3-charts/docs/nexus-iq-server-140.0.1.tgz
+    - https://sonatype.github.io/helm3-charts/nexus-iq-server-140.0.1.tgz
     version: 140.0.1  
   - apiVersion: v2
     appVersion: 1.140.0
