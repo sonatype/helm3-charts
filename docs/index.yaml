@@ -27,6 +27,30 @@ entries:
     version: 141.0.0
   - apiVersion: v2
     appVersion: 1.140.0
+    created: "2022-07-08T12:55:05.766488-07:00"
+    description: Sonatype Nexus IQ Server continuously monitors your entire software
+      supply chain
+    digest: 3c4051342f5fc5e43398632ce531f2d43f545a535ea6402242f6fa3b04f95ded
+    home: https://www.sonatype.com/product-nexus-lifecycle
+    icon: https://sonatype.github.io/helm3-charts/NexusIQServer_Vertical.svg
+    keywords:
+    - sonatype
+    - nexus
+    - lifecycle
+    - iq
+    - remediate
+    - vulnerabilities
+    - policy
+    maintainers:
+    - email: support@sonatype.com
+      name: Sonatype
+    name: nexus-iq-server
+    type: application
+    urls:
+    - https://sonatype.github.io/helm3-charts/docs/nexus-iq-server-140.0.1.tgz
+    version: 140.0.1  
+  - apiVersion: v2
+    appVersion: 1.140.0
     created: "2022-07-05T15:24:45.302521673Z"
     description: Sonatype Nexus IQ Server continuously monitors your entire software
       supply chain
