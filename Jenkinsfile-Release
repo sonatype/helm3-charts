@@ -19,18 +19,16 @@ final jira = [
 
 final jiraVersionMappings = [
   'nexus-iq-server': 'helm-iq',
-  'nexus-repository-manager': 'helm-nxrm',
 ]
 
 final chartLocation = [
   'nexus-iq-server': 'nexus-iq',
-  'nexus-repository-manager': 'nexus-repository-manager',
 ]
 
 properties([
   parameters([
     choice(
-      choices: ['', 'nexus-iq-server', 'nexus-repository-manager'],
+      choices: ['', 'nexus-iq-server'],
       name: 'chart',
       description: 'Chart to deploy.',
     ),
