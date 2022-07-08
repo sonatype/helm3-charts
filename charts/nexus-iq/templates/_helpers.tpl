@@ -70,9 +70,5 @@ Create the value for internal host system value from the image repository value.
   {{- $systems := dict "" "" -}}
   {{- $_ := set $systems "sonatype/nexus-iq-server" "Helm+Docker" -}}
   {{- $_ := set $systems "registry.connect.redhat.com/sonatype/nexus-iq-server" "Helm+RedHat" -}}
-  {{- .Values.image.repository
-      | default ""
-      | get $systems
-      | default "Helm+Other"
-    -}}
+  {{ .Values.image.repository | default "" | get $systems | default "Helm+Other" }}
 {{- end -}}
