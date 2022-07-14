@@ -75,7 +75,6 @@ To unit test the helm charts you can follow the next steps:
 1. Install the unittest plugin for Helm: https://github.com/quintush/helm-unittest
 2. Run the tests for each individual chart:
    * `cd charts/nexus-iq; helm unittest -3 -t junit -o test-output.xml .`
-   * `cd charts/nexus-repository-manager; helm unittest -3 -t junit -o test-output.xml .`
 
 ### Running Integration Tests
 You can run the integration tests for the helm charts by running the next commands. 
