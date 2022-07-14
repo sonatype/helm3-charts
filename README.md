@@ -90,22 +90,16 @@ Running integration tests for Nexus IQ:
 1. From source code: `helm install iq ./charts/nexus-iq --wait`
 2. Run the tests: `helm test iq`
 
-Running integration tests for Nexus Repository Manager:
-1. From source code: `helm install nxrm ./charts/nexus-repository-manager --wait`
-3. Run the tests: `helm test nxrm`
-
 ### Further Notes on Usage
 
 #### Resolver File and Ingress-DNS
 
 Get the default `values.yaml` for each chart.
-- Nexus Repository: `helm show values nexus-repo sonatype/nexus-repository-manager > iq-values.yaml`
 - Nexus IQ: `helm show values nexus-iq sonatype/nexus-iq-server > repo-values.yaml`
 
 Edit the values file you just downloaded to enable ingress support, and install the chart 
 with those values:
 
-- Nexus Repository: `helm install nexus-repo sonatype/nexus-repository-manager -f repo-values.yaml`
 - Nexus IQ: `helm install nexus-iq sonatype/nexus-iq-server -f iq-values.yaml`
 
 If you want to use the custom values file for the demo environment that expose 
