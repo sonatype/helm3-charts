@@ -6,7 +6,7 @@ deploymentStrategy: Recreate
 image:
   # Sonatype Official Public Image
   repository: sonatype/nexus3
-  tag: 3.40.1
+  tag: 3.41.0
   pullPolicy: IfNotPresent
 imagePullSecrets:
 # for image registries that require login, specify the name of the existing
