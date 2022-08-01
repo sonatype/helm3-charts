@@ -66,7 +66,7 @@ To test Helm Charts locally you will need to follow the next steps:
 ### Running Lint
 Helm's Lint command will highlight formatting problems in the charts that need to be corrected.
 ```
-helm lint charts/nexus-iq
+helm lint charts/nexus-iq charts/nexus-repository-manager
 ```
 
 ### Running Unit Tests
@@ -75,6 +75,7 @@ To unit test the helm charts you can follow the next steps:
 1. Install the unittest plugin for Helm: https://github.com/quintush/helm-unittest
 2. Run the tests for each individual chart:
    * `cd charts/nexus-iq; helm unittest -3 -t junit -o test-output.xml .`
+   * `cd charts/nexus-repository-manager; helm unittest -3 -t junit -o test-output.xml .`
 
 ### Running Integration Tests
 You can run the integration tests for the helm charts by running the next commands. 
@@ -89,16 +90,22 @@ Running integration tests for Nexus IQ:
 1. From source code: `helm install iq ./charts/nexus-iq --wait`
 2. Run the tests: `helm test iq`
 
+Running integration tests for Nexus Repository Manager:
+1. From source code: `helm install nxrm ./charts/nexus-repository-manager --wait`
+3. Run the tests: `helm test nxrm`
+
 ### Further Notes on Usage
 
 #### Resolver File and Ingress-DNS
 
 Get the default `values.yaml` for each chart.
+- Nexus Repository: `helm show values nexus-repo sonatype/nexus-repository-manager > iq-values.yaml`
 - Nexus IQ: `helm show values nexus-iq sonatype/nexus-iq-server > repo-values.yaml`
 
 Edit the values file you just downloaded to enable ingress support, and install the chart 
 with those values:
 
+- Nexus Repository: `helm install nexus-repo sonatype/nexus-repository-manager -f repo-values.yaml`
 - Nexus IQ: `helm install nexus-iq sonatype/nexus-iq-server -f iq-values.yaml`
 
 If you want to use the custom values file for the demo environment that expose 
