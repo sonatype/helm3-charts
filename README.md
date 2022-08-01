@@ -66,7 +66,7 @@ To test Helm Charts locally you will need to follow the next steps:
 ### Running Lint
 Helm's Lint command will highlight formatting problems in the charts that need to be corrected.
 ```
-helm lint charts/nexus-iq
+helm lint charts/nexus-iq charts/nexus-repository-manager
 ```
 
 ### Running Unit Tests
