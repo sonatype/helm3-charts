@@ -68,6 +68,7 @@ dockerizedBuildPipeline(
   archiveArtifacts: 'docs/*',
   testResults: [],
   deployCondition: { true },
+  retentionPolicy: RetentionPolicy.TEN_BUILDS,
   deploy: {
     runSafely 'git add docs'
     runSafely "git commit -m 'Release Update for ${params.chart} ${chartVersion}'"
