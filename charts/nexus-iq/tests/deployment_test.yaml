@@ -49,7 +49,7 @@ tests:
               value: -Djava.util.prefs.userRoot=$(SONATYPE_WORK)/javaprefs
       - equal:
           path: spec.template.spec.containers[0].ports
-          value: 
+          value:
             - name: application
               containerPort: 8070
               protocol: TCP
@@ -78,6 +78,13 @@ tests:
             periodSeconds: 30
             successThreshold: 1
             timeoutSeconds: 2
+      - equal:
+          path: spec.template.spec.securityContext
+          value:
+            fsGroup: 1000
+            runAsGroup: 1000
+            runAsUser: 1000
+
   - it: should use our simple values
     set:
       replicaCount: 2
