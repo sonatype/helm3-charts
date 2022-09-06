@@ -75,8 +75,13 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name:
 
-podSecurityContext: {}
-#  fsGroup: 2000
+# Default the pods UID and GID to match the nexus-iq-server container.
+# Customize or remove these values from the securityContext as appropriate for
+# your deployment environment.
+podSecurityContext:
+  runAsUser: 1000
+  runAsGroup: 1000
+  fsGroup: 1000
 
 securityContext: {}
 #  capabilities:
