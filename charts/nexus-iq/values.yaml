@@ -17,6 +17,12 @@ imagePullSecrets:
 # kubernetes secret
 #   - name: <pull-secret-name>
 
+# Change initContainer enabled to true, to change file ownership to new UID, when upgrading from old IQ version (<120, <100)
+initContainers:
+  enabled: false
+  iqUser: 1000
+  iqGroup: 1000
+
 iq:
   name: nxiq
   hostname: iq-server.demo
