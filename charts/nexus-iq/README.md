@@ -52,7 +52,10 @@ The default login for the IQ Server is admin/admin123
 $ helm upgrade nexus-iq sonatype/nexus-iq-server [--version v91.0.0]
 ```
 
-Note: optional version flag shown
+
+Note: 
+ - optional version flag shown.
+ - When upgrading from older IQ version, set initContainers.enabled to true for changing the file ownership to new uid (1000)
 
 ## Uninstalling the Chart
 
@@ -90,6 +93,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | `iq.readinessProbe.failureThreshold`           | Number of attempts before failure                                                                                                                                                       | 3                                                           |
 | `iq.readinessProbe.timeoutSeconds`             | Time in seconds after readiness probe times out                                                                                                                                         | 2                                                           |
 | `iq.readinessProbe.successThreshold`           | Number of attempts for the probe to be considered successful                                                                                                                            | 1                                                           |
+| `initContainers.enabled`                       | Change file ownership during IQ upgrade from older version                                                                                                                              | false                                                       |
 | `configYaml`                                   | A YAML block which will be used as a configuration block for IQ Server.                                                                                                                 | See `values.yaml`                                           |
 | `ingress.enabled`                              | Create an ingress for Nexus                                                                                                                                                             | `false`                                                     |
 | `ingress.annotations`                          | Annotations to enhance ingress configuration                                                                                                                                            | `{}`                                                        |
