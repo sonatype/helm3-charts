@@ -31,7 +31,8 @@ properties([
 ])
 
 final chartVersion = calculateChartVersion(params.chartVersion, params.appVersion)
-final artifactName = 'nexus-repository-manager-' + params.appVersion + '.tgz'
+final nexusRepoManagerArtifactName = 'nexus-repository-manager-' + params.appVersion + '.tgz'
+final awsResiliencyArtifactName = 'nxrm-aws-resiliency-' + + params.appVersion + '.tgz'
 
 dockerizedBuildPipeline(
   prepare: {
@@ -53,7 +54,8 @@ dockerizedBuildPipeline(
   deployCondition: { true },
   retentionPolicy: RetentionPolicy.TEN_BUILDS,
   deploy: {
-    runSafely "curl -L 'https://github.com/sonatype/nxrm3-helm-repository/blob/NEXUS-34974-publish-nxrm-helm-charts/docs/${artifactName}?raw=true' -o 'docs/${artifactName}'"
+    runSafely "curl -L 'https://github.com/sonatype/nxrm3-helm-repository/blob/main/docs/${nexusRepoManagerArtifactName}?raw=true' -o 'docs/${nexusRepoManagerArtifactName}'"
+    runSafely "curl -L 'https://github.com/sonatype/nxrm3-helm-repository/blob/main/docs/${awsResiliencyArtifactName}?raw=true' -o 'docs/${awsResiliencyArtifactName}'"
     runSafely 'git add docs'
     runSafely "git commit -m 'Release Update for nexus-iq-server ${chartVersion}'"
 
