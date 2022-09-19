@@ -77,7 +77,7 @@ spec:
               port: application
               {{- if .Values.iq.livenessProbe }}
                 {{- toYaml .Values.iq.readinessProbe | nindent 12 }}
-              {{- end }} 
+              {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
