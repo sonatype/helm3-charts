@@ -46,8 +46,8 @@ properties([
 ])
 
 final chartVersion = calculateChartVersion(params.chartVersion, params.appVersion)
-final nexusRepoManagerArtifactName = "nexus-repository-manager-${params.chartVersion}.tgz"
-final awsResiliencyArtifactName = "nxrm-aws-resiliency-${params.chartVersion}.tgz"
+final nexusRepoManagerArtifactName = "nexus-repository-manager-${params.appVersion}.tgz"
+final awsResiliencyArtifactName = "nxrm-aws-resiliency-${params.appVersion}.tgz"
 
 dockerizedBuildPipeline(
   prepare: {
