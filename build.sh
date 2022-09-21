@@ -18,15 +18,12 @@ set -e
 
 # lint yaml of charts
 helm lint charts/nexus-iq
-helm lint charts/nexus-repository-manager
 
 # unit test
 (cd charts/nexus-iq; helm unittest -3 -t junit -o test-output.xml .)
-(cd charts/nexus-repository-manager; helm unittest -3 -t junit -o test-output.xml .)
 
 # package the charts into tgz archives
 helm package charts/nexus-iq --destination docs
-helm package charts/nexus-repository-manager --destination docs
 
 # index the existing tgz archives
 cd docs

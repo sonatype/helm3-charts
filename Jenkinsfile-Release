@@ -17,8 +17,23 @@ final jira = [
     credentialId : 'jenkins-jira', autoRelease: true, failOnError: true
 ]
 
+final jiraVersionMappings = [
+  'nexus-iq-server': 'helm-iq',
+  'nexus-repository-manager': 'helm-nxrm',
+]
+
+final chartLocation = [
+  'nexus-iq-server': 'nexus-iq',
+  'nexus-repository-manager': 'nexus-repository-manager',
+]
+
 properties([
   parameters([
+    choice(
+      choices: ['', 'nexus-iq-server', 'nexus-repository-manager'],
+      name: 'chart',
+      description: 'Chart to deploy.',
+    ),
     string(
       name: 'appVersion',
       description: 'Version of the application image, like "1.139.0"',
@@ -31,11 +46,14 @@ properties([
 ])
 
 final chartVersion = calculateChartVersion(params.chartVersion, params.appVersion)
-final nexusRepoManagerArtifactName = 'nexus-repository-manager-' + params.appVersion + '.tgz'
-final awsResiliencyArtifactName = 'nxrm-aws-resiliency-' + + params.appVersion + '.tgz'
+final nexusRepoManagerArtifactName = "nexus-repository-manager-${params.chartVersion}.tgz"
+final awsResiliencyArtifactName = "nxrm-aws-resiliency-${params.chartVersion}.tgz"
 
 dockerizedBuildPipeline(
   prepare: {
+    if (! params.chart) {
+      error('Chart parameter is required.')
+    }
     if (! params.appVersion) {
       error('The appVersion is required.')
     }
@@ -44,9 +62,11 @@ dockerizedBuildPipeline(
   buildAndTest: {
     sonatypeZionGitConfig()
     runSafely "git checkout ${gitBranch(env)}"
-    runSafely "./upgrade.sh charts/nexus-iq ${chartVersion} ${params.appVersion}"
-    runSafely './build.sh'
-    runSafely 'git add charts'
+    if ('nexus-iq-server'.equals(params.chart)) {
+      runSafely "./upgrade.sh charts/nexus-iq ${chartVersion} ${params.appVersion}"
+      runSafely './build.sh'
+      runSafely 'git add charts'
+    }
   },
   skipVulnerabilityScan: true,
   archiveArtifacts: 'docs/*',
@@ -54,10 +74,12 @@ dockerizedBuildPipeline(
   deployCondition: { true },
   retentionPolicy: RetentionPolicy.TEN_BUILDS,
   deploy: {
-    runSafely "curl -L 'https://github.com/sonatype/nxrm3-helm-repository/blob/main/docs/${nexusRepoManagerArtifactName}?raw=true' -o 'docs/${nexusRepoManagerArtifactName}'"
-    runSafely "curl -L 'https://github.com/sonatype/nxrm3-helm-repository/blob/main/docs/${awsResiliencyArtifactName}?raw=true' -o 'docs/${awsResiliencyArtifactName}'"
+    if ('nexus-repository-manager'.equals(params.chart)) {
+      runSafely "curl -L 'https://github.com/sonatype/nxrm3-helm-repository/blob/main/docs/${nexusRepoManagerArtifactName}?raw=true' -o 'docs/${nexusRepoManagerArtifactName}'"
+      runSafely "curl -L 'https://github.com/sonatype/nxrm3-helm-repository/blob/main/docs/${awsResiliencyArtifactName}?raw=true' -o 'docs/${awsResiliencyArtifactName}'"
+    }
     runSafely 'git add docs'
-    runSafely "git commit -m 'Release Update for nexus-iq-server ${chartVersion}'"
+    runSafely "git commit -m 'Release Update for ${params.chart} ${chartVersion}'"
 
     sshagent(credentials: [sonatypeZionCredentialsId()]) {
       runSafely 'git push'
@@ -65,14 +87,14 @@ dockerizedBuildPipeline(
   },
   postDeploy: {
     // Verify Index.yaml
-    String version = verifyIndexYamlAndTarFile(nexus-iq-server)
+    String version = verifyIndexYamlAndTarFile(params.chart)
 
     // Set Jira Fix Version
-    jira.versionPrefix = helm-iq
+    jira.versionPrefix = jiraVersionMappings[chart]
     jiraSetFixVersion(jira, version)
 
     // Create tags
-    String tagName = "nexus-iq-server-${version}"
+    String tagName = "${chart}-${version}"
     runSafely "git tag -a ${tagName} -m 'Release Update: ${version}'"
     sshagent(credentials: [sonatypeZionCredentialsId()]) {
       runSafely "git push origin ${tagName}"
