@@ -1,5 +1,9 @@
 apiVersion: apps/v1
+{{- if .Values.statefulset.enabled }} 
+kind: StatefulSet
+{{- else }}
 kind: Deployment
+{{- end }}
 metadata:
   name: {{ template "nexus.fullname" . }}
   labels:
@@ -15,8 +19,10 @@ metadata:
 {{- end }}
 spec:
   replicas: 1
+  {{- if not .Values.statefulset.enabled }} 
   strategy:
     type: {{ .Values.deploymentStrategy }}
+  {{- end }}
   selector:
     matchLabels:
       {{- include "nexus.selectorLabels" . | nindent 6 }}
