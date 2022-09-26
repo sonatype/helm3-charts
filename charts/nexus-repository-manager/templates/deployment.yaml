@@ -19,7 +19,9 @@ metadata:
 {{- end }}
 spec:
   replicas: 1
-  {{- if not .Values.statefulset.enabled }} 
+  {{- if .Values.statefulset.enabled }}
+  serviceName: {{ template "nexus.fullname" . }}
+  {{- else }}
   strategy:
     type: {{ .Values.deploymentStrategy }}
   {{- end }}
