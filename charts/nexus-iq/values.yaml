@@ -17,6 +17,12 @@ imagePullSecrets:
 # kubernetes secret
 #   - name: <pull-secret-name>
 
+# Set fixOwner.enabled to true, when upgrading from IQ versions 1.117 or 1.100, to change file ownership. 
+fixOwner:
+  enabled: false
+  updateUser: 1000
+  updateGroup: 1000
+
 iq:
   name: nxiq
   hostname: iq-server.demo

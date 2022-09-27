@@ -84,7 +84,9 @@ tests:
             fsGroup: 1000
             runAsGroup: 1000
             runAsUser: 1000
-
+      - equal:
+          path: spec.template.spec.initContainers
+          value: null
   - it: should use our simple values
     set:
       replicaCount: 2
@@ -102,6 +104,80 @@ tests:
           path: spec.template.spec.imagePullSecrets
           value:
             - name: top-secret
+  - it: should add an initContainer for fixOwner with defaults
+    set:
+      fixOwner:
+        enabled: true
+    asserts:
+      - equal:
+          path: spec.template.spec.initContainers[0].name
+          value: chown-vols
+      - equal:
+          path: spec.template.spec.initContainers[0].image
+          value: busybox:latest
+      - equal:
+          path: spec.template.spec.initContainers[0].imagePullPolicy
+          value: IfNotPresent
+      - equal:
+          path: spec.template.spec.initContainers[0].securityContext
+          value:
+            runAsUser: 0
+            allowPrivilegeEscalation: true
+      - equal:
+          path: spec.template.spec.initContainers[0].command
+          value:
+            - sh
+            - -c
+            - chown -R 1000:1000 /var/log/nexus-iq-server /sonatype-work
+      - equal:
+          path: spec.template.spec.initContainers[0].volumeMounts
+          value:
+            - mountPath: /sonatype-work
+              name: nxiq-pv-data
+            - mountPath: /var/log/nexus-iq-server
+              name: nxiq-pv-log
+            - mountPath: /etc/nexus-iq-server
+              name: config-volume
+  - it: should add an initContainer for fixOwner with all parameters
+    set:
+      fixOwner:
+        enabled: true
+        updateUser: MY-USER
+        updateGroup: MY-GROUP
+      image:
+        pullPolicy: MY-POLICY
+      configYaml:
+        sonatypeWork: /MY/WORK/DIR
+    asserts:
+      - equal:
+          path: spec.template.spec.initContainers[0].name
+          value: chown-vols
+      - equal:
+          path: spec.template.spec.initContainers[0].image
+          value: busybox:latest
+      - equal:
+          path: spec.template.spec.initContainers[0].imagePullPolicy
+          value: MY-POLICY
+      - equal:
+          path: spec.template.spec.initContainers[0].securityContext
+          value:
+            runAsUser: 0
+            allowPrivilegeEscalation: true
+      - equal:
+          path: spec.template.spec.initContainers[0].command
+          value:
+            - sh
+            - -c
+            - chown -R MY-USER:MY-GROUP /var/log/nexus-iq-server /MY/WORK/DIR
+      - equal:
+          path: spec.template.spec.initContainers[0].volumeMounts
+          value:
+            - mountPath: /MY/WORK/DIR
+              name: nxiq-pv-data
+            - mountPath: /var/log/nexus-iq-server
+              name: nxiq-pv-log
+            - mountPath: /etc/nexus-iq-server
+              name: config-volume
   - it: shows the red hat docker image for telemetry
     set:
       image:
