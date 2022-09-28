@@ -1,6 +1,9 @@
 ![Lint and Test Charts](https://github.com/sonatype/helm3-charts/workflows/Lint%20and%20Test%20Charts/badge.svg)
 
 ## Helm3 Charts for Sonatype Products
+> Nexus Repository 3 Helm charts are now being published to our [Nexus Repository 3 Helm Repository](https://github.com/sonatype/nxrm3-helm-repository).
+>
+> Use the new repository to obtain the latest Nexus Repository 3 charts.
 
 These charts are designed to work out of the box with minikube using both ingess and ingress dns addons.
 
