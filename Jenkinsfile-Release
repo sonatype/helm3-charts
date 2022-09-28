@@ -90,8 +90,10 @@ dockerizedBuildPipeline(
     String version = verifyIndexYamlAndTarFile(params.chart)
 
     // Set Jira Fix Version
-    jira.versionPrefix = jiraVersionMappings[chart]
-    jiraSetFixVersion(jira, version)
+    if ('nexus-iq-server'.equals(params.chart)) {
+      jira.versionPrefix = jiraVersionMappings[chart]
+      jiraSetFixVersion(jira, version)
+    }
 
     // Create tags
     String tagName = "${chart}-${version}"
