@@ -46,6 +46,8 @@ properties([
 ])
 
 final chartVersion = calculateChartVersion(params.chartVersion, params.appVersion)
+final nexusRepoManagerArtifactName = "nexus-repository-manager-${params.appVersion}.tgz"
+final awsResiliencyArtifactName = "nxrm-aws-resiliency-${params.appVersion}.tgz"
 
 dockerizedBuildPipeline(
   prepare: {
@@ -60,9 +62,11 @@ dockerizedBuildPipeline(
   buildAndTest: {
     sonatypeZionGitConfig()
     runSafely "git checkout ${gitBranch(env)}"
-    runSafely "./upgrade.sh charts/${chartLocation[params.chart]} ${chartVersion} ${params.appVersion}"
-    runSafely './build.sh'
-    runSafely 'git add charts'
+    if ('nexus-iq-server'.equals(params.chart)) {
+      runSafely "./upgrade.sh charts/nexus-iq ${chartVersion} ${params.appVersion}"
+      runSafely './build.sh'
+      runSafely 'git add charts'
+    }
   },
   skipVulnerabilityScan: true,
   archiveArtifacts: 'docs/*',
@@ -70,6 +74,10 @@ dockerizedBuildPipeline(
   deployCondition: { true },
   retentionPolicy: RetentionPolicy.TEN_BUILDS,
   deploy: {
+    if ('nexus-repository-manager'.equals(params.chart)) {
+      runSafely "curl -L 'https://github.com/sonatype/nxrm3-helm-repository/blob/main/docs/${nexusRepoManagerArtifactName}?raw=true' -o 'docs/${nexusRepoManagerArtifactName}'"
+      runSafely "curl -L 'https://github.com/sonatype/nxrm3-helm-repository/blob/main/docs/${awsResiliencyArtifactName}?raw=true' -o 'docs/${awsResiliencyArtifactName}'"
+    }
     runSafely 'git add docs'
     runSafely "git commit -m 'Release Update for ${params.chart} ${chartVersion}'"
 
