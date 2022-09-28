@@ -17,11 +17,6 @@ final jira = [
     credentialId : 'jenkins-jira', autoRelease: true, failOnError: true
 ]
 
-final jiraVersionMappings = [
-  'nexus-iq-server': 'helm-iq',
-  'nexus-repository-manager': 'helm-nxrm',
-]
-
 final chartLocation = [
   'nexus-iq-server': 'nexus-iq',
   'nexus-repository-manager': 'nexus-repository-manager',
@@ -90,8 +85,8 @@ dockerizedBuildPipeline(
     String version = verifyIndexYamlAndTarFile(params.chart)
 
     // Set Jira Fix Version
-    if ('nexus-iq-server'.equals(params.chart)) {
-      jira.versionPrefix = jiraVersionMappings[chart]
+    if ('nexus-iq-server' == params.chart) {
+      jira.versionPrefix = 'helm-iq'
       jiraSetFixVersion(jira, version)
     }
 
