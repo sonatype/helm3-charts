@@ -59,9 +59,10 @@ dockerizedBuildPipeline(
     runSafely "git checkout ${gitBranch(env)}"
     if ('nexus-iq-server'.equals(params.chart)) {
       runSafely "./upgrade.sh charts/nexus-iq ${chartVersion} ${params.appVersion}"
-      runSafely './build.sh'
+      runSafely './build-iq.sh'
       runSafely 'git add charts'
     }
+    runSafely './build.sh'
   },
   skipVulnerabilityScan: true,
   archiveArtifacts: 'docs/*',
