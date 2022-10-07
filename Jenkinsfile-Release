@@ -62,7 +62,12 @@ dockerizedBuildPipeline(
       runSafely './build-iq.sh'
       runSafely 'git add charts'
     }
-    runSafely './build.sh'
+
+    if ('nexus-repository-manager'.equals(params.chart)) {
+      runSafely "curl -L 'https://github.com/sonatype/nxrm3-helm-repository/blob/main/docs/${nexusRepoManagerArtifactName}?raw=true' -o 'docs/${nexusRepoManagerArtifactName}'"
+      runSafely "curl -L 'https://github.com/sonatype/nxrm3-helm-repository/blob/main/docs/${awsResiliencyArtifactName}?raw=true' -o 'docs/${awsResiliencyArtifactName}'"
+      runSafely './build-nexus.sh'
+    }
   },
   skipVulnerabilityScan: true,
   archiveArtifacts: 'docs/*',
