@@ -75,10 +75,6 @@ dockerizedBuildPipeline(
   deployCondition: { true },
   retentionPolicy: RetentionPolicy.TEN_BUILDS,
   deploy: {
-    if ('nexus-repository-manager'.equals(params.chart)) {
-      runSafely "curl -L 'https://github.com/sonatype/nxrm3-helm-repository/blob/main/docs/${nexusRepoManagerArtifactName}?raw=true' -o 'docs/${nexusRepoManagerArtifactName}'"
-      runSafely "curl -L 'https://github.com/sonatype/nxrm3-helm-repository/blob/main/docs/${awsResiliencyArtifactName}?raw=true' -o 'docs/${awsResiliencyArtifactName}'"
-    }
     runSafely 'git add docs'
     runSafely "git commit -m 'Release Update for ${params.chart} ${chartVersion}'"
 
