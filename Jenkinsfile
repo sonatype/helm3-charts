@@ -17,7 +17,7 @@ dockerizedBuildPipeline(
     githubStatusUpdate('pending')
   },
   buildAndTest: {
-    sh './build.sh'
+    sh './build-iq.sh'
   },
   skipVulnerabilityScan: true,
   archiveArtifacts: 'docs/*',
