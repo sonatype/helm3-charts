@@ -89,13 +89,15 @@ podSecurityContext:
   runAsGroup: 1000
   fsGroup: 1000
 
-securityContext: {}
-#  capabilities:
-#    drop:
-#    - ALL
+securityContext:
+  allowPrivilegeEscalation: false
+  runAsNonRoot: true
+  seccompProfile:
+    type: RuntimeDefault
+  capabilities:
+    drop:
+    - ALL
 #  readOnlyRootFilesystem: true
-#  runAsNonRoot: true
-#  runAsUser: 1000
 
 service:
   type: "ClusterIP"
