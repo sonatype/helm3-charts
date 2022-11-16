@@ -31,7 +31,14 @@ tests:
           pattern: sonatype/nexus-iq-server:1\.\d+\.\d+
       - equal:
           path: spec.template.spec.containers[0].securityContext
-          value: {}
+          value:
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            seccompProfile:
+              type: RuntimeDefault
+            capabilities:
+              drop:
+                - ALL
       - equal:
           path: spec.template.spec.containers[0].imagePullPolicy
           value: IfNotPresent
