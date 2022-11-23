@@ -11,7 +11,7 @@
 # See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
 #
 
-FROM docker-all.repo.sonatype.com/alpine/helm:3.10.1
+FROM docker-all.repo.sonatype.com/alpine/helm:3.10.2
 
 RUN apk update && apk upgrade && \
     apk add --no-cache bash git openssh
