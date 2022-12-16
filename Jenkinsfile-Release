@@ -37,6 +37,12 @@ properties([
       name: 'chartVersion',
       description: '(Optional) Version of the Chart, like "139.0.0". If omitted, it will be calculated from the appVersion.',
     ),
+  ]),
+  pipelineTriggers([
+    triggers: [
+      upstream(upstreamProjects: 'insight/insight-brain/Release IQ Server',
+               threashold: hudson.model.Result.SUCCESS)
+    ]
   ])
 ])
 
