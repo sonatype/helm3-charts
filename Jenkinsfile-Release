@@ -13,7 +13,7 @@
 @Library(['private-pipeline-library', 'jenkins-shared', 'int-jenkins-shared']) _
 
 final jira = [
-    versionPrefix: '', project: 'INT', projectId: '12410',
+    versionPrefix: '', project: 'CLM', projectId: '11011',
     credentialId : 'jenkins-jira', autoRelease: true, failOnError: true
 ]
 
