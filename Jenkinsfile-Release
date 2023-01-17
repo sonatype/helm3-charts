@@ -19,14 +19,13 @@ final jira = [
 
 final chartLocation = [
   'nexus-iq-server': 'nexus-iq',
-  'nexus-iq-server-ha': 'nexus-iq-ha',
   'nexus-repository-manager': 'nexus-repository-manager',
 ]
 
 properties([
   parameters([
     choice(
-      choices: ['', 'nexus-iq-server', 'nexus-iq-server-ha', 'nexus-repository-manager'],
+      choices: ['', 'nexus-iq-server', 'nexus-repository-manager'],
       name: 'chart',
       description: 'Chart to deploy.',
     ),
@@ -63,9 +62,6 @@ dockerizedBuildPipeline(
       runSafely "./upgrade.sh charts/nexus-iq ${chartVersion} ${params.appVersion}"
       runSafely './build-iq.sh'
       runSafely 'git add charts'
-    }
-
-    if ('nexus-iq-server-ha'.equals(params.chart)) {
       runSafely "curl -L 'https://github.com/sonatype/nexus-iq-server-ha/blob/main/docs/${nexusIqServerHaArtifactName}?raw=true' -o 'docs/${nexusIqServerHaArtifactName}'"
       runSafely './build-nexus.sh'
     }
