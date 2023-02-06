@@ -43,6 +43,7 @@ properties([
 final chartVersion = calculateChartVersion(params.chartVersion, params.appVersion)
 final nexusRepoManagerArtifactName = "nexus-repository-manager-${chartVersion}.tgz"
 final awsResiliencyArtifactName = "nxrm-aws-resiliency-${chartVersion}.tgz"
+final nexusIqServerHaArtifactName = "nexus-iq-server-ha-${chartVersion}.tgz"
 
 dockerizedBuildPipeline(
   prepare: {
@@ -58,6 +59,7 @@ dockerizedBuildPipeline(
     sonatypeZionGitConfig()
     runSafely "git checkout ${gitBranch(env)}"
     if ('nexus-iq-server'.equals(params.chart)) {
+      runSafely "curl -L 'https://github.com/sonatype/nexus-iq-server-ha/blob/main/docs/${nexusIqServerHaArtifactName}?raw=true' -o 'docs/${nexusIqServerHaArtifactName}'"
       runSafely "./upgrade.sh charts/nexus-iq ${chartVersion} ${params.appVersion}"
       runSafely './build-iq.sh'
       runSafely 'git add charts'
