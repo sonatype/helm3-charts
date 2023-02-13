@@ -1772,34 +1772,6 @@ entries:
     version: 154.0.0
   nexus-repository-manager:
   - apiVersion: v2
-    appVersion: 3.47.0
-    created: "2023-02-09T10:42:16.360591059Z"
-    description: Sonatype Nexus Repository Manager - Universal Binary repository
-    digest: 97b7aae33533121e7a12de1e6803609c4a51e4d7cc59c3cd5e3606d2c903366e
-    home: https://www.sonatype.com/nexus-repository-oss
-    icon: https://sonatype.github.io/helm3-charts/NexusRepo_Vertical.svg
-    keywords:
-    - artifacts
-    - dependency
-    - management
-    - sonatype
-    - nexus
-    - repository
-    - quickstart
-    - ci
-    - repository-manager
-    - nexus3
-    maintainers:
-    - email: support@sonatype.com
-      name: Sonatype
-    name: nexus-repository-manager
-    sources:
-    - https://github.com/sonatype/nexus-public
-    type: application
-    urls:
-    - https://sonatype.github.io/helm3-charts/nexus-repository-manager-47.0.0.tgz
-    version: 47.0.0
-  - apiVersion: v2
     appVersion: 3.46.0
     created: "2023-02-09T10:42:16.359783982Z"
     description: Sonatype Nexus Repository Manager - Universal Binary repository
@@ -3620,32 +3592,6 @@ entries:
     - https://sonatype.github.io/helm3-charts/nexus-repository-manager-21.1.0.tgz
     version: 21.1.0
   nxrm-aws-resiliency:
-  - apiVersion: v2
-    appVersion: 3.47.0
-    created: "2023-02-09T10:42:16.368611025Z"
-    description: Resilient AWS Deployment of Sonatype Nexus Repository Manager - Universal
-      Binary repository
-    digest: f3e9ec6921bb3eccce9c48951f6aef3a44ee3dcd6050946a7b4da9a604a1fd8a
-    home: https://www.sonatype.com/nexus-repository-oss
-    icon: https://sonatype.github.io/helm3-charts/NexusRepo_Vertical.svg
-    keywords:
-    - artifacts
-    - dependency
-    - management
-    - sonatype
-    - nexus
-    - repository
-    - quickstart
-    - ci
-    - repository-manager
-    - nexus3
-    maintainers:
-    - name: Sonatype
-    name: nxrm-aws-resiliency
-    type: application
-    urls:
-    - https://sonatype.github.io/helm3-charts/nxrm-aws-resiliency-47.0.0.tgz
-    version: 47.0.0
   - apiVersion: v2
     appVersion: 3.46.0
     created: "2023-02-09T10:42:16.367890672Z"
