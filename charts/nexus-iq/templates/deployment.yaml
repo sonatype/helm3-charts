@@ -64,6 +64,13 @@ spec:
             - name: admin
               containerPort: {{ .Values.iq.adminPort }}
               protocol: TCP
+          startupProbe:
+            httpGet:
+              path: /ping
+              port: admin
+              {{- if .Values.iq.startupProbe }}
+                {{- toYaml .Values.iq.startupProbe | nindent 12 }}
+              {{- end }}
           livenessProbe:
             httpGet:
               path: /ping

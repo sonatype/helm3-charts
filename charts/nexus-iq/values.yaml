@@ -55,6 +55,12 @@ iq:
 #      value: "-Djavax.net.ssl.keyStoreType=jks -Djavax.net.ssl.keyStore=/etc/secret-volume/keystore.jks -Djavax.net.ssl.keyStorePassword=$(KEYSTORE_PASSWORD) -Djavax.net.ssl.trustStoreType=jks -Djavax.net.ssl.trustStore=/etc/secret-volume/truststore.jks -Djavax.net.ssl.trustStorePassword=$(TRUSTSTORE_PASSWORD) -Djava.util.prefs.userRoot=${SONATYPE_WORK}/javaprefs"
 
   # Configures the liveness probe for IQ pod
+  startupProbe:
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    timeoutSeconds: 2
+    failureThreshold: 60
+    successThreshold: 1
   livenessProbe:
     initialDelaySeconds: 10
     periodSeconds: 10
