@@ -43,8 +43,8 @@ properties([
 final chartVersion = calculateChartVersion(params.chartVersion, params.appVersion)
 final nexusRepoManagerArtifactName = "nexus-repository-manager-${chartVersion}.tgz"
 final awsResiliencyArtifactName = "nxrm-aws-resiliency-${chartVersion}.tgz"
-final awsHaArtifactName = "nxrm-aws-ha-helm-${chartVersion}.tgz"
-final azureHaArtifactName = "nxrm-azure-ha-helm-${chartVersion}.tgz"
+final awsHaArtifactName = "nxrm-ha-aws-${chartVersion}.tgz"
+final azureHaArtifactName = "nxrm-ha-azure-${chartVersion}.tgz"
 final nexusIqServerHaArtifactName = "nexus-iq-server-ha-${chartVersion}.tgz"
 
 dockerizedBuildPipeline(
