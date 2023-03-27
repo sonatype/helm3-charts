@@ -3,6 +3,9 @@ kind: Deployment
 metadata:
   name: {{ template "iqserver.fullname" . }}
   labels:
+    tags.datadoghq.com/env: "production-us-east-2" # Unified service tag - Deployment Env tag
+    tags.datadoghq.com/service: {{ .Release.Namespace }} # Unified service tag - Deployment Service tag
+    tags.datadoghq.com/version: {{ .Values.image.tag }} # Unified service tag - Deployment Version tag
     {{- include "iqserver.labels" . | nindent 4 }}
     {{- if .Values.iq.extraLabels }}
       {{- with .Values.iq.extraLabels }}
@@ -20,6 +23,13 @@ spec:
     metadata:
       labels:
         {{- include "iqserver.selectorLabels" . | nindent 8 }}
+        admission.datadoghq.com/enabled: "true"
+        admission.datadoghq.com/config.mode: "socket"
+        tags.datadoghq.com/env: "production-us-east-2" # Unified service tag - Deployment Env tag
+        tags.datadoghq.com/service: {{ .Release.Namespace }} # Unified service tag - Deployment Service tag
+        tags.datadoghq.com/version: {{ .Values.image.tag }} # Unified service tag - Deployment Version tag
+      annotations:
+        admission.datadoghq.com/java-lib.version: "v1.10.1"
     spec:
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -56,6 +66,8 @@ spec:
               value: {{ template "iqserver.internalHostSystem" . }}
             - name: SONATYPE_WORK
               value: {{ .Values.configYaml.sonatypeWork }}
+            - name: DD_LOGS_INJECTION
+              value: "true"
 {{ toYaml .Values.iq.env | indent 12 }}
           ports:
             - name: application
