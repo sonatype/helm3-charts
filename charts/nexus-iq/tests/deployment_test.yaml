@@ -52,6 +52,8 @@ tests:
               value: Helm+Docker
             - name: SONATYPE_WORK
               value: /sonatype-work
+            - name: DD_LOGS_INJECTION
+              value: "true"
             - name: JAVA_OPTS
               value: -Djava.util.prefs.userRoot=$(SONATYPE_WORK)/javaprefs
       - equal:
