@@ -74,30 +74,6 @@ entries:
     - https://sonatype.github.io/helm3-charts/nexus-iq-server-155.0.0.tgz
     version: 155.0.0
   - apiVersion: v2
-    appVersion: 1.154.0
-    created: "2023-03-20T19:47:18.925010091Z"
-    description: Sonatype Nexus IQ Server continuously monitors your entire software
-      supply chain
-    digest: d6649357f7e887b00061a6b2a5d75fb14c7dbbf8274ae63b2cecae561ba44040
-    home: https://www.sonatype.com/product-nexus-lifecycle
-    icon: https://sonatype.github.io/helm3-charts/NexusIQServer_Vertical.svg
-    keywords:
-    - sonatype
-    - nexus
-    - lifecycle
-    - iq
-    - remediate
-    - vulnerabilities
-    - policy
-    maintainers:
-    - email: support@sonatype.com
-      name: Sonatype
-    name: nexus-iq-server
-    type: application
-    urls:
-    - https://sonatype.github.io/helm3-charts/nexus-iq-server-154.0.0.tgz
-    version: 154.0.0
-  - apiVersion: v2
     appVersion: 1.153.0
     created: "2023-03-20T19:47:18.924131167Z"
     description: Sonatype Nexus IQ Server continuously monitors your entire software
@@ -1850,38 +1826,6 @@ entries:
     urls:
     - https://sonatype.github.io/helm3-charts/nexus-iq-server-ha-155.0.0.tgz
     version: 155.0.0
-  - apiVersion: v2
-    appVersion: 1.154.0
-    created: "2023-03-20T19:47:18.943249672Z"
-    dependencies:
-    - condition: ingress-nginx.enabled
-      name: ingress-nginx
-      repository: https://kubernetes.github.io/ingress-nginx
-      version: 4.4.2
-    - condition: fluentd.enabled
-      name: fluentd
-      repository: https://charts.bitnami.com/bitnami
-      version: 5.5.12
-    description: A cluster of Sonatype Nexus IQ Servers to continuously monitor your
-      entire software supply chain
-    digest: c6cb9aabd8d0a422735cd847a02a9e59e30eb53a6895284aeb6183cd385110db
-    home: https://www.sonatype.com/product-nexus-lifecycle
-    keywords:
-    - sonatype
-    - nexus
-    - lifecycle
-    - iq
-    - remediate
-    - vulnerabilities
-    - policy
-    maintainers:
-    - email: support@sonatype.com
-      name: Sonatype
-    name: nexus-iq-server-ha
-    type: application
-    urls:
-    - https://sonatype.github.io/helm3-charts/nexus-iq-server-ha-154.0.0.tgz
-    version: 154.0.0
   nexus-repository-manager:
   - apiVersion: v2
     appVersion: 3.49.0
