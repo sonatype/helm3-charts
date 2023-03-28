@@ -71,6 +71,7 @@ iq:
 
 nameOverride: ""
 fullnameOverride: ""
+environment: "production"
 
 serviceAccount:
   # Specifies whether a service account should be created
