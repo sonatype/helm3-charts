@@ -12,7 +12,7 @@
 # See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
 #
 
-helm plugin install https://github.com/quintush/helm-unittest
+helm plugin install --version "0.2.11" https://github.com/quintush/helm-unittest
 
 set -e
 
