@@ -14,7 +14,7 @@
 
 final jira = [
     versionPrefix: '', project: 'CLM', projectId: '11011',
-    credentialId : 'jenkins-jira', autoRelease: true, failOnError: true
+    credentialId : 'atlassian-jenkins', autoRelease: true, failOnError: true
 ]
 
 final chartLocation = [
