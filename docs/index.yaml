@@ -2664,34 +2664,6 @@ entries:
     - https://sonatype.github.io/helm3-charts/nexus-repository-manager-58.1.0.tgz
     version: 58.1.0
   - apiVersion: v2
-    appVersion: 3.58.0
-    created: "2023-12-07T19:45:07.54853415Z"
-    description: Sonatype Nexus Repository Manager - Universal Binary repository
-    digest: 5e9949aaaabb446e02dba055fa225b9358e0cbc5fd6701e956fcc37c65576e09
-    home: https://www.sonatype.com/nexus-repository-oss
-    icon: https://sonatype.github.io/helm3-charts/NexusRepo_Vertical.svg
-    keywords:
-    - artifacts
-    - dependency
-    - management
-    - sonatype
-    - nexus
-    - repository
-    - quickstart
-    - ci
-    - repository-manager
-    - nexus3
-    maintainers:
-    - email: support@sonatype.com
-      name: Sonatype
-    name: nexus-repository-manager
-    sources:
-    - https://github.com/sonatype/nexus-public
-    type: application
-    urls:
-    - https://sonatype.github.io/helm3-charts/nexus-repository-manager-58.0.0.tgz
-    version: 58.0.0
-  - apiVersion: v2
     appVersion: 3.57.1
     created: "2023-12-07T19:45:07.547767248Z"
     description: Sonatype Nexus Repository Manager - Universal Binary repository
@@ -5087,32 +5059,6 @@ entries:
     - https://sonatype.github.io/helm3-charts/nxrm-aws-resiliency-58.1.0.tgz
     version: 58.1.0
   - apiVersion: v2
-    appVersion: 3.58.0
-    created: "2023-12-07T19:45:07.571004365Z"
-    description: Resilient AWS Deployment of Sonatype Nexus Repository Manager - Universal
-      Binary repository
-    digest: f8f4c4d0b264042d8f4fcc37ff976df057e2a4060772690a321a2ccaa658c9b5
-    home: https://www.sonatype.com/nexus-repository-oss
-    icon: https://sonatype.github.io/helm3-charts/NexusRepo_Vertical.svg
-    keywords:
-    - artifacts
-    - dependency
-    - management
-    - sonatype
-    - nexus
-    - repository
-    - quickstart
-    - ci
-    - repository-manager
-    - nexus3
-    maintainers:
-    - name: Sonatype
-    name: nxrm-aws-resiliency
-    type: application
-    urls:
-    - https://sonatype.github.io/helm3-charts/nxrm-aws-resiliency-58.0.0.tgz
-    version: 58.0.0
-  - apiVersion: v2
     appVersion: 3.57.1
     created: "2023-12-07T19:45:07.570285819Z"
     description: Resilient AWS Deployment of Sonatype Nexus Repository Manager - Universal
@@ -5921,32 +5867,6 @@ entries:
     - https://sonatype.github.io/helm3-charts/nxrm-ha-aws-58.1.0.tgz
     version: 58.1.0
   - apiVersion: v2
-    appVersion: 3.58.0
-    created: "2023-12-07T19:45:07.589539069Z"
-    description: Resilient AWS Deployment of Sonatype Nexus Repository - Universal
-      Binary repository
-    digest: 703892df7dcc4f9f29cfa317ab4093b0f87422420b25622321f35a06ffaf0d26
-    home: https://www.sonatype.com/nexus-repository-oss
-    icon: https://sonatype.github.io/helm3-charts/NexusRepo_Vertical.svg
-    keywords:
-    - artifacts
-    - dependency
-    - management
-    - sonatype
-    - nexus
-    - repository
-    - quickstart
-    - ci
-    - repository-manager
-    - nexus3
-    maintainers:
-    - name: Sonatype
-    name: nxrm-ha-aws
-    type: application
-    urls:
-    - https://sonatype.github.io/helm3-charts/nxrm-ha-aws-58.0.0.tgz
-    version: 58.0.0
-  - apiVersion: v2
     appVersion: 3.57.1
     created: "2023-12-07T19:45:07.588866152Z"
     description: Resilient AWS Deployment of Sonatype Nexus Repository - Universal
@@ -6389,32 +6309,6 @@ entries:
     urls:
     - https://sonatype.github.io/helm3-charts/nxrm-ha-azure-58.1.0.tgz
     version: 58.1.0
-  - apiVersion: v2
-    appVersion: 3.58.0
-    created: "2023-12-07T19:45:07.600198531Z"
-    description: Resilient Azure Deployment of Sonatype Nexus Repository - Universal
-      Binary repository
-    digest: a9678e03d13e54c0b14482a4e6a0a6177c32ae161fe85bbb568eb235e22a36b2
-    home: https://www.sonatype.com/nexus-repository-oss
-    icon: https://sonatype.github.io/helm3-charts/NexusRepo_Vertical.svg
-    keywords:
-    - artifacts
-    - dependency
-    - management
-    - sonatype
-    - nexus
-    - repository
-    - quickstart
-    - ci
-    - repository-manager
-    - nexus3
-    maintainers:
-    - name: Sonatype
-    name: nxrm-ha-azure
-    type: application
-    urls:
-    - https://sonatype.github.io/helm3-charts/nxrm-ha-azure-58.0.0.tgz
-    version: 58.0.0
   - apiVersion: v2
     appVersion: 3.57.1
     created: "2023-12-07T19:45:07.599705611Z"
