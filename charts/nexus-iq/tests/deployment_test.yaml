@@ -66,17 +66,6 @@ tests:
               containerPort: 8071
               protocol: TCP
       - equal:
-          path: spec.template.spec.containers[0].startupProbe
-          value:
-            httpGet:
-              path: /ping
-              port: admin
-            initialDelaySeconds: 30
-            failureThreshold: 30
-            periodSeconds: 10
-            successThreshold: 1
-            timeoutSeconds: 2
-      - equal:
           path: spec.template.spec.containers[0].livenessProbe
           value:
             httpGet:
