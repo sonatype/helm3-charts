@@ -23,6 +23,9 @@ fixOwner:
   updateUser: 1000
   updateGroup: 1000
 
+# Annotations to add to iq server pod
+podAnnotations:
+
 iq:
   name: nxiq
   hostname: iq-server.demo
