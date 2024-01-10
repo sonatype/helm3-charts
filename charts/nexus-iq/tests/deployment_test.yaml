@@ -72,7 +72,7 @@ tests:
               path: /ping
               port: admin
             initialDelaySeconds: 30
-            failureThreshold: 30
+            failureThreshold: 180
             periodSeconds: 10
             successThreshold: 1
             timeoutSeconds: 2

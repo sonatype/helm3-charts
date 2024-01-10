@@ -61,7 +61,7 @@ iq:
   startupProbe:
     initialDelaySeconds: 30
     periodSeconds: 10
-    failureThreshold: 30
+    failureThreshold: 180
     timeoutSeconds: 2
     successThreshold: 1
   # Configures the liveness probe for IQ pod
