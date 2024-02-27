@@ -41,9 +41,7 @@ properties([
 ])
 
 final chartVersion = calculateChartVersion(params.chartVersion, params.appVersion)
-final nexusRepoManagerArtifactName = "nexus-repository-manager-${chartVersion}.tgz"
-final awsResiliencyArtifactName = "nxrm-aws-resiliency-${chartVersion}.tgz"
-//final haArtifactName = "nxrm-ha-${chartVersion}.tgz"
+final haArtifactName = "nxrm-ha-${chartVersion}.tgz"
 final nexusIqServerHaArtifactName = "nexus-iq-server-ha-${chartVersion}.tgz"
 
 dockerizedBuildPipeline(
@@ -67,9 +65,7 @@ dockerizedBuildPipeline(
     }
 
     if ('nexus-repository-manager'.equals(params.chart)) {
-      runSafely "curl -L 'https://github.com/sonatype/nxrm3-helm-repository/blob/main/docs/${nexusRepoManagerArtifactName}?raw=true' -o 'docs/${nexusRepoManagerArtifactName}'"
-      runSafely "curl -L 'https://github.com/sonatype/nxrm3-helm-repository/blob/main/docs/${awsResiliencyArtifactName}?raw=true' -o 'docs/${awsResiliencyArtifactName}'"
-      //runSafely "curl -L 'https://github.com/sonatype/nxrm3-ha-repository/blob/main/docs/${haArtifactName}?raw=true' -o 'docs/${haArtifactName}'"
+      runSafely "curl -L 'https://github.com/sonatype/nxrm3-ha-repository/blob/main/docs/${haArtifactName}?raw=true' -o 'docs/${haArtifactName}'"
       runSafely './build-nexus.sh'
     }
   },
