@@ -5983,7 +5983,7 @@ entries:
   nxrm-ha:
   - apiVersion: v2
     appVersion: 3.66.0
-    created: "2024-05-08T17:10:51.383139811Z"
+    created: "2024-05-09T17:10:51.383139811Z"
     description: Resilient Deployment of Sonatype Nexus Repository - Universal Binary
       repository
     digest: e2150e6889d25d61137371ebafb1f33136cf1e5e32abe6a5f828a0bc25f299a2
