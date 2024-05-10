@@ -84,7 +84,13 @@ dockerizedBuildPipeline(
   },
   postDeploy: {
     // Verify Index.yaml
-    String version = verifyIndexYamlAndTarFile(params.chart)
+    String version = ""
+
+     if ('nexus-repository-manager'.equals(params.chart)) {
+          version = verifyIndexYamlAndTarFile('nxrm-ha')
+     } else {
+          version = verifyIndexYamlAndTarFile(params.chart)
+     }
 
     // Set Jira Fix Version
     if ('nexus-iq-server' == params.chart) {
