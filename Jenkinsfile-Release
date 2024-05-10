@@ -93,7 +93,12 @@ dockerizedBuildPipeline(
     }
 
     // Create tags
-    String tagName = "${chart}-${version}"
+    String tagName = ""
+    if ('nexus-repository-manager'.equals(params.chart)) {
+      tagName = "nxrm-ha-${version}"
+    } else {
+      tagName = "${chart}-${version}"
+    }
     runSafely "git tag -a ${tagName} -m 'Release Update: ${version}'"
     sshagent(credentials: [sonatypeZionCredentialsId()]) {
       runSafely "git push origin ${tagName}"
