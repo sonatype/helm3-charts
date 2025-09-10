@@ -31,8 +31,18 @@ iq:
   hostname: iq-server.demo
   applicationPort: 8070
   adminPort: 8071
-  # base 64 encoded license file with no line breaks
-  licenseSecret: ""
+  license:
+    # base 64 encoded license file with no line breaks
+    secret: ""
+    # use existingSecret as reference for the license
+    # make sure the key is 'license_lic' and is cleartext
+    # apiVersion: v1
+    # kind: Secret
+    # metadata:
+    #   name: <name of existingSecret>
+    # stringData:
+    #  license_lic: ""
+    existingSecret: ""
   # add this line with this file path and the `licenseSecret` above to autoconfigure licensing
   # licenseFile: /etc/nexus-iq-license/license_lic
   extraLabels:
@@ -295,3 +305,5 @@ configYaml:
         currentLogFilename: /var/log/nexus-iq-server/clm-server.log
         archivedLogFilenamePattern: /var/log/nexus-iq-server/clm-server-%d.log.gz
         archivedFileCount: 50
+
+extraManifests: []

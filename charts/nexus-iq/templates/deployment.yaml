@@ -114,7 +114,7 @@ spec:
               name: secret-volume
               readOnly: true
   {{- end }}
-  {{- if .Values.iq.licenseSecret }}
+  {{- if or .Values.iq.license.secret .Values.iq.license.existingSecret }}
             - mountPath: /etc/nexus-iq-license
               name: license-volume
   {{- end }}
@@ -131,11 +131,16 @@ spec:
             items:
               - key: config.yml
                 path: config.yml
-  {{- if .Values.iq.licenseSecret }}
+        {{- if or .Values.iq.license.secret .Values.iq.license.existingSecret }}
         - name: license-volume
           secret:
+          {{- if .Values.iq.license.secret }}
             secretName: {{ template "iqserver.fullname" . }}-license
-  {{- end }}
+          {{- end }}
+          {{- if .Values.iq.license.existingSecret }}
+            secretName: {{ .Values.iq.license.existingSecret }}
+          {{- end }}  
+        {{- end }}
   {{- if and (.Values.iq.secretName) (.Values.iq.secretMountName) }}
         - name: secret-volume
           secret:
