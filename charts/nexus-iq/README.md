@@ -16,6 +16,7 @@ The current releases have been tested on minikube v1.25.1 running Kubernetes v1.
 
 To Add as a Helm Repo
 ```helm repo add sonatype https://sonatype.github.io/helm3-charts/```
+
 ## Testing the Chart
 
 To test the chart:
@@ -26,6 +27,7 @@ To test the chart with your own values:
 ```bash
 $ helm install --dry-run --debug --generate-name -f myvalues.yaml ./ 
 ```
+
 ## Installing the Chart
 
 To install the chart:
@@ -33,6 +35,7 @@ To install the chart:
 ```bash
 $ helm install nexus-iq sonatype/nexus-iq-server [ --version v90.0.0 ]
 ```
+
 The above command deploys IQ on the Kubernetes cluster in the default configuration. Note the optional version flag.
 
 You can pass custom configuration values as:
@@ -40,6 +43,7 @@ You can pass custom configuration values as:
 ```bash
 $ helm install -f myvalues.yaml ./ --name nexus-iq
 ```
+
 The default login for the IQ Server is admin/admin123
 
 ## Upgrading the Chart
@@ -47,6 +51,8 @@ The default login for the IQ Server is admin/admin123
 ```bash
 $ helm upgrade nexus-iq sonatype/nexus-iq-server [--version v91.0.0]
 ```
+
+
 Note: 
  - optional version flag shown.
  - When upgrading from IQ versions 1.117 or 1.100, set fixOwner.enabled to true for changing the file ownership.
@@ -59,9 +65,10 @@ To uninstall/delete the deployment:
 ```bash
 $ helm list
 NAME                    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
-plinking-gopher         default         1               2021-03-10 15:13:04.614125 -0800 PST    deployed        nexus-iq-server-106.0.0 1.106.0    
+plinking-gopher	        default         1               2021-03-10 15:13:04.614125 -0800 PST    deployed        nexus-iq-server-106.0.0 1.106.0    
 $ helm delete plinking-gopher
 ```
+
 The command removes all the Kubernetes components associated with the chart and deletes the release.
 
 ## Chart Configuration Options
@@ -123,6 +130,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | `resources`                                    | Resource requests and limits for the IQ pod in the cluster.                                                                                                                             | See `values.yaml` for suggested minimum recommended values. |
 | `podAnnotations`                               | Annotations to add to iq server pod.                                                                                                                                                    | `nil`                                                       |
 | `podSecurityContext`                           | `securityContext` for the whole pod.                                                                                                                                                    | Default matches the stock container.                        |
+
 ## Configuring IQ Server
 
 You can define the `config.yml` for IQ Server in your `myvalues.yml` file on startup. 
@@ -150,11 +158,12 @@ Java keystores and their associated passwords. In order to utilize the provided 
 from a directory containing the keystore and truststore files like so:
 ```shell
 kubectl create secret generic secret-jks 
-    --from-file=truststore.jks=./truststore.jks 
-    --from-file=keystore.jks=./keystore.jks 
-    --from-literal='keystorePassword=password' 
-    --from-literal='truststorePassword=password'
+	--from-file=truststore.jks=./truststore.jks 
+	--from-file=keystore.jks=./keystore.jks 
+	--from-literal='keystorePassword=password' 
+	--from-literal='truststorePassword=password'
 ```
+
 ## Using the Image from the Red Hat Registry
 
 To use the [IQ image available from Red Hat's registry](https://catalog.redhat.com/software/containers/sonatype/nexus-iq-server/5e5d8063ac3db90370816c66),
@@ -172,9 +181,11 @@ you'll need to:
 * Provide the name of the secret in `imagePullSecrets` in this chart's `values.yaml`
   ```yaml
   imagePullSecrets:
-    - name: redhat-pull-secret  ```
+    - name: redhat-pull-secret
+  ```
 * Set `image.name` and `image.tag` in `values.yaml`
   ```yaml
   image:
     repository: registry.connect.redhat.com/sonatype/nexus-iq-server
-    tag: 1.132.0-ubi-1  ```
+    tag: 1.132.0-ubi-1
+  ```
