@@ -55,7 +55,8 @@ $ helm upgrade nexus-iq sonatype/nexus-iq-server [--version v91.0.0]
 
 Note: 
  - optional version flag shown.
- - When upgrading from IQ versions 1.117 or 1.100, set fixOwner.enabled to true for changing the file ownership. 
+ - When upgrading from IQ versions 1.117 or 1.100, set fixOwner.enabled to true for changing the file ownership.
+ - If you're upgrading from a previous chart version that used `iq.licenseSecret`, you need to update your values to use the new `iq.license.secret` or `iq.license.existingSecret` parameters instead.
 
 ## Uninstalling the Chart
 
@@ -79,7 +80,8 @@ The command removes all the Kubernetes components associated with the chart and 
 | `imagePullSecrets`                             | The names of the kubernetes secrets with credentials to login to a registry                                                                                                             | `[]`                                                        |
 | `iq.applicationPort`                           | Port of the application connector. Must match the value in the `configYaml` property                                                                                                    | `8070`                                                      |
 | `iq.adminPort`                                 | Port of the application connector. Must match the value in the `configYaml` property                                                                                                    | `8071`                                                      |
-| `iq.licenseSecret`                             | The base-64 encoded license file to be installed at startup                                                                                                                             | `""`                                                        |
+| `iq.license.secret`                           | The base-64 encoded license file to be installed at startup                                                                                                                             | `""`                                                        |
+| `iq.license.existingSecret`                    | Name of an existing secret containing the license (with key 'license_lic')                                                                                                              | `""`                                                        |
 | `iq.env`                                       | IQ server environment variables, including JAVA_OPTS                                                                                                                                    | See `values.yaml`                                           |
 | `iq.secretName`                                | The name of a secret to mount inside the container                                                                                                                                      | See `values.yaml`                                           |
 | `iq.secretMountName`                           | Where in the container to mount the data from `secretName`                                                                                                                              | See `values.yaml`                                           |
@@ -140,8 +142,14 @@ process invocation and can be used for purposes such as changing the server memo
 ## Installing the License
 
 The license file can be installed via the UI when IQ server is running, or it can be done as a part of the deploy. 
-If you leave the `licenseFile` field empty/commented, IQ Server will start and prompt you to manually install the license 
-when you first enter the GUI.
+You have two options for providing the license during deployment:
+
+1. Set `iq.license.secret` with a base-64 encoded license file (with no line breaks)
+2. Use an existing Kubernetes secret by setting `iq.license.existingSecret` with the name of your secret (the secret must contain a key named 'license_lic')
+
+If you leave both `iq.license.secret` and `iq.license.existingSecret` empty, IQ Server will start and prompt you to manually install the license when you first enter the GUI.
+
+Note: The `configYaml.licenseFile` field should be set to `/etc/nexus-iq-license/license_lic` to use the license mounted from the secret.
 
 ## Specifying custom Java keystore/truststore
 
