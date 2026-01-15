@@ -119,9 +119,13 @@ dockerizedBuildPipeline(
 )
 
 String verifyIndexYamlAndTarFile(String chart) {
-  // Get current version
   def indexFile = readYaml file: 'docs/index.yaml'
-  String version = indexFile.entries[chart][0].version
+  // Find the chart we are releasing
+  def entry = indexFile.entries[chart].find { it.version == chartVersion }
+  if (!entry) {
+    error "Version ${chartVersion} not found in index.yaml for chart ${chart}"
+  }
+  String version = entry.version
 
   // Check tar file
   String repo_url = 'https://sonatype.github.io/helm3-charts/'
@@ -133,7 +137,11 @@ String verifyIndexYamlAndTarFile(String chart) {
   // Get repository version
   def response = httpRequest "${repo_url}/index.yaml"
   def repositoryIndexFile = readYaml text:response.content
-  String repositoryVersion = repositoryIndexFile.entries[chart][0].version
+  def repoEntry = repositoryIndexFile.entries[chart].find { it.version == chartVersion }
+  if (!repoEntry) {
+    error "Version ${chartVersion} not found in remote index.yaml for chart ${chart}"
+  }
+  String repositoryVersion = repoEntry.version
 
   if (!version.equals(repositoryVersion)) {
     error "Released version: ${version} is different " +
