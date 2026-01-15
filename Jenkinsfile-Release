@@ -75,40 +75,47 @@ dockerizedBuildPipeline(
   deployCondition: { true },
   retentionPolicy: RetentionPolicy.TEN_BUILDS,
   deploy: {
-    runSafely 'git add docs'
-    runSafely "git commit -m 'Release Update for ${params.chart} ${chartVersion}'"
 
-    sshagent(credentials: [sonatypeZionCredentialsId()]) {
-      runSafely 'git push'
-    }
+    echo "deploy: chart version calculated as: ${chartVersion} - app version: ${params.appVersion}"
+    // runSafely 'git add docs'
+    // runSafely "git commit -m 'Release Update for ${params.chart} ${chartVersion}'"
+
+    // sshagent(credentials: [sonatypeZionCredentialsId()]) {
+    //   runSafely 'git push'
+    // }
   },
   postDeploy: {
+    echo "post-deploy: chart version calculated as: ${chartVersion} - app version: ${params.appVersion}"
+    echo "versions "
+    def indexFile = readYaml file: 'docs/index.yaml'
+    def versions = indexFile.entries[params.chart]*.version
+    echo "Available versions for chart ${params.chart}: ${versions}"
     // Verify Index.yaml
-    String version = ""
+    // String version = ""
 
-     if ('nexus-repository-manager'.equals(params.chart)) {
-          version = verifyIndexYamlAndTarFile('nxrm-ha')
-     } else {
-          version = verifyIndexYamlAndTarFile(params.chart)
-     }
+    //  if ('nexus-repository-manager'.equals(params.chart)) {
+    //       version = verifyIndexYamlAndTarFile('nxrm-ha')
+    //  } else {
+    //       version = verifyIndexYamlAndTarFile(params.chart)
+    //  }
 
-    // Set Jira Fix Version
-    if ('nexus-iq-server' == params.chart) {
-      jira.versionPrefix = 'helm-iq'
-      jiraSetFixVersion(jira, version)
-    }
+    // // Set Jira Fix Version
+    // if ('nexus-iq-server' == params.chart) {
+    //   jira.versionPrefix = 'helm-iq'
+    //   jiraSetFixVersion(jira, version)
+    // }
 
-    // Create tags
-    String tagName = ""
-    if ('nexus-repository-manager'.equals(params.chart)) {
-      tagName = "nxrm-ha-${version}"
-    } else {
-      tagName = "${chart}-${version}"
-    }
-    runSafely "git tag -a ${tagName} -m 'Release Update: ${version}'"
-    sshagent(credentials: [sonatypeZionCredentialsId()]) {
-      runSafely "git push origin ${tagName}"
-    }
+    // // Create tags
+    // String tagName = ""
+    // if ('nexus-repository-manager'.equals(params.chart)) {
+    //   tagName = "nxrm-ha-${version}"
+    // } else {
+    //   tagName = "${chart}-${version}"
+    // }
+    // runSafely "git tag -a ${tagName} -m 'Release Update: ${version}'"
+    // sshagent(credentials: [sonatypeZionCredentialsId()]) {
+    //   runSafely "git push origin ${tagName}"
+    // }
   },
   onSuccess: {
     buildNotifications(currentBuild, env, 'main')
