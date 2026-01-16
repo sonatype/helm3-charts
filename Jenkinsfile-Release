@@ -86,9 +86,8 @@ dockerizedBuildPipeline(
   },
   postDeploy: {
     echo "post-deploy: chart version calculated as: ${chartVersion} - app version: ${params.appVersion}"
-    echo "versions "
     def indexFile = readYaml file: 'docs/index.yaml'
-    def versions = indexFile.entries[params.chart]*.version
+    def versions = indexFile.entries['nxrm-ha']*.version
     echo "Available versions for chart ${params.chart}: ${versions}"
     // Verify Index.yaml
     // String version = ""
