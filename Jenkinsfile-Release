@@ -87,9 +87,9 @@ dockerizedBuildPipeline(
     String version = ""
 
      if ('nexus-repository-manager'.equals(params.chart)) {
-          version = verifyIndexYamlAndTarFile('nxrm-ha')
+          version = verifyIndexYamlAndTarFile('nxrm-ha' , chartVersion)
      } else {
-          version = verifyIndexYamlAndTarFile(params.chart)
+          version = verifyIndexYamlAndTarFile(params.chart, chartVersion)
      }
 
     // Set Jira Fix Version
@@ -118,7 +118,7 @@ dockerizedBuildPipeline(
   }
 )
 
-String verifyIndexYamlAndTarFile(String chart) {
+String verifyIndexYamlAndTarFile(String chart, String chartVersion) {
   def indexFile = readYaml file: 'docs/index.yaml'
   // Find the chart we are releasing
   def entry = indexFile.entries[chart].find { it.version == chartVersion }
