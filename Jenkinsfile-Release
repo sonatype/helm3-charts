@@ -89,6 +89,7 @@ dockerizedBuildPipeline(
     def indexFile = readYaml file: 'docs/index.yaml'
     def versions = indexFile.entries['nxrm-ha']*.version
     echo "Available versions for chart ${params.chart}: ${versions}"
+    version = verifyIndexYamlAndTarFile('nxrm-ha')
     // Verify Index.yaml
     // String version = ""
 
@@ -125,6 +126,8 @@ dockerizedBuildPipeline(
 )
 
 String verifyIndexYamlAndTarFile(String chart) {
+  echo "chartVersion on method: ${chartVersion}"
+
   def indexFile = readYaml file: 'docs/index.yaml'
   // Find the chart we are releasing
   def entry = indexFile.entries[chart].find { it.version == chartVersion }
