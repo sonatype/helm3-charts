@@ -52,20 +52,33 @@ dockerizedBuildPipeline(
     if (! params.appVersion) {
       error('The appVersion is required.')
     }
+    // The release tag is created last, so if it exists this version was already published: skip the remaining stages
+    // (dockerizedBuildPipeline skips them while .skip-build exists) instead of republishing it.
+    String releaseTag = 'nexus-repository-manager'.equals(params.chart) ? "nxrm-ha-${chartVersion}" : "${params.chart}-${chartVersion}"
+    boolean released = false
+    sshagent(credentials: [sonatypeZionCredentialsId()]) {
+      released = sh(script: "git ls-remote --exit-code --tags origin 'refs/tags/${releaseTag}'", returnStatus: true) == 0
+    }
+    if (released) {
+      echo "${params.chart} ${chartVersion} was already published (tag ${releaseTag} exists); nothing to do"
+      currentBuild.description = "Skipped - ${params.chart} ${chartVersion} already published"
+      writeFile file: '.skip-build', text: 'true'
+      return
+    }
     githubStatusUpdate('pending')
   },
   buildAndTest: {
     sonatypeZionGitConfig()
     runSafely "git checkout ${gitBranch(env)}"
     if ('nexus-iq-server'.equals(params.chart)) {
-      runSafely "curl -L 'https://github.com/sonatype/nexus-iq-server-ha/blob/main/docs/${nexusIqServerHaArtifactName}?raw=true' -o 'docs/${nexusIqServerHaArtifactName}'"
+      runSafely "curl -fL 'https://github.com/sonatype/nexus-iq-server-ha/blob/main/docs/${nexusIqServerHaArtifactName}?raw=true' -o 'docs/${nexusIqServerHaArtifactName}'"
       runSafely "./upgrade.sh charts/nexus-iq ${chartVersion} ${params.appVersion}"
       runSafely './build-iq.sh'
       runSafely 'git add charts'
     }
 
     if ('nexus-repository-manager'.equals(params.chart)) {
-      runSafely "curl -L 'https://github.com/sonatype/nxrm3-ha-repository/blob/main/docs/${haArtifactName}?raw=true' -o 'docs/${haArtifactName}'"
+      runSafely "curl -fL 'https://github.com/sonatype/nxrm3-ha-repository/blob/main/docs/${haArtifactName}?raw=true' -o 'docs/${haArtifactName}'"
       runSafely './build-nexus.sh'
     }
   },
@@ -127,21 +140,26 @@ String verifyIndexYamlAndTarFile(String chart, String chartVersion) {
   }
   String version = entry.version
 
-  // Check tar file
+  // GitHub Pages publishes a push about a minute later, so wait for its index.yaml to list the version.
   String repo_url = 'https://sonatype.github.io/helm3-charts/'
+  String repositoryVersion = null
+  for (int attempt = 1; attempt <= 5 && !repositoryVersion; attempt++) {
+    def response = httpRequest "${repo_url}/index.yaml"
+    repositoryVersion = readYaml(text: response.content).entries[chart]?.find { it.version == chartVersion }?.version
+    if (!repositoryVersion && attempt < 5) {
+      echo "Version ${chartVersion} not in remote index.yaml yet (attempt ${attempt} of 5), waiting 60s"
+      sleep(time: 60, unit: 'SECONDS')
+    }
+  }
+  if (!repositoryVersion) {
+    error "Version ${chartVersion} not found in remote index.yaml for chart ${chart}"
+  }
+
+  // Check tar file
   verifyDownloadLinks(
     urlParts: [repo_url, chart, '-', version],
     urlSuffixes: ['.tgz'], retryCount: 2, retryDelay: 60
   )
-
-  // Get repository version
-  def response = httpRequest "${repo_url}/index.yaml"
-  def repositoryIndexFile = readYaml text:response.content
-  def repoEntry = repositoryIndexFile.entries[chart].find { it.version == chartVersion }
-  if (!repoEntry) {
-    error "Version ${chartVersion} not found in remote index.yaml for chart ${chart}"
-  }
-  String repositoryVersion = repoEntry.version
 
   if (!version.equals(repositoryVersion)) {
     error "Released version: ${version} is different " +
